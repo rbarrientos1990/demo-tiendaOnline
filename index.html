@@ -1,1 +1,251 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demo Tienda Online — Ropa Guatemala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', Arial, sans-serif; }
+
+    nav { background: #7F77DD; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-brand { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: 2px; }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .nav-link { color: #EEEDFE; font-size: 14px; font-weight: 600; text-decoration: none; }
+    .btn-pedido { background: #fff; color: #534AB7; border: none; border-radius: 25px; padding: 9px 20px; font-weight: 800; cursor: pointer; font-size: 14px; font-family: 'Nunito', sans-serif; }
+    .btn-pedido:hover { background: #EEEDFE; }
+
+    .hero { background: #EEEDFE; padding: 40px 24px; text-align: center; border-bottom: 2px solid #AFA9EC; }
+    .hero h1 { font-size: 28px; font-weight: 800; color: #3C3489; margin-bottom: 8px; }
+    .hero p { font-size: 15px; color: #534AB7; font-weight: 600; }
+    .hero-badge { display: inline-block; background: #7F77DD; color: #fff; border-radius: 20px; padding: 6px 18px; font-size: 13px; font-weight: 700; margin-top: 14px; }
+
+    .filtros { padding: 16px 24px; display: flex; gap: 10px; flex-wrap: wrap; background: #fff; border-bottom: 1px solid #EEEDFE; }
+    .pill { padding: 8px 18px; border-radius: 25px; font-size: 13px; font-weight: 700; cursor: pointer; border: 2px solid #AFA9EC; background: #EEEDFE; color: #534AB7; font-family: 'Nunito', sans-serif; }
+    .pill:hover { background: #AFA9EC; color: #fff; }
+    .pill.active { background: #7F77DD; color: #fff; border-color: #7F77DD; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 18px; padding: 24px; background: #F8F7FF; }
+
+    .card { background: #fff; border-radius: 18px; border: 2px solid #EEEDFE; overflow: hidden; }
+    .card:hover { border-color: #AFA9EC; }
+    .card-img { height: 155px; display: flex; align-items: center; justify-content: center; font-size: 54px; }
+    .card-body { padding: 14px; }
+    .card-cat { font-size: 11px; color: #7F77DD; font-weight: 800; margin-bottom: 3px; text-transform: uppercase; letter-spacing: .5px; }
+    .card-name { font-size: 15px; font-weight: 700; color: #26215C; margin-bottom: 5px; }
+    .card-price { font-size: 18px; font-weight: 800; color: #534AB7; margin-bottom: 10px; }
+    .card-tallas { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 12px; }
+    .talla { font-size: 12px; padding: 4px 10px; border-radius: 10px; border: 2px solid #AFA9EC; color: #534AB7; cursor: pointer; background: #EEEDFE; font-weight: 700; font-family: 'Nunito', sans-serif; }
+    .talla.sel { background: #7F77DD; color: #fff; border-color: #7F77DD; }
+    .btn-add { width: 100%; padding: 10px; background: #7F77DD; color: #fff; border: none; border-radius: 14px; font-size: 14px; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; }
+    .btn-add:hover { background: #534AB7; }
+    .sin-stock { font-size: 12px; color: #bbb; text-align: center; padding: 8px 0; font-weight: 600; }
+
+    .modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(63,52,137,0.45); z-index: 100; align-items: center; justify-content: center; }
+    .modal-bg.show { display: flex; }
+    .modal { background: #fff; border-radius: 22px; padding: 30px; max-width: 390px; width: 90%; border: 2px solid #EEEDFE; }
+    .modal h2 { font-size: 20px; font-weight: 800; color: #3C3489; margin-bottom: 5px; }
+    .modal-sub { font-size: 13px; color: #888; margin-bottom: 20px; font-weight: 600; }
+    .form-group { margin-bottom: 13px; }
+    .form-group label { font-size: 12px; color: #534AB7; font-weight: 700; display: block; margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; border: 2px solid #EEEDFE; border-radius: 12px; font-size: 13px; font-family: 'Nunito', sans-serif; outline: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #7F77DD; }
+    .form-group textarea { height: 80px; resize: none; }
+    .modal-btns { display: flex; gap: 10px; margin-top: 18px; }
+    .btn-cancel { flex: 1; padding: 10px; border: 2px solid #EEEDFE; border-radius: 14px; background: #fff; color: #888; cursor: pointer; font-size: 13px; font-weight: 700; font-family: 'Nunito', sans-serif; }
+    .btn-enviar { flex: 2; padding: 10px; background: #7F77DD; color: #fff; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 14px; font-family: 'Nunito', sans-serif; }
+    .btn-enviar:hover { background: #534AB7; }
+
+    .notif { display: none; position: fixed; bottom: 24px; right: 24px; background: #EEEDFE; border: 2px solid #7F77DD; border-radius: 16px; padding: 16px 20px; font-size: 14px; font-weight: 700; color: #3C3489; z-index: 200; max-width: 300px; }
+    .notif.show { display: block; }
+
+    .loader { text-align: center; padding: 50px; color: #7F77DD; font-size: 16px; font-weight: 700; grid-column: 1/-1; }
+
+    footer { background: #26215C; padding: 20px 24px; text-align: center; }
+    footer p { color: #AFA9EC; font-size: 13px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">Demo Tienda Online</div>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Inicio</a>
+      <a href="#" class="nav-link">Catálogo</a>
+      <a href="#" class="nav-link">Contacto</a>
+      <button class="btn-pedido" onclick="abrirModal()">Hacer pedido</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <h1>Nueva colección 2026</h1>
+    <p>Moda fresca y accesible — envíos a toda Guatemala</p>
+    <div class="hero-badge">Envío gratis en pedidos mayores a Q 300</div>
+  </div>
+
+  <div class="filtros">
+    <div class="pill active" onclick="filtrar('Todos', this)">Todos</div>
+    <div class="pill" onclick="filtrar('Blusas', this)">Blusas</div>
+    <div class="pill" onclick="filtrar('Pantalones', this)">Pantalones</div>
+    <div class="pill" onclick="filtrar('Vestidos', this)">Vestidos</div>
+    <div class="pill" onclick="filtrar('Accesorios', this)">Accesorios</div>
+  </div>
+
+  <div class="grid" id="grid">
+    <div class="loader">Cargando productos...</div>
+  </div>
+
+  <div class="modal-bg" id="modal">
+    <div class="modal">
+      <h2>Hacer pedido</h2>
+      <div class="modal-sub" id="modal-sub">Completá tus datos y te contactamos</div>
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="f-nombre" placeholder="Tu nombre completo">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp / Teléfono</label>
+        <input type="text" id="f-tel" placeholder="+502 0000-0000">
+      </div>
+      <div class="form-group">
+        <label>Departamento</label>
+        <select id="f-depto">
+          <option value="">Seleccioná tu departamento</option>
+          <option>Guatemala</option>
+          <option>Quetzaltenango</option>
+          <option>Escuintla</option>
+          <option>Sacatepéquez</option>
+          <option>Chimaltenango</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Producto y talla</label>
+        <textarea id="f-producto" placeholder="Ej: Blusa floral talla M..."></textarea>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn-enviar" onclick="enviarPedido()">Enviar pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="notif" id="notif">Pedido enviado. Te contactamos pronto.</div>
+
+  <footer>
+    <p>Demo Tienda Online — Guatemala City &nbsp;|&nbsp; info@demotienda.gt &nbsp;|&nbsp; +502 5555-0000</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://TU-URL.supabase.co'
+    const SUPABASE_KEY = 'TU-PUBLISHABLE-KEY'
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+    let todosLosProductos = []
+    let categoriaActual = 'Todos'
+    let tallasSeleccionadas = {}
+    let pedidoActual = []
+
+    const cfg = {
+      'Blusas':     { bg: '#EEEDFE', icon: '👚' },
+      'Pantalones': { bg: '#E1F5EE', icon: '👖' },
+      'Vestidos':   { bg: '#FBEAF0', icon: '👗' },
+      'Accesorios': { bg: '#FAEEDA', icon: '👜' },
+    }
+
+    async function cargarProductos() {
+      const { data, error } = await supabase
+        .from('productos').select('*').order('created_at', { ascending: false })
+      if (error) {
+        document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'
+        return
+      }
+      todosLosProductos = data
+      renderProductos()
+    }
+
+    function renderProductos() {
+      const lista = categoriaActual === 'Todos'
+        ? todosLosProductos
+        : todosLosProductos.filter(p => p.categoria === categoriaActual)
+
+      if (lista.length === 0) {
+        document.getElementById('grid').innerHTML = '<div class="loader">No hay productos en esta categoría.</div>'
+        return
+      }
+
+      document.getElementById('grid').innerHTML = lista.map(p => {
+        const c = cfg[p.categoria] || { bg: '#EEEDFE', icon: '🛍️' }
+        const tallas = p.tallas ? p.tallas.split(',').map(t => t.trim()) : []
+        const sinStock = p.stock <= 0
+        return `
+          <div class="card">
+            <div class="card-img" style="background:${c.bg}">${c.icon}</div>
+            <div class="card-body">
+              <div class="card-cat">${p.categoria}</div>
+              <div class="card-name">${p.nombre}</div>
+              <div class="card-price">Q ${parseFloat(p.precio).toFixed(2)}</div>
+              ${sinStock
+                ? '<div class="sin-stock">Agotado por el momento</div>'
+                : `<div class="card-tallas">
+                    ${tallas.map(t => `<span class="talla" onclick="selTalla('${p.id}','${t}',this)">${t}</span>`).join('')}
+                  </div>
+                  <button class="btn-add" onclick="agregarPedido('${p.id}','${p.nombre}',${p.precio})">Agregar al pedido</button>`
+              }
+            </div>
+          </div>`
+      }).join('')
+    }
+
+    function filtrar(cat, el) {
+      categoriaActual = cat
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'))
+      el.classList.add('active')
+      renderProductos()
+    }
+
+    function selTalla(id, talla, el) {
+      tallasSeleccionadas[id] = talla
+      el.closest('.card-tallas').querySelectorAll('.talla').forEach(t => t.classList.remove('sel'))
+      el.classList.add('sel')
+    }
+
+    function agregarPedido(id, nombre, precio) {
+      const talla = tallasSeleccionadas[id] || 'Sin especificar'
+      pedidoActual.push({ nombre, talla, precio })
+      document.getElementById('f-producto').value = pedidoActual.map(i => `${i.nombre} — ${i.talla}`).join('\n')
+      document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) en tu pedido`
+      abrirModal()
+    }
+
+    function abrirModal() { document.getElementById('modal').classList.add('show') }
+    function cerrarModal() { document.getElementById('modal').classList.remove('show') }
+
+    async function enviarPedido() {
+      const nombre = document.getElementById('f-nombre').value.trim()
+      const tel    = document.getElementById('f-tel').value.trim()
+      const depto  = document.getElementById('f-depto').value
+      const prod   = document.getElementById('f-producto').value.trim()
+
+      if (!nombre || !tel || !depto || !prod) { alert('Por favor completá todos los campos.'); return }
+
+      const { error } = await supabase.from('pedidos').insert([{
+        cliente_nombre: nombre, whatsapp: tel, departamento: depto,
+        producto_nombre: prod, talla: 'Ver detalle', estado: 'nuevo'
+      }])
+
+      if (error) { alert('Error al enviar el pedido. Intentá de nuevo.'); return }
+
+      cerrarModal()
+      pedidoActual = []
+      ;['f-nombre','f-tel','f-depto','f-producto'].forEach(id => document.getElementById(id).value = '')
+      const notif = document.getElementById('notif')
+      notif.classList.add('show')
+      setTimeout(() => notif.classList.remove('show'), 4000)
+    }
+
+    cargarProductos()
+  </script>
+</body>
+</html>
