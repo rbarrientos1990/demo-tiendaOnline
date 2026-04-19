@@ -8,7 +8,6 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
 
-    /* LOGIN */
     .login-bg{min-height:100vh;background:#EEEDFE;display:flex;align-items:center;justify-content:center}
     .login-card{background:#fff;border-radius:24px;padding:40px;width:100%;max-width:380px;border:2px solid #AFA9EC}
     .login-logo{font-size:22px;font-weight:900;color:#7F77DD;text-align:center;margin-bottom:6px}
@@ -21,7 +20,6 @@
     .login-btn:hover{background:#534AB7}
     .login-error{background:#FCEBEB;border:1px solid #F09595;border-radius:10px;padding:10px 14px;font-size:13px;color:#A32D2D;font-weight:700;margin-bottom:14px;display:none}
 
-    /* LAYOUT ADMIN */
     .admin-layout{display:none;min-height:100vh;background:#F8F7FF}
     .topbar{background:#7F77DD;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
     .topbar-brand{font-size:18px;font-weight:900;color:#fff}
@@ -37,18 +35,15 @@
 
     .content{padding:24px}
 
-    /* STATS */
     .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
     .stat{background:#fff;border-radius:14px;border:2px solid #EEEDFE;padding:16px 18px}
     .stat-label{font-size:11px;color:#888;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
     .stat-val{font-size:26px;font-weight:900}
 
-    /* SECTION */
     .section{background:#fff;border-radius:16px;border:2px solid #EEEDFE;overflow:hidden;margin-bottom:20px}
     .section-head{padding:14px 20px;border-bottom:2px solid #EEEDFE;display:flex;justify-content:space-between;align-items:center}
     .section-title{font-size:15px;font-weight:900;color:#26215C}
 
-    /* BUTTONS */
     .btn-primary{padding:9px 20px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
     .btn-primary:hover{background:#534AB7}
     .btn-secondary{padding:9px 20px;background:#EEEDFE;color:#534AB7;border:2px solid #AFA9EC;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
@@ -58,7 +53,6 @@
     .btn-sm-red{background:#FCEBEB;color:#A32D2D}
     .btn-sm-amber{background:#FAEEDA;color:#854F0B}
 
-    /* TABLE */
     .tbl-wrap{overflow-x:auto}
     table{width:100%;border-collapse:collapse;font-size:13px}
     th{padding:11px 16px;text-align:left;font-weight:800;font-size:11px;color:#888;border-bottom:2px solid #EEEDFE;background:#F8F7FF;text-transform:uppercase;letter-spacing:.5px}
@@ -66,7 +60,6 @@
     tr:last-child td{border-bottom:none}
     tr:hover td{background:#F8F7FF}
 
-    /* BADGES */
     .badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
     .b-nuevo{background:#E6F1FB;color:#185FA5}
     .b-proceso{background:#FAEEDA;color:#854F0B}
@@ -76,7 +69,6 @@
     .b-low{background:#FAEEDA;color:#854F0B}
     .b-out{background:#FCEBEB;color:#A32D2D}
 
-    /* FORM MODAL */
     .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:200;align-items:center;justify-content:center}
     .modal-bg.show{display:flex}
     .modal{background:#fff;border-radius:22px;padding:28px;max-width:460px;width:92%;border:2px solid #EEEDFE;max-height:90vh;overflow-y:auto}
@@ -92,13 +84,11 @@
     .btn-save{flex:2;padding:10px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-save:hover{background:#534AB7}
 
-    /* FOTO UPLOAD */
     .upload-area{border:2px dashed #AFA9EC;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:#F8F7FF}
     .upload-area:hover{border-color:#7F77DD;background:#EEEDFE}
     .upload-area p{font-size:13px;color:#888;font-weight:700;margin-top:8px}
     .upload-preview{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
 
-    /* NOTIF */
     .toast{position:fixed;bottom:24px;right:24px;background:#EEEDFE;border:2px solid #7F77DD;border-radius:16px;padding:14px 20px;font-size:14px;font-weight:800;color:#3C3489;z-index:300;max-width:300px;display:none}
     .toast.show{display:block}
     .toast.error{background:#FCEBEB;border-color:#F09595;color:#A32D2D}
@@ -114,7 +104,6 @@
 </head>
 <body>
 
-<!-- LOGIN -->
 <div class="login-bg" id="loginBg">
   <div class="login-card">
     <div class="login-logo">Demo Tienda Online</div>
@@ -132,7 +121,6 @@
   </div>
 </div>
 
-<!-- ADMIN LAYOUT -->
 <div class="admin-layout" id="adminLayout">
 
   <div class="topbar">
@@ -152,7 +140,6 @@
 
   <div class="content">
 
-    <!-- DASHBOARD -->
     <div class="pane active" id="pane-dashboard">
       <div class="stats" id="statsGrid"></div>
       <div class="section">
@@ -178,20 +165,17 @@
       </div>
     </div>
 
-    <!-- PEDIDOS -->
     <div class="pane" id="pane-pedidos">
       <div class="section">
         <div class="section-head">
           <div class="section-title">Todos los pedidos</div>
-          <div style="display:flex;gap:8px">
-            <select id="filtroEstado" onchange="cargarPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
-              <option value="">Todos los estados</option>
-              <option>nuevo</option>
-              <option>proceso</option>
-              <option>entregado</option>
-              <option>cancelado</option>
-            </select>
-          </div>
+          <select id="filtroEstado" onchange="cargarPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+            <option value="">Todos los estados</option>
+            <option>nuevo</option>
+            <option>proceso</option>
+            <option>entregado</option>
+            <option>cancelado</option>
+          </select>
         </div>
         <div class="tbl-wrap">
           <table>
@@ -202,7 +186,6 @@
       </div>
     </div>
 
-    <!-- PRODUCTOS -->
     <div class="pane" id="pane-productos">
       <div class="section">
         <div class="section-head">
@@ -218,7 +201,6 @@
       </div>
     </div>
 
-    <!-- MOVIMIENTOS -->
     <div class="pane" id="pane-movimientos">
       <div class="section">
         <div class="section-head">
@@ -237,7 +219,6 @@
   </div>
 </div>
 
-<!-- MODAL PRODUCTO -->
 <div class="modal-bg" id="modalProducto">
   <div class="modal">
     <h3 id="modalProductoTitle">Agregar producto</h3>
@@ -288,7 +269,6 @@
   </div>
 </div>
 
-<!-- MODAL MOVIMIENTO -->
 <div class="modal-bg" id="modalMovimiento">
   <div class="modal">
     <h3>Registrar movimiento</h3>
@@ -320,7 +300,6 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -336,16 +315,22 @@
     const u = document.getElementById('loginUser').value.trim()
     const p = document.getElementById('loginPass').value
     if (USERS[u] && USERS[u] === p) {
-      document.getElementById('loginBg').style.display = 'none'
-      document.getElementById('adminLayout').style.display = 'block'
-      document.getElementById('topbarUser').textContent = u
-      cargarDashboard()
+      localStorage.setItem('admin_user', u)
+      mostrarAdmin(u)
     } else {
       document.getElementById('loginError').style.display = 'block'
     }
   }
 
+  function mostrarAdmin(u) {
+    document.getElementById('loginBg').style.display = 'none'
+    document.getElementById('adminLayout').style.display = 'block'
+    document.getElementById('topbarUser').textContent = u
+    cargarDashboard()
+  }
+
   function doLogout() {
+    localStorage.removeItem('admin_user')
     document.getElementById('loginBg').style.display = 'flex'
     document.getElementById('adminLayout').style.display = 'none'
     document.getElementById('loginUser').value = ''
@@ -372,8 +357,8 @@
   }
 
   function estadoBadge(e) {
-    const m = { nuevo: 'b-nuevo', proceso: 'b-proceso', entregado: 'b-entregado', cancelado: 'b-cancelado' }
-    return `<span class="badge ${m[e] || 'b-nuevo'}">${e}</span>`
+    const m = { nuevo:'b-nuevo', proceso:'b-proceso', entregado:'b-entregado', cancelado:'b-cancelado' }
+    return `<span class="badge ${m[e]||'b-nuevo'}">${e}</span>`
   }
 
   function stockBadge(s) {
@@ -383,25 +368,34 @@
   }
 
   function fmtFecha(f) {
-    return f ? new Date(f).toLocaleDateString('es-GT', { day:'2-digit', month:'short', year:'numeric' }) : '—'
+    return f ? new Date(f).toLocaleDateString('es-GT',{day:'2-digit',month:'short',year:'numeric'}) : '—'
+  }
+
+  function estadoSelect(id, actual) {
+    return `<select onchange="cambiarEstadoPedido('${id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+      <option ${actual==='nuevo'?'selected':''}>nuevo</option>
+      <option ${actual==='proceso'?'selected':''}>proceso</option>
+      <option ${actual==='entregado'?'selected':''}>entregado</option>
+      <option ${actual==='cancelado'?'selected':''}>cancelado</option>
+    </select>`
   }
 
   async function cargarDashboard() {
-    const [{ data: pedidos }, { data: productos }] = await Promise.all([
-      db.from('pedidos').select('*').order('created_at', { ascending: false }),
+    const [{ data: pedidos },{ data: productos }] = await Promise.all([
+      db.from('pedidos').select('*').order('created_at',{ascending:false}),
       db.from('productos').select('*')
     ])
     productosCache = productos || []
     const total = productos?.length || 0
-    const nuevos = pedidos?.filter(p => p.estado === 'nuevo').length || 0
-    const bajo = productos?.filter(p => p.stock <= 5 && p.stock > 0).length || 0
-    const agotados = productos?.filter(p => p.stock <= 0).length || 0
+    const nuevos = pedidos?.filter(p => p.estado==='nuevo').length || 0
+    const bajo = productos?.filter(p => p.stock<=5 && p.stock>0).length || 0
+    const agotados = productos?.filter(p => p.stock<=0).length || 0
     document.getElementById('statsGrid').innerHTML = `
       <div class="stat"><div class="stat-label">Productos</div><div class="stat-val" style="color:#7F77DD">${total}</div></div>
       <div class="stat"><div class="stat-label">Pedidos nuevos</div><div class="stat-val" style="color:#185FA5">${nuevos}</div></div>
       <div class="stat"><div class="stat-label">Stock bajo</div><div class="stat-val" style="color:#854F0B">${bajo}</div></div>
       <div class="stat"><div class="stat-label">Agotados</div><div class="stat-val" style="color:#A32D2D">${agotados}</div></div>`
-    document.getElementById('dashPedidos').innerHTML = (pedidos || []).slice(0, 5).map(p => `
+    document.getElementById('dashPedidos').innerHTML = (pedidos||[]).slice(0,5).map(p=>`
       <tr>
         <td style="font-family:monospace;font-size:11px;color:#888">${p.id.slice(0,8)}...</td>
         <td style="font-weight:800">${p.cliente_nombre}</td>
@@ -409,24 +403,19 @@
         <td>${p.departamento}</td>
         <td>${estadoBadge(p.estado)}</td>
         <td>${fmtFecha(p.created_at)}</td>
-        <td><select onchange="cambiarEstadoPedido('${p.id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
-          <option ${p.estado==='nuevo'?'selected':''}>nuevo</option>
-          <option ${p.estado==='proceso'?'selected':''}>proceso</option>
-          <option ${p.estado==='entregado'?'selected':''}>entregado</option>
-          <option ${p.estado==='cancelado'?'selected':''}>cancelado</option>
-        </select></td>
+        <td>${estadoSelect(p.id,p.estado)}</td>
       </tr>`).join('')
-    document.getElementById('dashStock').innerHTML = (productos || [])
-      .filter(p => p.stock <= 5)
-      .map(p => `<tr><td style="font-weight:800">${p.nombre}</td><td>${p.categoria}</td><td>${p.stock}</td><td>${stockBadge(p.stock)}</td></tr>`).join('')
+    document.getElementById('dashStock').innerHTML = (productos||[])
+      .filter(p=>p.stock<=5)
+      .map(p=>`<tr><td style="font-weight:800">${p.nombre}</td><td>${p.categoria}</td><td>${p.stock}</td><td>${stockBadge(p.stock)}</td></tr>`).join('')
   }
 
   async function cargarPedidos() {
     const filtro = document.getElementById('filtroEstado').value
-    let q = db.from('pedidos').select('*').order('created_at', { ascending: false })
-    if (filtro) q = q.eq('estado', filtro)
+    let q = db.from('pedidos').select('*').order('created_at',{ascending:false})
+    if (filtro) q = q.eq('estado',filtro)
     const { data } = await q
-    document.getElementById('tablaPedidos').innerHTML = (data || []).map(p => `
+    document.getElementById('tablaPedidos').innerHTML = (data||[]).map(p=>`
       <tr>
         <td style="font-weight:800">${p.cliente_nombre}</td>
         <td style="color:#7F77DD;font-weight:700">${p.whatsapp}</td>
@@ -435,35 +424,32 @@
         <td>${estadoBadge(p.estado)}</td>
         <td>${fmtFecha(p.created_at)}</td>
         <td style="display:flex;gap:6px;flex-wrap:wrap">
-          <select onchange="cambiarEstadoPedido('${p.id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
-            <option ${p.estado==='nuevo'?'selected':''}>nuevo</option>
-            <option ${p.estado==='proceso'?'selected':''}>proceso</option>
-            <option ${p.estado==='entregado'?'selected':''}>entregado</option>
-            <option ${p.estado==='cancelado'?'selected':''}>cancelado</option>
-          </select>
+          ${estadoSelect(p.id,p.estado)}
           <button class="btn-sm btn-sm-red" onclick="eliminarPedido('${p.id}')">Eliminar</button>
         </td>
       </tr>`).join('')
   }
 
   async function cambiarEstadoPedido(id, estado) {
-    await db.from('pedidos').update({ estado }).eq('id', id)
+    await db.from('pedidos').update({estado}).eq('id',id)
     showToast('Estado actualizado')
   }
 
   async function eliminarPedido(id) {
     if (!confirm('¿Eliminar este pedido?')) return
-    await db.from('pedidos').delete().eq('id', id)
+    await db.from('pedidos').delete().eq('id',id)
     showToast('Pedido eliminado')
     cargarPedidos()
   }
 
   async function cargarProductos() {
-    const { data } = await db.from('productos').select('*').order('created_at', { ascending: false })
+    const { data } = await db.from('productos').select('*').order('created_at',{ascending:false})
     productosCache = data || []
-    document.getElementById('tablaProductos').innerHTML = (data || []).map(p => `
+    document.getElementById('tablaProductos').innerHTML = (data||[]).map(p=>`
       <tr>
-        <td>${p.imagen_url ? `<img src="${p.imagen_url}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;border:2px solid #EEEDFE">` : '<div style="width:44px;height:44px;background:#EEEDFE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px">🛍️</div>'}</td>
+        <td>${p.imagen_url
+          ? `<img src="${p.imagen_url}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;border:2px solid #EEEDFE">`
+          : '<div style="width:44px;height:44px;background:#EEEDFE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px">🛍️</div>'}</td>
         <td style="font-weight:800">${p.nombre}</td>
         <td>${p.categoria}</td>
         <td style="font-weight:800;color:#D4537E">Q ${parseFloat(p.precio).toFixed(2)}</td>
@@ -478,7 +464,7 @@
       </tr>`).join('')
   }
 
-  function abrirModalProducto(id) {
+  function abrirModalProducto() {
     document.getElementById('modalProductoTitle').textContent = 'Agregar producto'
     document.getElementById('prod-id').value = ''
     document.getElementById('prod-nombre').value = ''
@@ -488,13 +474,14 @@
     document.getElementById('prod-tallas').value = ''
     document.getElementById('prod-imagen-url').value = ''
     document.getElementById('prod-foto-preview').style.display = 'none'
+    document.getElementById('prod-foto-input').value = ''
     document.getElementById('modalProducto').classList.add('show')
   }
 
   function cerrarModalProducto() { document.getElementById('modalProducto').classList.remove('show') }
 
   function editarProducto(id) {
-    const p = productosCache.find(x => x.id === id)
+    const p = productosCache.find(x => x.id===id)
     if (!p) return
     document.getElementById('modalProductoTitle').textContent = 'Editar producto'
     document.getElementById('prod-id').value = p.id
@@ -506,7 +493,7 @@
     document.getElementById('prod-imagen-url').value = p.imagen_url || ''
     const prev = document.getElementById('prod-foto-preview')
     if (p.imagen_url) { prev.src = p.imagen_url; prev.style.display = 'block' }
-    else { prev.style.display = 'none' }
+    else prev.style.display = 'none'
     document.getElementById('modalProducto').classList.add('show')
   }
 
@@ -526,7 +513,7 @@
     const ext = file.name.split('.').pop()
     const path = `productos/${Date.now()}-${nombre.replace(/\s/g,'_')}.${ext}`
     const { error } = await db.storage.from('fotos').upload(path, file, { upsert: true })
-    if (error) return null
+    if (error) { console.error('Error subiendo foto:', error); return null }
     const { data } = db.storage.from('fotos').getPublicUrl(path)
     return data.publicUrl
   }
@@ -545,15 +532,19 @@
       showToast('Subiendo foto...')
       const url = await subirFoto(fotoInput.files[0], nombre)
       if (url) imagen_url = url
+      else showToast('Error al subir la foto, se guardará sin imagen', true)
     }
     const payload = { nombre, categoria, precio, stock, tallas, imagen_url: imagen_url || null }
+    let error
     if (id) {
-      await db.from('productos').update(payload).eq('id', id)
-      showToast('Producto actualizado')
+      const res = await db.from('productos').update(payload).eq('id', id)
+      error = res.error
     } else {
-      await db.from('productos').insert([payload])
-      showToast('Producto agregado')
+      const res = await db.from('productos').insert([payload])
+      error = res.error
     }
+    if (error) { showToast('Error al guardar: ' + error.message, true); return }
+    showToast(id ? 'Producto actualizado' : 'Producto agregado')
     cerrarModalProducto()
     cargarProductos()
   }
@@ -566,22 +557,22 @@
   }
 
   async function cargarMovimientos() {
-    const { data } = await db.from('movimientos').select('*, productos(nombre)').order('created_at', { ascending: false })
-    document.getElementById('tablaMovimientos').innerHTML = (data || []).map(m => `
+    const { data } = await db.from('movimientos').select('*, productos(nombre)').order('created_at',{ascending:false})
+    document.getElementById('tablaMovimientos').innerHTML = (data||[]).map(m=>`
       <tr>
         <td>${fmtFecha(m.created_at)}</td>
-        <td style="font-weight:800">${m.productos?.nombre || '—'}</td>
+        <td style="font-weight:800">${m.productos?.nombre||'—'}</td>
         <td><span class="badge ${m.tipo==='entrada'?'b-stock':'b-out'}">${m.tipo}</span></td>
         <td style="font-weight:800">${m.tipo==='entrada'?'+':'−'}${m.cantidad}</td>
-        <td>${m.stock_anterior ?? '—'}</td>
-        <td style="font-weight:800">${m.stock_nuevo ?? '—'}</td>
-        <td style="color:#888">${m.motivo || '—'}</td>
+        <td>${m.stock_anterior??'—'}</td>
+        <td style="font-weight:800">${m.stock_nuevo??'—'}</td>
+        <td style="color:#888">${m.motivo||'—'}</td>
       </tr>`).join('')
   }
 
   function abrirModalMovimiento() {
     const sel = document.getElementById('mov-producto')
-    sel.innerHTML = productosCache.map(p => `<option value="${p.id}" data-stock="${p.stock}">${p.nombre} (stock: ${p.stock})</option>`).join('')
+    sel.innerHTML = productosCache.map(p=>`<option value="${p.id}" data-stock="${p.stock}">${p.nombre} (stock: ${p.stock})</option>`).join('')
     document.getElementById('mov-cantidad').value = ''
     document.getElementById('mov-motivo').value = ''
     document.getElementById('modalMovimiento').classList.add('show')
@@ -600,19 +591,26 @@
     const cantidad = parseInt(document.getElementById('mov-cantidad').value)
     const motivo = document.getElementById('mov-motivo').value.trim()
     if (!prodId || !cantidad || cantidad < 1) { showToast('Completá todos los campos', true); return }
-    const prod = productosCache.find(p => p.id === prodId)
+    const prod = productosCache.find(p => p.id===prodId)
     if (!prod) return
     const stockAnterior = prod.stock
-    const stockNuevo = tipo === 'entrada' ? stockAnterior + cantidad : Math.max(0, stockAnterior - cantidad)
-    await db.from('productos').update({ stock: stockNuevo }).eq('id', prodId)
-    await db.from('movimientos').insert([{ producto_id: prodId, tipo, cantidad, motivo, stock_anterior: stockAnterior, stock_nuevo: stockNuevo }])
-    showToast('Movimiento registrado')
+    const stockNuevo = tipo==='entrada' ? stockAnterior+cantidad : Math.max(0, stockAnterior-cantidad)
+    const [resStock, resMov] = await Promise.all([
+      db.from('productos').update({stock: stockNuevo}).eq('id', prodId),
+      db.from('movimientos').insert([{producto_id: prodId, tipo, cantidad, motivo, stock_anterior: stockAnterior, stock_nuevo: stockNuevo}])
+    ])
+    if (resStock.error) { showToast('Error al actualizar stock: ' + resStock.error.message, true); return }
+    if (resMov.error) { showToast('Error al registrar movimiento: ' + resMov.error.message, true); return }
+    showToast('Movimiento registrado y stock actualizado')
     cerrarModalMovimiento()
     cargarMovimientos()
     cargarProductos()
   }
 
-  cargarDashboard()
+  const savedUser = localStorage.getItem('admin_user')
+  if (savedUser && USERS[savedUser]) {
+    mostrarAdmin(savedUser)
+  }
 </script>
 </body>
 </html>
