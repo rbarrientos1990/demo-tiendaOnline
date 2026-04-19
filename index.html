@@ -6,10 +6,8 @@
   <title>Demo Tienda Online — Ropa Guatemala</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
   <style>
-    /* Reset y base */
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
 
-    /* Navbar */
     nav{background:#7F77DD;padding:16px 32px;display:flex;justify-content:space-between;align-items:center}
     .nav-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:2px}
     .nav-right{display:flex;gap:20px;align-items:center}
@@ -17,69 +15,82 @@
     .btn-pedido{background:#fff;color:#534AB7;border:none;border-radius:24px;padding:10px 24px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-pedido:hover{background:#EEEDFE}
 
-    /* Hero */
     .hero{display:grid;grid-template-columns:1fr 360px;background:#EEEDFE;min-height:280px;overflow:hidden}
     .hero-left{padding:40px 40px;display:flex;flex-direction:column;justify-content:center}
     .hero-tag{display:inline-block;background:#FAC775;color:#633806;border-radius:20px;padding:5px 16px;font-size:12px;font-weight:900;margin-bottom:14px;width:fit-content}
     .hero-title{font-size:42px;font-weight:900;color:#3C3489;line-height:1.05;margin-bottom:10px}
     .hero-title span{color:#D4537E;display:block}
     .hero-sub{font-size:15px;color:#534AB7;font-weight:700;margin-bottom:22px}
-    .hero-cta{background:#534AB7;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-weight:900;cursor:pointer;font-size:15px;font-family:'Nunito',sans-serif;width:fit-content;opacity:.5;cursor:default}
+    .hero-cta{background:#534AB7;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-weight:900;font-size:15px;font-family:'Nunito',sans-serif;width:fit-content;opacity:.5;cursor:default}
     .hero-right{background:#D4537E;overflow:hidden}
 
-    /* Strip de beneficios */
     .strip{background:#FAC775;padding:10px 32px;display:flex;gap:28px;overflow:hidden;flex-wrap:wrap}
     .strip-item{font-size:13px;font-weight:800;color:#633806;display:flex;align-items:center;gap:6px;white-space:nowrap}
     .strip-dot{width:6px;height:6px;border-radius:50%;background:#D85A30;flex-shrink:0}
 
-    /* Filtros de categoría */
     .filtros{padding:16px 32px;display:flex;gap:10px;flex-wrap:wrap;background:#fff;border-bottom:2px solid #EEEDFE}
     .pill{padding:9px 20px;border-radius:24px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #AFA9EC;background:#fff;color:#534AB7;font-family:'Nunito',sans-serif}
     .pill:hover{background:#EEEDFE}
     .pill.active{background:#7F77DD;color:#fff;border-color:#7F77DD}
 
-    /* Grid de productos */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:28px 32px;background:#F8F7FF}
 
-    /* Tarjeta de producto */
     .card{background:#fff;border-radius:20px;border:2px solid #EEEDFE;overflow:hidden}
     .card:hover{border-color:#AFA9EC}
     .card-img{height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden}
     .card-body{padding:16px}
     .card-cat{font-size:10px;color:#7F77DD;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
     .card-name{font-size:16px;font-weight:900;color:#26215C;margin-bottom:5px}
-    .card-price{font-size:20px;font-weight:900;color:#D4537E;margin-bottom:12px}
-    .card-tallas{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+    .card-price{font-size:20px;font-weight:900;color:#D4537E;margin-bottom:10px}
+    .card-stock{font-size:11px;color:#888;font-weight:700;margin-bottom:8px}
+    .card-tallas{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
     .talla{font-size:11px;padding:4px 10px;border-radius:8px;border:2px solid #AFA9EC;color:#534AB7;background:#EEEDFE;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
     .talla.sel{background:#7F77DD;color:#fff;border-color:#7F77DD}
+
+    /* Selector de cantidad con botones - / + */
+    .qty-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+    .qty-label{font-size:12px;color:#534AB7;font-weight:800}
+    .qty-ctrl{display:flex;align-items:center;gap:6px;background:#EEEDFE;border-radius:12px;padding:4px 8px}
+    .qty-btn{width:26px;height:26px;border:none;background:#7F77DD;color:#fff;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:'Nunito',sans-serif}
+    .qty-btn:hover{background:#534AB7}
+    .qty-btn:disabled{background:#AFA9EC;cursor:not-allowed}
+    .qty-num{font-size:15px;font-weight:900;color:#26215C;min-width:20px;text-align:center}
+
     .btn-add{width:100%;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
     .btn-add:hover{background:#534AB7}
     .sin-stock{font-size:12px;color:#bbb;text-align:center;padding:8px 0;font-weight:700}
 
-    /* Modal de pedido */
     .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:100;align-items:center;justify-content:center}
     .modal-bg.show{display:flex}
-    .modal{background:#fff;border-radius:24px;padding:32px;max-width:400px;width:90%;border:2px solid #EEEDFE}
+    .modal{background:#fff;border-radius:24px;padding:32px;max-width:420px;width:90%;border:2px solid #EEEDFE;max-height:90vh;overflow-y:auto}
     .modal h2{font-size:22px;font-weight:900;color:#3C3489;margin-bottom:5px}
     .modal-sub{font-size:13px;color:#888;margin-bottom:22px;font-weight:700}
     .form-group{margin-bottom:14px}
     .form-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
     .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:2px solid #EEEDFE;border-radius:12px;font-size:13px;font-family:'Nunito',sans-serif;outline:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#7F77DD}
-    .form-group textarea{height:80px;resize:none}
+    .form-group textarea{height:100px;resize:none}
     .modal-btns{display:flex;gap:10px;margin-top:20px}
     .btn-cancel{flex:1;padding:11px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif}
     .btn-enviar{flex:2;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-enviar:hover{background:#534AB7}
 
-    /* Lightbox para ver fotos en grande */
+    /* Resumen de pedido en el modal */
+    .pedido-resumen{background:#F8F7FF;border-radius:12px;padding:12px;margin-bottom:14px;border:1px solid #EEEDFE}
+    .pedido-resumen-title{font-size:12px;font-weight:800;color:#534AB7;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+    .pedido-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #EEEDFE;font-size:13px}
+    .pedido-item:last-child{border-bottom:none}
+    .pedido-item-name{color:#26215C;font-weight:700}
+    .pedido-item-det{color:#888;font-size:12px}
+    .pedido-item-precio{color:#D4537E;font-weight:900}
+    .pedido-total{display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:2px solid #EEEDFE;font-size:14px;font-weight:900;color:#26215C}
+
     .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:500;align-items:center;justify-content:center;cursor:zoom-out}
     .lightbox.show{display:flex}
     .lightbox img{max-width:90%;max-height:90vh;border-radius:18px;object-fit:contain}
-    .lightbox-close{position:absolute;top:20px;right:28px;font-size:32px;color:#fff;cursor:pointer;font-weight:900;line-height:1;opacity:.8}
+    .lightbox-close{position:absolute;top:20px;right:28px;font-size:32px;color:#fff;cursor:pointer;font-weight:900;opacity:.8}
     .lightbox-close:hover{opacity:1}
 
-    /* Notificaciones */
     .notif{display:none;position:fixed;bottom:24px;right:24px;border-radius:18px;padding:16px 22px;font-size:14px;font-weight:800;z-index:200;max-width:320px}
     .notif.show{display:block}
     .notif-ok{background:#EAF3DE;border:2px solid #97C459;color:#27500A}
@@ -87,7 +98,6 @@
 
     .loader{text-align:center;padding:60px;color:#7F77DD;font-size:16px;font-weight:800;grid-column:1/-1}
 
-    /* Footer */
     footer{background:#26215C;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
     .footer-brand{font-size:20px;font-weight:900;color:#fff}
     .footer-info{font-size:12px;color:#AFA9EC;margin-top:4px;font-weight:700}
@@ -165,10 +175,22 @@
     <div class="loader">Cargando productos...</div>
   </div>
 
+  <!-- Modal de pedido con resumen y datos del cliente -->
   <div class="modal-bg" id="modal">
     <div class="modal">
       <h2>Hacer pedido</h2>
       <div class="modal-sub" id="modal-sub">Completá tus datos y te contactamos</div>
+
+      <!-- Resumen visual de productos en el pedido -->
+      <div class="pedido-resumen" id="pedido-resumen" style="display:none">
+        <div class="pedido-resumen-title">Tu pedido</div>
+        <div id="pedido-items"></div>
+        <div class="pedido-total">
+          <span>Total estimado</span>
+          <span id="pedido-total-val">Q 0.00</span>
+        </div>
+      </div>
+
       <div class="form-group">
         <label>Nombre completo</label>
         <input type="text" id="f-nombre" placeholder="Tu nombre completo">
@@ -190,28 +212,22 @@
         </select>
       </div>
       <div class="form-group">
-        <label>Producto y talla</label>
-        <textarea id="f-producto" placeholder="Ej: Blusa floral talla M..."></textarea>
+        <label>Detalle del pedido</label>
+        <textarea id="f-producto" placeholder="Se llena automáticamente al agregar productos..." readonly style="background:#F8F7FF;color:#534AB7;font-weight:700"></textarea>
       </div>
       <div class="modal-btns">
-        <!-- Cancelar: devuelve el stock y limpia el pedido -->
         <button class="btn-cancel" onclick="cancelarPedido()">Cancelar</button>
-        <!-- Enviar: confirma el pedido y guarda en Supabase -->
         <button class="btn-enviar" onclick="enviarPedido()">Enviar pedido</button>
       </div>
     </div>
   </div>
 
-  <!-- Lightbox para ver fotos en grande -->
   <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
     <div class="lightbox-close" onclick="cerrarLightbox()">✕</div>
-    <img id="lightbox-img" src="" alt="Vista ampliada del producto">
+    <img id="lightbox-img" src="" alt="Vista ampliada">
   </div>
 
-  <!-- Notificación de éxito al enviar pedido -->
-  <div class="notif notif-ok" id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
-
-  <!-- Notificación al cancelar pedido (devuelve stock) -->
+  <div class="notif notif-ok"  id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
   <div class="notif notif-warn" id="notif-warn">Pedido cancelado. Stock devuelto.</div>
 
   <footer>
@@ -231,24 +247,16 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // =============================================
-    // CONFIGURACIÓN SUPABASE
-    // =============================================
     const SUPABASE_URL = 'https://dlrnlktlsvwijsnwvdiy.supabase.co'
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRscm5sa3Rsc3Z3aWpzbnd2ZGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTE2OTMsImV4cCI6MjA5MTk2NzY5M30.mPCCNUgt3kJergBuv66h89PMCOIuGtVipTM5bVPQdbw'
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
-    // =============================================
-    // VARIABLES DE ESTADO
-    // =============================================
     let todos = []
     let categoriaActual = 'Todos'
-    let tallasSeleccionadas = {}
-    let pedidoActual = []  // Productos agregados al pedido actual
+    let tallasSeleccionadas = {}  // { id: talla }
+    let cantidades = {}           // { id: cantidad } — cantidad seleccionada por producto
+    let pedidoActual = []         // Array de items en el pedido
 
-    // =============================================
-    // CONFIG VISUAL POR CATEGORÍA
-    // =============================================
     const cfg = {
       'Blusas':     { bg: '#EEEDFE', icon: dibujarBlusa },
       'Pantalones': { bg: '#E1F5EE', icon: dibujarPantalon },
@@ -256,95 +264,37 @@
       'Accesorios': { bg: '#FAEEDA', icon: dibujarCartera },
     }
 
-    // =============================================
-    // ILUSTRACIONES SVG POR CATEGORÍA
-    // =============================================
     function dibujarBlusa() {
-      return `<svg width="90" height="110" viewBox="0 0 90 110">
-        <ellipse cx="45" cy="22" rx="16" ry="17" fill="#FAC775"/>
-        <path d="M22 44 Q12 40 10 55 L20 59 L23 50 L23 108 L67 108 L67 50 L70 59 L80 55 Q78 40 68 44 L56 37 Q50 50 45 50 Q40 50 34 37 Z" fill="#D4537E"/>
-        <rect x="30" y="58" width="30" height="3.5" rx="1.8" fill="#993556" opacity=".4"/>
-        <circle cx="45" cy="68" r="3.5" fill="#FAC775" opacity=".6"/>
-        <circle cx="34" cy="80" r="3" fill="#FAC775" opacity=".5"/>
-        <circle cx="56" cy="84" r="3" fill="#FAC775" opacity=".5"/>
-        <circle cx="45" cy="90" r="2.5" fill="#FAC775" opacity=".4"/>
-      </svg>`
+      return `<svg width="90" height="110" viewBox="0 0 90 110"><ellipse cx="45" cy="22" rx="16" ry="17" fill="#FAC775"/><path d="M22 44 Q12 40 10 55 L20 59 L23 50 L23 108 L67 108 L67 50 L70 59 L80 55 Q78 40 68 44 L56 37 Q50 50 45 50 Q40 50 34 37 Z" fill="#D4537E"/><rect x="30" y="58" width="30" height="3.5" rx="1.8" fill="#993556" opacity=".4"/><circle cx="45" cy="68" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="34" cy="80" r="3" fill="#FAC775" opacity=".5"/><circle cx="56" cy="84" r="3" fill="#FAC775" opacity=".5"/></svg>`
     }
-
     function dibujarPantalon() {
-      return `<svg width="80" height="110" viewBox="0 0 80 110">
-        <ellipse cx="40" cy="18" rx="15" ry="15" fill="#FAC775"/>
-        <rect x="10" y="42" width="26" height="62" rx="8" fill="#7F77DD"/>
-        <rect x="44" y="42" width="26" height="62" rx="8" fill="#7F77DD"/>
-        <rect x="10" y="40" width="60" height="18" rx="6" fill="#534AB7"/>
-        <path d="M22 32 Q40 27 58 32 L58 42 L22 42 Z" fill="#D4537E"/>
-        <rect x="14" y="52" width="16" height="3.5" rx="1.8" fill="#EEEDFE" opacity=".5"/>
-        <rect x="50" y="52" width="16" height="3.5" rx="1.8" fill="#EEEDFE" opacity=".5"/>
-      </svg>`
+      return `<svg width="80" height="110" viewBox="0 0 80 110"><ellipse cx="40" cy="18" rx="15" ry="15" fill="#FAC775"/><rect x="10" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="44" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="10" y="40" width="60" height="18" rx="6" fill="#534AB7"/><path d="M22 32 Q40 27 58 32 L58 42 L22 42 Z" fill="#D4537E"/></svg>`
     }
-
     function dibujarVestido() {
-      return `<svg width="85" height="115" viewBox="0 0 85 115">
-        <ellipse cx="42" cy="19" rx="16" ry="17" fill="#FAC775"/>
-        <path d="M14 42 Q5 38 4 53 L14 56 L17 47 L17 65 Q42 82 68 65 L68 47 L71 56 L81 53 Q80 38 71 42 L60 36 Q52 50 42 50 Q32 50 25 36 Z" fill="#ED93B1"/>
-        <path d="M17 65 Q22 112 42 110 Q62 112 68 65 Z" fill="#D4537E"/>
-        <circle cx="28" cy="88" r="3.5" fill="#FAC775" opacity=".6"/>
-        <circle cx="56" cy="94" r="3" fill="#FAC775" opacity=".6"/>
-        <circle cx="42" cy="100" r="3" fill="#FAC775" opacity=".5"/>
-        <circle cx="34" cy="76" r="2.5" fill="#FAC775" opacity=".4"/>
-        <circle cx="50" cy="80" r="2.5" fill="#FAC775" opacity=".4"/>
-      </svg>`
+      return `<svg width="85" height="115" viewBox="0 0 85 115"><ellipse cx="42" cy="19" rx="16" ry="17" fill="#FAC775"/><path d="M14 42 Q5 38 4 53 L14 56 L17 47 L17 65 Q42 82 68 65 L68 47 L71 56 L81 53 Q80 38 71 42 L60 36 Q52 50 42 50 Q32 50 25 36 Z" fill="#ED93B1"/><path d="M17 65 Q22 112 42 110 Q62 112 68 65 Z" fill="#D4537E"/><circle cx="28" cy="88" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="56" cy="94" r="3" fill="#FAC775" opacity=".6"/></svg>`
     }
-
     function dibujarCartera() {
-      return `<svg width="95" height="95" viewBox="0 0 95 95">
-        <path d="M14 40 Q14 24 30 22 L65 22 Q81 24 81 40 L81 80 Q81 88 72 88 L23 88 Q14 88 14 80 Z" fill="#FAC775"/>
-        <path d="M30 22 Q38 10 47 8 Q56 10 65 22" fill="none" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round"/>
-        <ellipse cx="47" cy="25" rx="7" ry="5.5" fill="#EF9F27"/>
-        <rect x="22" y="44" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/>
-        <rect x="22" y="56" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/>
-        <rect x="22" y="68" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/>
-        <circle cx="47" cy="34" r="5" fill="#BA7517"/>
-      </svg>`
+      return `<svg width="95" height="95" viewBox="0 0 95 95"><path d="M14 40 Q14 24 30 22 L65 22 Q81 24 81 40 L81 80 Q81 88 72 88 L23 88 Q14 88 14 80 Z" fill="#FAC775"/><path d="M30 22 Q38 10 47 8 Q56 10 65 22" fill="none" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="47" cy="25" rx="7" ry="5.5" fill="#EF9F27"/><rect x="22" y="44" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><rect x="22" y="56" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><rect x="22" y="68" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><circle cx="47" cy="34" r="5" fill="#BA7517"/></svg>`
     }
 
-    // =============================================
-    // CARGAR PRODUCTOS DESDE SUPABASE
-    // =============================================
     async function cargarProductos() {
-      const { data, error } = await db
-        .from('productos')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) {
-        document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'
-        return
-      }
-
+      const { data, error } = await db.from('productos').select('*').order('created_at', { ascending: false })
+      if (error) { document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'; return }
       todos = data
+      // Inicializar cantidad en 1 para cada producto
+      todos.forEach(p => { cantidades[p.id] = 1 })
       renderProductos()
     }
 
-    // =============================================
-    // RENDERIZAR PRODUCTOS EN EL GRID
-    // =============================================
     function renderProductos() {
-      const lista = categoriaActual === 'Todos'
-        ? todos
-        : todos.filter(p => p.categoria === categoriaActual)
-
-      if (!lista.length) {
-        document.getElementById('grid').innerHTML = '<div class="loader">No hay productos en esta categoría.</div>'
-        return
-      }
+      const lista = categoriaActual === 'Todos' ? todos : todos.filter(p => p.categoria === categoriaActual)
+      if (!lista.length) { document.getElementById('grid').innerHTML = '<div class="loader">No hay productos en esta categoría.</div>'; return }
 
       document.getElementById('grid').innerHTML = lista.map(p => {
         const c = cfg[p.categoria] || { bg: '#EEEDFE', icon: () => '<svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="#7F77DD"/></svg>' }
         const tallas = p.tallas ? p.tallas.split(',').map(t => t.trim()) : []
         const sinStock = p.stock <= 0
-
-        // Si tiene foto real → mostrar con lightbox. Si no → ilustración SVG
+        const qty = cantidades[p.id] || 1
         const imgHtml = p.imagen_url
           ? `<img src="${p.imagen_url}" style="max-height:140px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in" onclick="abrirLightbox('${p.imagen_url}')" title="Clic para ver en grande">`
           : c.icon()
@@ -356,21 +306,37 @@
               <div class="card-cat">${p.categoria}</div>
               <div class="card-name">${p.nombre}</div>
               <div class="card-price">Q ${parseFloat(p.precio).toFixed(2)}</div>
-              ${sinStock
-                ? '<div class="sin-stock">Agotado por el momento</div>'
-                : `<div class="card-tallas">
-                    ${tallas.map(t => `<span class="talla" onclick="selTalla('${p.id}','${t}',this)">${t}</span>`).join('')}
+              <div class="card-stock">Disponible: ${p.stock} unidades</div>
+              ${sinStock ? '<div class="sin-stock">Agotado por el momento</div>' : `
+                <div class="card-tallas">
+                  ${tallas.map(t => `<span class="talla ${tallasSeleccionadas[p.id]===t?'sel':''}" onclick="selTalla('${p.id}','${t}',this)">${t}</span>`).join('')}
+                </div>
+                <div class="qty-wrap">
+                  <span class="qty-label">Cantidad:</span>
+                  <div class="qty-ctrl">
+                    <button class="qty-btn" onclick="cambiarCantidad('${p.id}',-1,${p.stock})" ${qty<=1?'disabled':''}>−</button>
+                    <span class="qty-num" id="qty-${p.id}">${qty}</span>
+                    <button class="qty-btn" onclick="cambiarCantidad('${p.id}',1,${p.stock})" ${qty>=p.stock?'disabled':''}>+</button>
                   </div>
-                  <button class="btn-add" onclick="agregarPedido('${p.id}','${p.nombre}',${p.precio})">Agregar al pedido</button>`
-              }
+                </div>
+                <button class="btn-add" onclick="agregarPedido('${p.id}','${p.nombre}',${p.precio},${p.stock})">Agregar al pedido</button>
+              `}
             </div>
           </div>`
       }).join('')
     }
 
-    // =============================================
-    // FILTRAR POR CATEGORÍA
-    // =============================================
+    // Cambiar cantidad con los botones - y +
+    function cambiarCantidad(id, delta, stockMax) {
+      const actual = cantidades[id] || 1
+      const nueva = Math.min(Math.max(1, actual + delta), stockMax)
+      cantidades[id] = nueva
+      const el = document.getElementById(`qty-${id}`)
+      if (el) el.textContent = nueva
+      // Actualizar estado de botones
+      renderProductos()
+    }
+
     function filtrar(cat, el) {
       categoriaActual = cat
       document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'))
@@ -378,111 +344,104 @@
       renderProductos()
     }
 
-    // =============================================
-    // SELECCIONAR TALLA
-    // =============================================
     function selTalla(id, talla, el) {
       tallasSeleccionadas[id] = talla
       el.closest('.card-tallas').querySelectorAll('.talla').forEach(t => t.classList.remove('sel'))
       el.classList.add('sel')
     }
 
-    // =============================================
-    // AGREGAR PRODUCTO AL PEDIDO
-    // También descuenta el stock inmediatamente
-    // para que no se pueda pedir más de lo disponible
-    // =============================================
-    async function agregarPedido(id, nombre, precio) {
+    // Agregar producto al pedido con la cantidad seleccionada
+    async function agregarPedido(id, nombre, precio, stockMax) {
       const talla = tallasSeleccionadas[id] || 'Sin especificar'
-
-      // Buscar el producto en memoria
+      const cantidad = cantidades[id] || 1
       const prod = todos.find(p => p.id === id)
-      if (!prod || prod.stock <= 0) {
-        alert('Este producto está agotado.')
-        return
-      }
 
-      // Descontar 1 del stock en Supabase
-      const { error } = await db
-        .from('productos')
-        .update({ stock: prod.stock - 1 })
-        .eq('id', id)
+      if (!prod || prod.stock <= 0) { alert('Este producto está agotado.'); return }
+      if (cantidad > prod.stock) { alert(`Solo hay ${prod.stock} unidades disponibles.`); return }
 
-      if (error) {
-        alert('Error al reservar el producto. Intentá de nuevo.')
-        return
-      }
+      // Descontar la cantidad seleccionada del stock en Supabase
+      const { error } = await db.from('productos').update({ stock: prod.stock - cantidad }).eq('id', id)
+      if (error) { alert('Error al reservar el producto. Intentá de nuevo.'); return }
 
-      // Actualizar stock en memoria local
-      prod.stock = prod.stock - 1
+      // Actualizar stock en memoria
+      prod.stock = prod.stock - cantidad
 
-      // Agregar al array del pedido actual (guardamos id para poder devolver)
-      pedidoActual.push({ id, nombre, talla, precio })
+      // Agregar al pedido actual
+      pedidoActual.push({ id, nombre, talla, cantidad, precio })
 
-      // Actualizar textarea del modal
-      document.getElementById('f-producto').value = pedidoActual
-        .map(i => `${i.nombre} — ${i.talla}`)
-        .join('\n')
+      // Resetear cantidad del producto a 1
+      cantidades[id] = 1
 
-      // Actualizar subtítulo del modal
-      document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) reservado(s)`
+      // Actualizar resumen en el modal
+      actualizarResumenModal()
 
-      // Refrescar el grid para mostrar el stock actualizado
+      // Refrescar grid
       renderProductos()
 
       abrirModal()
     }
 
-    // =============================================
-    // CANCELAR PEDIDO
-    // Devuelve el stock de todos los productos del pedido
-    // =============================================
+    // Actualizar el resumen visual del pedido en el modal
+    function actualizarResumenModal() {
+      if (pedidoActual.length === 0) {
+        document.getElementById('pedido-resumen').style.display = 'none'
+        document.getElementById('modal-sub').textContent = 'Completá tus datos y te contactamos'
+        document.getElementById('f-producto').value = ''
+        return
+      }
+
+      document.getElementById('pedido-resumen').style.display = 'block'
+      document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) en tu pedido`
+
+      // Renderizar items del resumen
+      document.getElementById('pedido-items').innerHTML = pedidoActual.map(i => `
+        <div class="pedido-item">
+          <div>
+            <div class="pedido-item-name">${i.nombre}</div>
+            <div class="pedido-item-det">Talla: ${i.talla} &nbsp;|&nbsp; Cantidad: ${i.cantidad}</div>
+          </div>
+          <div class="pedido-item-precio">Q ${(i.precio * i.cantidad).toFixed(2)}</div>
+        </div>`).join('')
+
+      // Calcular total
+      const total = pedidoActual.reduce((sum, i) => sum + (i.precio * i.cantidad), 0)
+      document.getElementById('pedido-total-val').textContent = `Q ${total.toFixed(2)}`
+
+      // Actualizar textarea con detalle del pedido
+      document.getElementById('f-producto').value = pedidoActual
+        .map(i => `${i.nombre} — Talla: ${i.talla} — Cantidad: ${i.cantidad} — Q ${(i.precio * i.cantidad).toFixed(2)}`)
+        .join('\n')
+    }
+
+    // Cancelar pedido: devuelve el stock de todos los productos
     async function cancelarPedido() {
-      // Si hay productos en el pedido, devolver su stock
       if (pedidoActual.length > 0) {
         for (const item of pedidoActual) {
           const prod = todos.find(p => p.id === item.id)
           if (prod) {
-            // Sumar 1 de vuelta al stock en Supabase
-            await db
-              .from('productos')
-              .update({ stock: prod.stock + 1 })
-              .eq('id', item.id)
-
-            // Actualizar en memoria local
-            prod.stock = prod.stock + 1
+            await db.from('productos').update({ stock: prod.stock + item.cantidad }).eq('id', item.id)
+            prod.stock = prod.stock + item.cantidad
           }
         }
-
-        // Mostrar notificación de cancelación con devolución
         mostrarNotif('notif-warn')
       }
-
-      // Limpiar pedido y cerrar modal
       limpiarPedido()
       cerrarModal()
-
-      // Refrescar grid con stock devuelto
       renderProductos()
     }
 
-    // =============================================
-    // ENVIAR PEDIDO A SUPABASE
-    // El stock ya fue descontado al agregar productos
-    // Solo queda guardar el pedido y limpiar
-    // =============================================
+    // Enviar pedido: guarda en Supabase y registra movimientos
     async function enviarPedido() {
       const nombre = document.getElementById('f-nombre').value.trim()
       const tel    = document.getElementById('f-tel').value.trim()
       const depto  = document.getElementById('f-depto').value
       const prod   = document.getElementById('f-producto').value.trim()
 
-      if (!nombre || !tel || !depto || !prod) {
-        alert('Por favor completá todos los campos.')
-        return
-      }
+      if (!nombre || !tel || !depto || !prod) { alert('Por favor completá todos los campos.'); return }
+      if (pedidoActual.length === 0) { alert('Agregá al menos un producto al pedido.'); return }
 
-      // Guardar el pedido en Supabase
+      const total = pedidoActual.reduce((sum, i) => sum + (i.precio * i.cantidad), 0)
+
       const { error } = await db.from('pedidos').insert([{
         cliente_nombre: nombre,
         whatsapp: tel,
@@ -492,70 +451,45 @@
         estado: 'nuevo'
       }])
 
-      if (error) {
-        alert('Error al enviar el pedido. Intentá de nuevo.')
-        return
-      }
+      if (error) { alert('Error al enviar el pedido. Intentá de nuevo.'); return }
 
-      // Registrar movimientos de salida para cada producto
+      // Registrar movimientos de salida por cada producto pedido
       for (const item of pedidoActual) {
         const prodData = todos.find(p => p.id === item.id)
         if (prodData) {
           await db.from('movimientos').insert([{
             producto_id: item.id,
             tipo: 'salida',
-            cantidad: 1,
-            motivo: `Pedido de ${nombre}`,
-            stock_anterior: prodData.stock + 1,
+            cantidad: item.cantidad,
+            motivo: `Pedido de ${nombre} — ${item.cantidad} unidad(es) talla ${item.talla}`,
+            stock_anterior: prodData.stock + item.cantidad,
             stock_nuevo: prodData.stock
           }])
         }
       }
 
-      // Limpiar y cerrar
       cerrarModal()
       limpiarPedido()
       mostrarNotif('notif-ok')
-
-      // Refrescar grid
       cargarProductos()
     }
 
-    // =============================================
-    // LIMPIAR PEDIDO
-    // Resetea el array y los campos del formulario
-    // =============================================
     function limpiarPedido() {
       pedidoActual = []
-      ;['f-nombre','f-tel','f-depto','f-producto'].forEach(id => {
-        document.getElementById(id).value = ''
-      })
+      ;['f-nombre','f-tel','f-depto','f-producto'].forEach(id => { document.getElementById(id).value = '' })
+      document.getElementById('pedido-resumen').style.display = 'none'
       document.getElementById('modal-sub').textContent = 'Completá tus datos y te contactamos'
     }
 
-    // =============================================
-    // MODAL: ABRIR / CERRAR
-    // =============================================
-    function abrirModal() {
-      document.getElementById('modal').classList.add('show')
-    }
+    function abrirModal() { document.getElementById('modal').classList.add('show') }
+    function cerrarModal() { document.getElementById('modal').classList.remove('show') }
 
-    function cerrarModal() {
-      document.getElementById('modal').classList.remove('show')
-    }
-
-    // =============================================
-    // NOTIFICACIONES
-    // =============================================
     function mostrarNotif(id) {
       const el = document.getElementById(id)
       el.classList.add('show')
       setTimeout(() => el.classList.remove('show'), 4000)
     }
 
-    // =============================================
-    // LIGHTBOX: VER IMAGEN EN GRANDE
-    // =============================================
     function abrirLightbox(url) {
       document.getElementById('lightbox-img').src = url
       document.getElementById('lightbox').classList.add('show')
@@ -566,14 +500,8 @@
       document.getElementById('lightbox-img').src = ''
     }
 
-    // Cerrar lightbox con tecla Escape
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') cerrarLightbox()
-    })
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarLightbox() })
 
-    // =============================================
-    // INICIALIZAR: cargar productos al abrir la página
-    // =============================================
     cargarProductos()
   </script>
 </body>
