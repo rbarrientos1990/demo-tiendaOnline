@@ -8,102 +8,155 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
 
-    nav{background:#7F77DD;padding:16px 32px;display:flex;justify-content:space-between;align-items:center}
-    .nav-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:2px}
-    .nav-right{display:flex;gap:20px;align-items:center}
-    .nav-link{color:#EEEDFE;font-size:14px;font-weight:700;text-decoration:none}
-    .btn-pedido{background:#fff;color:#534AB7;border:none;border-radius:24px;padding:10px 24px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
+    /* ===== NAVBAR ===== */
+    nav{background:#7F77DD;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+    .nav-brand{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
+    .nav-right{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+    .nav-link{color:#EEEDFE;font-size:13px;font-weight:700;text-decoration:none}
+    .btn-pedido{background:#fff;color:#534AB7;border:none;border-radius:20px;padding:8px 18px;font-weight:900;cursor:pointer;font-size:13px;font-family:'Nunito',sans-serif;white-space:nowrap}
     .btn-pedido:hover{background:#EEEDFE}
 
-    .hero{display:grid;grid-template-columns:1fr 360px;background:#EEEDFE;min-height:280px;overflow:hidden}
-    .hero-left{padding:40px 40px;display:flex;flex-direction:column;justify-content:center}
-    .hero-tag{display:inline-block;background:#FAC775;color:#633806;border-radius:20px;padding:5px 16px;font-size:12px;font-weight:900;margin-bottom:14px;width:fit-content}
-    .hero-title{font-size:42px;font-weight:900;color:#3C3489;line-height:1.05;margin-bottom:10px}
+    /* ===== HERO ===== */
+    .hero{display:grid;grid-template-columns:1fr 280px;background:#EEEDFE;min-height:220px;overflow:hidden}
+    .hero-left{padding:28px 24px;display:flex;flex-direction:column;justify-content:center}
+    .hero-tag{display:inline-block;background:#FAC775;color:#633806;border-radius:16px;padding:4px 14px;font-size:11px;font-weight:900;margin-bottom:10px;width:fit-content}
+    .hero-title{font-size:32px;font-weight:900;color:#3C3489;line-height:1.1;margin-bottom:8px}
     .hero-title span{color:#D4537E;display:block}
-    .hero-sub{font-size:15px;color:#534AB7;font-weight:700;margin-bottom:22px}
-    .hero-cta{background:#534AB7;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-weight:900;font-size:15px;font-family:'Nunito',sans-serif;width:fit-content;opacity:.5;cursor:default}
+    .hero-sub{font-size:13px;color:#534AB7;font-weight:700;margin-bottom:16px}
+    .hero-cta{background:#534AB7;color:#fff;border:none;border-radius:20px;padding:10px 22px;font-weight:900;font-size:13px;font-family:'Nunito',sans-serif;width:fit-content;opacity:.5;cursor:default}
     .hero-right{background:#D4537E;overflow:hidden}
 
-    .strip{background:#FAC775;padding:10px 32px;display:flex;gap:28px;overflow:hidden;flex-wrap:wrap}
-    .strip-item{font-size:13px;font-weight:800;color:#633806;display:flex;align-items:center;gap:6px;white-space:nowrap}
-    .strip-dot{width:6px;height:6px;border-radius:50%;background:#D85A30;flex-shrink:0}
+    /* ===== STRIP ===== */
+    .strip{background:#FAC775;padding:8px 20px;display:flex;gap:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .strip::-webkit-scrollbar{display:none}
+    .strip-item{font-size:12px;font-weight:800;color:#633806;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
+    .strip-dot{width:5px;height:5px;border-radius:50%;background:#D85A30;flex-shrink:0}
 
-    .filtros{padding:16px 32px;display:flex;gap:10px;flex-wrap:wrap;background:#fff;border-bottom:2px solid #EEEDFE}
-    .pill{padding:9px 20px;border-radius:24px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #AFA9EC;background:#fff;color:#534AB7;font-family:'Nunito',sans-serif}
+    /* ===== FILTROS ===== */
+    .filtros{padding:12px 20px;display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:#fff;border-bottom:2px solid #EEEDFE;scrollbar-width:none}
+    .filtros::-webkit-scrollbar{display:none}
+    .pill{padding:8px 16px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;border:2px solid #AFA9EC;background:#fff;color:#534AB7;font-family:'Nunito',sans-serif;white-space:nowrap;flex-shrink:0}
     .pill:hover{background:#EEEDFE}
     .pill.active{background:#7F77DD;color:#fff;border-color:#7F77DD}
 
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:28px 32px;background:#F8F7FF}
+    /* ===== GRID ===== */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:16px 20px;background:#F8F7FF}
 
-    .card{background:#fff;border-radius:20px;border:2px solid #EEEDFE;overflow:hidden}
+    /* ===== TARJETA ===== */
+    .card{background:#fff;border-radius:16px;border:2px solid #EEEDFE;overflow:hidden}
     .card:hover{border-color:#AFA9EC}
-    .card-img{height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .card-body{padding:16px}
-    .card-cat{font-size:10px;color:#7F77DD;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-    .card-name{font-size:16px;font-weight:900;color:#26215C;margin-bottom:5px}
-    .card-price{font-size:20px;font-weight:900;color:#D4537E;margin-bottom:10px}
-    .card-stock{font-size:11px;color:#888;font-weight:700;margin-bottom:8px}
-    .card-tallas{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-    .talla{font-size:11px;padding:4px 10px;border-radius:8px;border:2px solid #AFA9EC;color:#534AB7;background:#EEEDFE;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+    .card-img{height:130px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .card-body{padding:12px}
+    .card-cat{font-size:9px;color:#7F77DD;font-weight:900;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
+    .card-name{font-size:14px;font-weight:900;color:#26215C;margin-bottom:4px;line-height:1.2}
+    .card-price{font-size:17px;font-weight:900;color:#D4537E;margin-bottom:8px}
+    .card-stock{font-size:10px;color:#888;font-weight:700;margin-bottom:7px}
+    .card-tallas{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+    .talla{font-size:10px;padding:3px 8px;border-radius:7px;border:2px solid #AFA9EC;color:#534AB7;background:#EEEDFE;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
     .talla.sel{background:#7F77DD;color:#fff;border-color:#7F77DD}
 
-    /* Selector de cantidad con botones - / + */
-    .qty-wrap{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-    .qty-label{font-size:12px;color:#534AB7;font-weight:800}
-    .qty-ctrl{display:flex;align-items:center;gap:6px;background:#EEEDFE;border-radius:12px;padding:4px 8px}
-    .qty-btn{width:26px;height:26px;border:none;background:#7F77DD;color:#fff;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:'Nunito',sans-serif}
+    /* Selector de cantidad */
+    .qty-wrap{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+    .qty-label{font-size:11px;color:#534AB7;font-weight:800}
+    .qty-ctrl{display:flex;align-items:center;gap:5px;background:#EEEDFE;border-radius:10px;padding:3px 7px}
+    .qty-btn{width:24px;height:24px;border:none;background:#7F77DD;color:#fff;border-radius:7px;font-size:15px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;font-family:'Nunito',sans-serif}
     .qty-btn:hover{background:#534AB7}
     .qty-btn:disabled{background:#AFA9EC;cursor:not-allowed}
-    .qty-num{font-size:15px;font-weight:900;color:#26215C;min-width:20px;text-align:center}
+    .qty-num{font-size:14px;font-weight:900;color:#26215C;min-width:18px;text-align:center}
 
-    .btn-add{width:100%;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
+    .btn-add{width:100%;padding:9px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
     .btn-add:hover{background:#534AB7}
-    .sin-stock{font-size:12px;color:#bbb;text-align:center;padding:8px 0;font-weight:700}
+    .sin-stock{font-size:11px;color:#bbb;text-align:center;padding:6px 0;font-weight:700}
 
-    .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:100;align-items:center;justify-content:center}
+    /* ===== MODAL ===== */
+    .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:100;align-items:flex-end;justify-content:center}
     .modal-bg.show{display:flex}
-    .modal{background:#fff;border-radius:24px;padding:32px;max-width:420px;width:90%;border:2px solid #EEEDFE;max-height:90vh;overflow-y:auto}
-    .modal h2{font-size:22px;font-weight:900;color:#3C3489;margin-bottom:5px}
-    .modal-sub{font-size:13px;color:#888;margin-bottom:22px;font-weight:700}
-    .form-group{margin-bottom:14px}
-    .form-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;border:2px solid #EEEDFE;border-radius:12px;font-size:13px;font-family:'Nunito',sans-serif;outline:none}
+    .modal{background:#fff;border-radius:24px 24px 0 0;padding:24px 20px;width:100%;max-width:500px;border:2px solid #EEEDFE;max-height:92vh;overflow-y:auto}
+    .modal-handle{width:40px;height:4px;background:#EEEDFE;border-radius:2px;margin:0 auto 16px}
+    .modal h2{font-size:20px;font-weight:900;color:#3C3489;margin-bottom:4px}
+    .modal-sub{font-size:12px;color:#888;margin-bottom:16px;font-weight:700}
+    .form-group{margin-bottom:12px}
+    .form-group label{font-size:11px;color:#534AB7;font-weight:800;display:block;margin-bottom:4px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#7F77DD}
-    .form-group textarea{height:100px;resize:none}
-    .modal-btns{display:flex;gap:10px;margin-top:20px}
-    .btn-cancel{flex:1;padding:11px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif}
-    .btn-enviar{flex:2;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
+    .form-group textarea{height:90px;resize:none;font-size:12px}
+    .modal-btns{display:flex;gap:10px;margin-top:16px}
+    .btn-cancel{flex:1;padding:12px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif}
+    .btn-enviar{flex:2;padding:12px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-enviar:hover{background:#534AB7}
 
-    /* Resumen de pedido en el modal */
+    /* Resumen del pedido */
     .pedido-resumen{background:#F8F7FF;border-radius:12px;padding:12px;margin-bottom:14px;border:1px solid #EEEDFE}
-    .pedido-resumen-title{font-size:12px;font-weight:800;color:#534AB7;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-    .pedido-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #EEEDFE;font-size:13px}
+    .pedido-resumen-title{font-size:11px;font-weight:800;color:#534AB7;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+    .pedido-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #EEEDFE;font-size:12px}
     .pedido-item:last-child{border-bottom:none}
     .pedido-item-name{color:#26215C;font-weight:700}
-    .pedido-item-det{color:#888;font-size:12px}
-    .pedido-item-precio{color:#D4537E;font-weight:900}
-    .pedido-total{display:flex;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:2px solid #EEEDFE;font-size:14px;font-weight:900;color:#26215C}
+    .pedido-item-det{color:#888;font-size:11px}
+    .pedido-item-precio{color:#D4537E;font-weight:900;white-space:nowrap;margin-left:8px}
+    .pedido-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid #EEEDFE;font-size:14px;font-weight:900;color:#26215C}
 
+    /* Lightbox */
     .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:500;align-items:center;justify-content:center;cursor:zoom-out}
     .lightbox.show{display:flex}
-    .lightbox img{max-width:90%;max-height:90vh;border-radius:18px;object-fit:contain}
-    .lightbox-close{position:absolute;top:20px;right:28px;font-size:32px;color:#fff;cursor:pointer;font-weight:900;opacity:.8}
+    .lightbox img{max-width:95%;max-height:88vh;border-radius:14px;object-fit:contain}
+    .lightbox-close{position:absolute;top:16px;right:20px;font-size:28px;color:#fff;cursor:pointer;font-weight:900;opacity:.8;background:rgba(0,0,0,.4);width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%}
     .lightbox-close:hover{opacity:1}
 
-    .notif{display:none;position:fixed;bottom:24px;right:24px;border-radius:18px;padding:16px 22px;font-size:14px;font-weight:800;z-index:200;max-width:320px}
+    /* Notificaciones */
+    .notif{display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);border-radius:14px;padding:13px 20px;font-size:13px;font-weight:800;z-index:200;width:90%;max-width:340px;text-align:center}
     .notif.show{display:block}
     .notif-ok{background:#EAF3DE;border:2px solid #97C459;color:#27500A}
     .notif-warn{background:#FAEEDA;border:2px solid #EF9F27;color:#633806}
 
-    .loader{text-align:center;padding:60px;color:#7F77DD;font-size:16px;font-weight:800;grid-column:1/-1}
+    .loader{text-align:center;padding:50px;color:#7F77DD;font-size:15px;font-weight:800;grid-column:1/-1}
 
-    footer{background:#26215C;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
-    .footer-brand{font-size:20px;font-weight:900;color:#fff}
-    .footer-info{font-size:12px;color:#AFA9EC;margin-top:4px;font-weight:700}
-    .footer-links{display:flex;gap:16px;justify-content:flex-end;flex-wrap:wrap}
-    .footer-link{font-size:12px;color:#AFA9EC;font-weight:700}
-    .footer-bottom{background:#1a1640;padding:10px 32px;text-align:center;font-size:11px;color:#534AB7;font-weight:700}
+    /* ===== FOOTER ===== */
+    footer{background:#26215C;padding:20px;display:flex;flex-direction:column;gap:16px}
+    .footer-brand{font-size:18px;font-weight:900;color:#fff}
+    .footer-info{font-size:11px;color:#AFA9EC;margin-top:3px;font-weight:700}
+    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
+    .footer-link{font-size:11px;color:#AFA9EC;font-weight:700}
+    .footer-bottom{background:#1a1640;padding:10px 20px;text-align:center;font-size:10px;color:#534AB7;font-weight:700}
+
+    /* ===== RESPONSIVE MÓVIL ===== */
+    @media(max-width:600px){
+      /* Hero apilado en móvil */
+      .hero{grid-template-columns:1fr;min-height:auto}
+      .hero-right{height:160px}
+      .hero-right svg{width:100%;height:160px}
+      .hero-left{padding:20px 16px}
+      .hero-title{font-size:26px}
+
+      /* Nav más compacto */
+      nav{padding:12px 16px}
+      .nav-link{display:none}
+      .nav-brand{font-size:16px}
+
+      /* Grid de 2 columnas en móvil */
+      .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
+
+      /* Modal ocupa toda la pantalla desde abajo */
+      .modal{border-radius:20px 20px 0 0;padding:20px 16px;max-height:95vh}
+
+      /* Filtros con scroll horizontal */
+      .filtros{padding:10px 14px;gap:6px}
+      .pill{padding:7px 14px;font-size:11px}
+
+      /* Strip compacto */
+      .strip{padding:7px 14px;gap:16px}
+
+      /* Notificación centrada abajo */
+      .notif{bottom:16px;width:92%}
+
+      /* Footer apilado */
+      footer{padding:16px 14px}
+    }
+
+    @media(max-width:360px){
+      .hero-title{font-size:22px}
+      .grid{grid-template-columns:1fr}
+      .card-img{height:110px}
+    }
   </style>
 </head>
 <body>
@@ -111,7 +164,6 @@
   <nav>
     <div class="nav-brand">Demo Tienda Online</div>
     <div class="nav-right">
-      <a href="#" class="nav-link">Inicio</a>
       <a href="#" class="nav-link">Catálogo</a>
       <a href="#" class="nav-link">Contacto</a>
       <button class="btn-pedido" onclick="abrirModal()">Hacer pedido</button>
@@ -122,36 +174,29 @@
     <div class="hero-left">
       <div class="hero-tag">Nueva colección 2026</div>
       <div class="hero-title">Moda que te<span>hace brillar</span></div>
-      <div class="hero-sub">Envíos a toda Guatemala — ropa para cada ocasión</div>
+      <div class="hero-sub">Envíos a toda Guatemala</div>
       <button class="hero-cta">Ver colección</button>
     </div>
     <div class="hero-right">
-      <svg width="360" height="280" viewBox="0 0 360 280" style="display:block">
-        <rect width="360" height="280" fill="#D4537E"/>
-        <circle cx="300" cy="40" r="65" fill="#ED93B1" opacity=".5"/>
-        <circle cx="60"  cy="240" r="70" fill="#993556" opacity=".4"/>
-        <circle cx="180" cy="260" r="45" fill="#FAC775" opacity=".25"/>
-        <circle cx="290" cy="200" r="18" fill="#FBEAF0" opacity=".5"/>
-        <circle cx="40"  cy="80"  r="12" fill="#FAC775" opacity=".7"/>
-        <text x="50"  y="220" font-size="28" fill="#FAC775" opacity=".35">★</text>
-        <text x="300" y="90"  font-size="22" fill="#FBEAF0" opacity=".4">✦</text>
-        <text x="100" y="265" font-size="16" fill="#EEEDFE" opacity=".35">✦</text>
-        <ellipse cx="180" cy="230" rx="48" ry="10" fill="#993556" opacity=".3"/>
-        <ellipse cx="180" cy="138" rx="46" ry="60" fill="#FBEAF0"/>
-        <ellipse cx="180" cy="90"  rx="30" ry="32" fill="#FAC775"/>
-        <circle  cx="168" cy="84" r="4" fill="#26215C"/>
-        <circle  cx="192" cy="84" r="4" fill="#26215C"/>
-        <ellipse cx="180" cy="96" rx="6" ry="3.5" fill="#D4537E"/>
-        <path d="M155 112 Q150 108 147 114 Q146 120 152 121 Q155 115 158 118" fill="none" stroke="#EF9F27" stroke-width="2" stroke-linecap="round"/>
-        <path d="M205 112 Q210 108 213 114 Q214 120 208 121 Q205 115 202 118" fill="none" stroke="#EF9F27" stroke-width="2" stroke-linecap="round"/>
-        <rect x="134" y="162" width="92" height="72" rx="8" fill="#7F77DD"/>
-        <rect x="120" y="156" width="32" height="56" rx="7" fill="#534AB7"/>
-        <rect x="208" y="156" width="32" height="56" rx="7" fill="#534AB7"/>
-        <rect x="148" y="164" width="64" height="9"  rx="4.5" fill="#EEEDFE" opacity=".4"/>
-        <rect x="154" y="180" width="52" height="7"  rx="3.5" fill="#EEEDFE" opacity=".3"/>
-        <rect x="156" y="194" width="48" height="7"  rx="3.5" fill="#EEEDFE" opacity=".3"/>
-        <rect x="144" y="234" width="24" height="38" rx="8" fill="#3C3489"/>
-        <rect x="192" y="234" width="24" height="38" rx="8" fill="#3C3489"/>
+      <svg width="280" height="220" viewBox="0 0 280 220" style="display:block;width:100%;height:100%">
+        <rect width="280" height="220" fill="#D4537E"/>
+        <circle cx="230" cy="30" r="55" fill="#ED93B1" opacity=".5"/>
+        <circle cx="40" cy="190" r="60" fill="#993556" opacity=".4"/>
+        <circle cx="140" cy="205" r="38" fill="#FAC775" opacity=".25"/>
+        <ellipse cx="140" cy="108" rx="40" ry="52" fill="#FBEAF0"/>
+        <ellipse cx="140" cy="70" rx="26" ry="28" fill="#FAC775"/>
+        <circle cx="130" cy="65" r="3.5" fill="#26215C"/>
+        <circle cx="150" cy="65" r="3.5" fill="#26215C"/>
+        <ellipse cx="140" cy="75" rx="5" ry="3" fill="#D4537E"/>
+        <rect x="104" y="130" width="72" height="58" rx="7" fill="#7F77DD"/>
+        <rect x="92" y="125" width="26" height="46" rx="6" fill="#534AB7"/>
+        <rect x="162" y="125" width="26" height="46" rx="6" fill="#534AB7"/>
+        <rect x="116" y="132" width="48" height="7" rx="3.5" fill="#EEEDFE" opacity=".4"/>
+        <rect x="120" y="146" width="40" height="6" rx="3" fill="#EEEDFE" opacity=".3"/>
+        <rect x="112" y="183" width="20" height="30" rx="7" fill="#3C3489"/>
+        <rect x="148" y="183" width="20" height="30" rx="7" fill="#3C3489"/>
+        <text x="38" y="172" font-size="22" fill="#FAC775" opacity=".35">★</text>
+        <text x="232" y="72" font-size="17" fill="#FBEAF0" opacity=".4">✦</text>
       </svg>
     </div>
   </div>
@@ -175,13 +220,12 @@
     <div class="loader">Cargando productos...</div>
   </div>
 
-  <!-- Modal de pedido con resumen y datos del cliente -->
   <div class="modal-bg" id="modal">
     <div class="modal">
+      <div class="modal-handle"></div>
       <h2>Hacer pedido</h2>
       <div class="modal-sub" id="modal-sub">Completá tus datos y te contactamos</div>
 
-      <!-- Resumen visual de productos en el pedido -->
       <div class="pedido-resumen" id="pedido-resumen" style="display:none">
         <div class="pedido-resumen-title">Tu pedido</div>
         <div id="pedido-items"></div>
@@ -193,11 +237,11 @@
 
       <div class="form-group">
         <label>Nombre completo</label>
-        <input type="text" id="f-nombre" placeholder="Tu nombre completo">
+        <input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name">
       </div>
       <div class="form-group">
         <label>WhatsApp / Teléfono</label>
-        <input type="text" id="f-tel" placeholder="+502 0000-0000">
+        <input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel">
       </div>
       <div class="form-group">
         <label>Departamento</label>
@@ -213,7 +257,7 @@
       </div>
       <div class="form-group">
         <label>Detalle del pedido</label>
-        <textarea id="f-producto" placeholder="Se llena automáticamente al agregar productos..." readonly style="background:#F8F7FF;color:#534AB7;font-weight:700"></textarea>
+        <textarea id="f-producto" placeholder="Se llena automáticamente..." readonly style="background:#F8F7FF;color:#534AB7;font-weight:700"></textarea>
       </div>
       <div class="modal-btns">
         <button class="btn-cancel" onclick="cancelarPedido()">Cancelar</button>
@@ -227,7 +271,7 @@
     <img id="lightbox-img" src="" alt="Vista ampliada">
   </div>
 
-  <div class="notif notif-ok"  id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
+  <div class="notif notif-ok"   id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
   <div class="notif notif-warn" id="notif-warn">Pedido cancelado. Stock devuelto.</div>
 
   <footer>
@@ -253,9 +297,9 @@
 
     let todos = []
     let categoriaActual = 'Todos'
-    let tallasSeleccionadas = {}  // { id: talla }
-    let cantidades = {}           // { id: cantidad } — cantidad seleccionada por producto
-    let pedidoActual = []         // Array de items en el pedido
+    let tallasSeleccionadas = {}
+    let cantidades = {}
+    let pedidoActual = []
 
     const cfg = {
       'Blusas':     { bg: '#EEEDFE', icon: dibujarBlusa },
@@ -265,23 +309,22 @@
     }
 
     function dibujarBlusa() {
-      return `<svg width="90" height="110" viewBox="0 0 90 110"><ellipse cx="45" cy="22" rx="16" ry="17" fill="#FAC775"/><path d="M22 44 Q12 40 10 55 L20 59 L23 50 L23 108 L67 108 L67 50 L70 59 L80 55 Q78 40 68 44 L56 37 Q50 50 45 50 Q40 50 34 37 Z" fill="#D4537E"/><rect x="30" y="58" width="30" height="3.5" rx="1.8" fill="#993556" opacity=".4"/><circle cx="45" cy="68" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="34" cy="80" r="3" fill="#FAC775" opacity=".5"/><circle cx="56" cy="84" r="3" fill="#FAC775" opacity=".5"/></svg>`
+      return `<svg width="75" height="95" viewBox="0 0 90 110"><ellipse cx="45" cy="22" rx="16" ry="17" fill="#FAC775"/><path d="M22 44 Q12 40 10 55 L20 59 L23 50 L23 108 L67 108 L67 50 L70 59 L80 55 Q78 40 68 44 L56 37 Q50 50 45 50 Q40 50 34 37 Z" fill="#D4537E"/><rect x="30" y="58" width="30" height="3.5" rx="1.8" fill="#993556" opacity=".4"/><circle cx="45" cy="68" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="34" cy="80" r="3" fill="#FAC775" opacity=".5"/><circle cx="56" cy="84" r="3" fill="#FAC775" opacity=".5"/></svg>`
     }
     function dibujarPantalon() {
-      return `<svg width="80" height="110" viewBox="0 0 80 110"><ellipse cx="40" cy="18" rx="15" ry="15" fill="#FAC775"/><rect x="10" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="44" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="10" y="40" width="60" height="18" rx="6" fill="#534AB7"/><path d="M22 32 Q40 27 58 32 L58 42 L22 42 Z" fill="#D4537E"/></svg>`
+      return `<svg width="65" height="95" viewBox="0 0 80 110"><ellipse cx="40" cy="18" rx="15" ry="15" fill="#FAC775"/><rect x="10" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="44" y="42" width="26" height="62" rx="8" fill="#7F77DD"/><rect x="10" y="40" width="60" height="18" rx="6" fill="#534AB7"/><path d="M22 32 Q40 27 58 32 L58 42 L22 42 Z" fill="#D4537E"/></svg>`
     }
     function dibujarVestido() {
-      return `<svg width="85" height="115" viewBox="0 0 85 115"><ellipse cx="42" cy="19" rx="16" ry="17" fill="#FAC775"/><path d="M14 42 Q5 38 4 53 L14 56 L17 47 L17 65 Q42 82 68 65 L68 47 L71 56 L81 53 Q80 38 71 42 L60 36 Q52 50 42 50 Q32 50 25 36 Z" fill="#ED93B1"/><path d="M17 65 Q22 112 42 110 Q62 112 68 65 Z" fill="#D4537E"/><circle cx="28" cy="88" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="56" cy="94" r="3" fill="#FAC775" opacity=".6"/></svg>`
+      return `<svg width="70" height="95" viewBox="0 0 85 115"><ellipse cx="42" cy="19" rx="16" ry="17" fill="#FAC775"/><path d="M14 42 Q5 38 4 53 L14 56 L17 47 L17 65 Q42 82 68 65 L68 47 L71 56 L81 53 Q80 38 71 42 L60 36 Q52 50 42 50 Q32 50 25 36 Z" fill="#ED93B1"/><path d="M17 65 Q22 112 42 110 Q62 112 68 65 Z" fill="#D4537E"/><circle cx="28" cy="88" r="3.5" fill="#FAC775" opacity=".6"/><circle cx="56" cy="94" r="3" fill="#FAC775" opacity=".6"/></svg>`
     }
     function dibujarCartera() {
-      return `<svg width="95" height="95" viewBox="0 0 95 95"><path d="M14 40 Q14 24 30 22 L65 22 Q81 24 81 40 L81 80 Q81 88 72 88 L23 88 Q14 88 14 80 Z" fill="#FAC775"/><path d="M30 22 Q38 10 47 8 Q56 10 65 22" fill="none" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="47" cy="25" rx="7" ry="5.5" fill="#EF9F27"/><rect x="22" y="44" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><rect x="22" y="56" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><rect x="22" y="68" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><circle cx="47" cy="34" r="5" fill="#BA7517"/></svg>`
+      return `<svg width="78" height="78" viewBox="0 0 95 95"><path d="M14 40 Q14 24 30 22 L65 22 Q81 24 81 40 L81 80 Q81 88 72 88 L23 88 Q14 88 14 80 Z" fill="#FAC775"/><path d="M30 22 Q38 10 47 8 Q56 10 65 22" fill="none" stroke="#EF9F27" stroke-width="3.5" stroke-linecap="round"/><ellipse cx="47" cy="25" rx="7" ry="5.5" fill="#EF9F27"/><rect x="22" y="44" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><rect x="22" y="56" width="51" height="3.5" rx="1.8" fill="#EF9F27" opacity=".5"/><circle cx="47" cy="34" r="5" fill="#BA7517"/></svg>`
     }
 
     async function cargarProductos() {
       const { data, error } = await db.from('productos').select('*').order('created_at', { ascending: false })
       if (error) { document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'; return }
       todos = data
-      // Inicializar cantidad en 1 para cada producto
       todos.forEach(p => { cantidades[p.id] = 1 })
       renderProductos()
     }
@@ -296,7 +339,7 @@
         const sinStock = p.stock <= 0
         const qty = cantidades[p.id] || 1
         const imgHtml = p.imagen_url
-          ? `<img src="${p.imagen_url}" style="max-height:140px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in" onclick="abrirLightbox('${p.imagen_url}')" title="Clic para ver en grande">`
+          ? `<img src="${p.imagen_url}" style="max-height:120px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in" onclick="abrirLightbox('${p.imagen_url}')">`
           : c.icon()
 
         return `
@@ -306,13 +349,13 @@
               <div class="card-cat">${p.categoria}</div>
               <div class="card-name">${p.nombre}</div>
               <div class="card-price">Q ${parseFloat(p.precio).toFixed(2)}</div>
-              <div class="card-stock">Disponible: ${p.stock} unidades</div>
-              ${sinStock ? '<div class="sin-stock">Agotado por el momento</div>' : `
+              <div class="card-stock">${p.stock} disponibles</div>
+              ${sinStock ? '<div class="sin-stock">Agotado</div>' : `
                 <div class="card-tallas">
                   ${tallas.map(t => `<span class="talla ${tallasSeleccionadas[p.id]===t?'sel':''}" onclick="selTalla('${p.id}','${t}',this)">${t}</span>`).join('')}
                 </div>
                 <div class="qty-wrap">
-                  <span class="qty-label">Cantidad:</span>
+                  <span class="qty-label">Cant:</span>
                   <div class="qty-ctrl">
                     <button class="qty-btn" onclick="cambiarCantidad('${p.id}',-1,${p.stock})" ${qty<=1?'disabled':''}>−</button>
                     <span class="qty-num" id="qty-${p.id}">${qty}</span>
@@ -326,14 +369,8 @@
       }).join('')
     }
 
-    // Cambiar cantidad con los botones - y +
     function cambiarCantidad(id, delta, stockMax) {
-      const actual = cantidades[id] || 1
-      const nueva = Math.min(Math.max(1, actual + delta), stockMax)
-      cantidades[id] = nueva
-      const el = document.getElementById(`qty-${id}`)
-      if (el) el.textContent = nueva
-      // Actualizar estado de botones
+      cantidades[id] = Math.min(Math.max(1, (cantidades[id]||1) + delta), stockMax)
       renderProductos()
     }
 
@@ -350,128 +387,66 @@
       el.classList.add('sel')
     }
 
-    // Agregar producto al pedido con la cantidad seleccionada
     async function agregarPedido(id, nombre, precio, stockMax) {
       const talla = tallasSeleccionadas[id] || 'Sin especificar'
       const cantidad = cantidades[id] || 1
       const prod = todos.find(p => p.id === id)
-
       if (!prod || prod.stock <= 0) { alert('Este producto está agotado.'); return }
       if (cantidad > prod.stock) { alert(`Solo hay ${prod.stock} unidades disponibles.`); return }
-
-      // Descontar la cantidad seleccionada del stock en Supabase
       const { error } = await db.from('productos').update({ stock: prod.stock - cantidad }).eq('id', id)
-      if (error) { alert('Error al reservar el producto. Intentá de nuevo.'); return }
-
-      // Actualizar stock en memoria
-      prod.stock = prod.stock - cantidad
-
-      // Agregar al pedido actual
+      if (error) { alert('Error al reservar. Intentá de nuevo.'); return }
+      prod.stock -= cantidad
       pedidoActual.push({ id, nombre, talla, cantidad, precio })
-
-      // Resetear cantidad del producto a 1
       cantidades[id] = 1
-
-      // Actualizar resumen en el modal
       actualizarResumenModal()
-
-      // Refrescar grid
       renderProductos()
-
       abrirModal()
     }
 
-    // Actualizar el resumen visual del pedido en el modal
     function actualizarResumenModal() {
-      if (pedidoActual.length === 0) {
+      if (!pedidoActual.length) {
         document.getElementById('pedido-resumen').style.display = 'none'
         document.getElementById('modal-sub').textContent = 'Completá tus datos y te contactamos'
         document.getElementById('f-producto').value = ''
         return
       }
-
       document.getElementById('pedido-resumen').style.display = 'block'
       document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) en tu pedido`
-
-      // Renderizar items del resumen
       document.getElementById('pedido-items').innerHTML = pedidoActual.map(i => `
         <div class="pedido-item">
-          <div>
-            <div class="pedido-item-name">${i.nombre}</div>
-            <div class="pedido-item-det">Talla: ${i.talla} &nbsp;|&nbsp; Cantidad: ${i.cantidad}</div>
-          </div>
-          <div class="pedido-item-precio">Q ${(i.precio * i.cantidad).toFixed(2)}</div>
+          <div><div class="pedido-item-name">${i.nombre}</div><div class="pedido-item-det">Talla: ${i.talla} | Cantidad: ${i.cantidad}</div></div>
+          <div class="pedido-item-precio">Q ${(i.precio*i.cantidad).toFixed(2)}</div>
         </div>`).join('')
-
-      // Calcular total
-      const total = pedidoActual.reduce((sum, i) => sum + (i.precio * i.cantidad), 0)
+      const total = pedidoActual.reduce((s,i) => s+(i.precio*i.cantidad), 0)
       document.getElementById('pedido-total-val').textContent = `Q ${total.toFixed(2)}`
-
-      // Actualizar textarea con detalle del pedido
-      document.getElementById('f-producto').value = pedidoActual
-        .map(i => `${i.nombre} — Talla: ${i.talla} — Cantidad: ${i.cantidad} — Q ${(i.precio * i.cantidad).toFixed(2)}`)
-        .join('\n')
+      document.getElementById('f-producto').value = pedidoActual.map(i => `${i.nombre} — Talla: ${i.talla} — Cant: ${i.cantidad} — Q ${(i.precio*i.cantidad).toFixed(2)}`).join('\n')
     }
 
-    // Cancelar pedido: devuelve el stock de todos los productos
     async function cancelarPedido() {
       if (pedidoActual.length > 0) {
         for (const item of pedidoActual) {
           const prod = todos.find(p => p.id === item.id)
-          if (prod) {
-            await db.from('productos').update({ stock: prod.stock + item.cantidad }).eq('id', item.id)
-            prod.stock = prod.stock + item.cantidad
-          }
+          if (prod) { await db.from('productos').update({ stock: prod.stock + item.cantidad }).eq('id', item.id); prod.stock += item.cantidad }
         }
         mostrarNotif('notif-warn')
       }
-      limpiarPedido()
-      cerrarModal()
-      renderProductos()
+      limpiarPedido(); cerrarModal(); renderProductos()
     }
 
-    // Enviar pedido: guarda en Supabase y registra movimientos
     async function enviarPedido() {
       const nombre = document.getElementById('f-nombre').value.trim()
       const tel    = document.getElementById('f-tel').value.trim()
       const depto  = document.getElementById('f-depto').value
       const prod   = document.getElementById('f-producto').value.trim()
-
       if (!nombre || !tel || !depto || !prod) { alert('Por favor completá todos los campos.'); return }
-      if (pedidoActual.length === 0) { alert('Agregá al menos un producto al pedido.'); return }
-
-      const total = pedidoActual.reduce((sum, i) => sum + (i.precio * i.cantidad), 0)
-
-      const { error } = await db.from('pedidos').insert([{
-        cliente_nombre: nombre,
-        whatsapp: tel,
-        departamento: depto,
-        producto_nombre: prod,
-        talla: 'Ver detalle',
-        estado: 'nuevo'
-      }])
-
-      if (error) { alert('Error al enviar el pedido. Intentá de nuevo.'); return }
-
-      // Registrar movimientos de salida por cada producto pedido
+      if (!pedidoActual.length) { alert('Agregá al menos un producto.'); return }
+      const { error } = await db.from('pedidos').insert([{ cliente_nombre: nombre, whatsapp: tel, departamento: depto, producto_nombre: prod, talla: 'Ver detalle', estado: 'nuevo' }])
+      if (error) { alert('Error al enviar. Intentá de nuevo.'); return }
       for (const item of pedidoActual) {
         const prodData = todos.find(p => p.id === item.id)
-        if (prodData) {
-          await db.from('movimientos').insert([{
-            producto_id: item.id,
-            tipo: 'salida',
-            cantidad: item.cantidad,
-            motivo: `Pedido de ${nombre} — ${item.cantidad} unidad(es) talla ${item.talla}`,
-            stock_anterior: prodData.stock + item.cantidad,
-            stock_nuevo: prodData.stock
-          }])
-        }
+        if (prodData) await db.from('movimientos').insert([{ producto_id: item.id, tipo: 'salida', cantidad: item.cantidad, motivo: `Pedido de ${nombre}`, stock_anterior: prodData.stock + item.cantidad, stock_nuevo: prodData.stock }])
       }
-
-      cerrarModal()
-      limpiarPedido()
-      mostrarNotif('notif-ok')
-      cargarProductos()
+      cerrarModal(); limpiarPedido(); mostrarNotif('notif-ok'); cargarProductos()
     }
 
     function limpiarPedido() {
@@ -490,16 +465,8 @@
       setTimeout(() => el.classList.remove('show'), 4000)
     }
 
-    function abrirLightbox(url) {
-      document.getElementById('lightbox-img').src = url
-      document.getElementById('lightbox').classList.add('show')
-    }
-
-    function cerrarLightbox() {
-      document.getElementById('lightbox').classList.remove('show')
-      document.getElementById('lightbox-img').src = ''
-    }
-
+    function abrirLightbox(url) { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox').classList.add('show') }
+    function cerrarLightbox() { document.getElementById('lightbox').classList.remove('show'); document.getElementById('lightbox-img').src = '' }
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cerrarLightbox() })
 
     cargarProductos()
