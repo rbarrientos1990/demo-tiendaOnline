@@ -4,21 +4,12 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Demo Tienda Online — Ropa Guatemala</title>
-
-  <!-- Fuente Nunito: redondeada y juvenil, cargada desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
-
   <style>
-    /* =============================================
-       RESET Y BASE
-       Elimina márgenes y aplica la fuente global
-    ============================================= */
+    /* Reset y base */
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
 
-    /* =============================================
-       NAVBAR
-       Barra de navegación superior morada
-    ============================================= */
+    /* Navbar */
     nav{background:#7F77DD;padding:16px 32px;display:flex;justify-content:space-between;align-items:center}
     .nav-brand{font-size:22px;font-weight:900;color:#fff;letter-spacing:2px}
     .nav-right{display:flex;gap:20px;align-items:center}
@@ -26,11 +17,7 @@
     .btn-pedido{background:#fff;color:#534AB7;border:none;border-radius:24px;padding:10px 24px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-pedido:hover{background:#EEEDFE}
 
-    /* =============================================
-       HERO SECTION
-       Sección principal con texto e ilustración SVG
-       Layout de 2 columnas: texto | ilustración
-    ============================================= */
+    /* Hero */
     .hero{display:grid;grid-template-columns:1fr 360px;background:#EEEDFE;min-height:280px;overflow:hidden}
     .hero-left{padding:40px 40px;display:flex;flex-direction:column;justify-content:center}
     .hero-tag{display:inline-block;background:#FAC775;color:#633806;border-radius:20px;padding:5px 16px;font-size:12px;font-weight:900;margin-bottom:14px;width:fit-content}
@@ -40,33 +27,21 @@
     .hero-cta{background:#534AB7;color:#fff;border:none;border-radius:24px;padding:12px 28px;font-weight:900;cursor:pointer;font-size:15px;font-family:'Nunito',sans-serif;width:fit-content;opacity:.5;cursor:default}
     .hero-right{background:#D4537E;overflow:hidden}
 
-    /* =============================================
-       STRIP DE BENEFICIOS
-       Franja amarilla con puntos informativos
-    ============================================= */
+    /* Strip de beneficios */
     .strip{background:#FAC775;padding:10px 32px;display:flex;gap:28px;overflow:hidden;flex-wrap:wrap}
     .strip-item{font-size:13px;font-weight:800;color:#633806;display:flex;align-items:center;gap:6px;white-space:nowrap}
     .strip-dot{width:6px;height:6px;border-radius:50%;background:#D85A30;flex-shrink:0}
 
-    /* =============================================
-       FILTROS DE CATEGORÍA
-       Pills clickeables para filtrar productos
-    ============================================= */
+    /* Filtros de categoría */
     .filtros{padding:16px 32px;display:flex;gap:10px;flex-wrap:wrap;background:#fff;border-bottom:2px solid #EEEDFE}
     .pill{padding:9px 20px;border-radius:24px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #AFA9EC;background:#fff;color:#534AB7;font-family:'Nunito',sans-serif}
     .pill:hover{background:#EEEDFE}
     .pill.active{background:#7F77DD;color:#fff;border-color:#7F77DD}
 
-    /* =============================================
-       GRID DE PRODUCTOS
-       Cuadrícula responsive que se adapta al ancho
-    ============================================= */
+    /* Grid de productos */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:28px 32px;background:#F8F7FF}
 
-    /* =============================================
-       TARJETA DE PRODUCTO
-       Cada producto se muestra en una card individual
-    ============================================= */
+    /* Tarjeta de producto */
     .card{background:#fff;border-radius:20px;border:2px solid #EEEDFE;overflow:hidden}
     .card:hover{border-color:#AFA9EC}
     .card-img{height:160px;display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -75,17 +50,13 @@
     .card-name{font-size:16px;font-weight:900;color:#26215C;margin-bottom:5px}
     .card-price{font-size:20px;font-weight:900;color:#D4537E;margin-bottom:12px}
     .card-tallas{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
-    /* Tallas: clickeables, cambian a morado cuando se seleccionan */
     .talla{font-size:11px;padding:4px 10px;border-radius:8px;border:2px solid #AFA9EC;color:#534AB7;background:#EEEDFE;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
     .talla.sel{background:#7F77DD;color:#fff;border-color:#7F77DD}
     .btn-add{width:100%;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
     .btn-add:hover{background:#534AB7}
     .sin-stock{font-size:12px;color:#bbb;text-align:center;padding:8px 0;font-weight:700}
 
-    /* =============================================
-       MODAL DE PEDIDO
-       Formulario que aparece al hacer un pedido
-    ============================================= */
+    /* Modal de pedido */
     .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:100;align-items:center;justify-content:center}
     .modal-bg.show{display:flex}
     .modal{background:#fff;border-radius:24px;padding:32px;max-width:400px;width:90%;border:2px solid #EEEDFE}
@@ -101,32 +72,22 @@
     .btn-enviar{flex:2;padding:11px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-enviar:hover{background:#534AB7}
 
-    /* =============================================
-       LIGHTBOX
-       Overlay oscuro que muestra la imagen en grande
-       Se cierra al hacer clic en cualquier parte
-    ============================================= */
+    /* Lightbox para ver fotos en grande */
     .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:500;align-items:center;justify-content:center;cursor:zoom-out}
     .lightbox.show{display:flex}
     .lightbox img{max-width:90%;max-height:90vh;border-radius:18px;object-fit:contain}
-    /* Botón X para cerrar el lightbox */
     .lightbox-close{position:absolute;top:20px;right:28px;font-size:32px;color:#fff;cursor:pointer;font-weight:900;line-height:1;opacity:.8}
     .lightbox-close:hover{opacity:1}
 
-    /* =============================================
-       NOTIFICACIÓN DE PEDIDO ENVIADO
-       Aparece abajo a la derecha por 4 segundos
-    ============================================= */
-    .notif{display:none;position:fixed;bottom:24px;right:24px;background:#EEEDFE;border:2px solid #7F77DD;border-radius:18px;padding:16px 22px;font-size:14px;font-weight:800;color:#3C3489;z-index:200;max-width:320px}
+    /* Notificaciones */
+    .notif{display:none;position:fixed;bottom:24px;right:24px;border-radius:18px;padding:16px 22px;font-size:14px;font-weight:800;z-index:200;max-width:320px}
     .notif.show{display:block}
+    .notif-ok{background:#EAF3DE;border:2px solid #97C459;color:#27500A}
+    .notif-warn{background:#FAEEDA;border:2px solid #EF9F27;color:#633806}
 
-    /* Mensaje de carga / error centrado en el grid */
     .loader{text-align:center;padding:60px;color:#7F77DD;font-size:16px;font-weight:800;grid-column:1/-1}
 
-    /* =============================================
-       FOOTER
-       Pie de página con 2 columnas: info | links
-    ============================================= */
+    /* Footer */
     footer{background:#26215C;padding:24px 32px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
     .footer-brand{font-size:20px;font-weight:900;color:#fff}
     .footer-info{font-size:12px;color:#AFA9EC;margin-top:4px;font-weight:700}
@@ -137,23 +98,16 @@
 </head>
 <body>
 
-  <!-- =============================================
-       NAVBAR
-  ============================================= -->
   <nav>
     <div class="nav-brand">Demo Tienda Online</div>
     <div class="nav-right">
       <a href="#" class="nav-link">Inicio</a>
       <a href="#" class="nav-link">Catálogo</a>
       <a href="#" class="nav-link">Contacto</a>
-      <!-- Al hacer clic abre el modal de pedido -->
       <button class="btn-pedido" onclick="abrirModal()">Hacer pedido</button>
     </div>
   </nav>
 
-  <!-- =============================================
-       HERO: texto izquierda + ilustración derecha
-  ============================================= -->
   <div class="hero">
     <div class="hero-left">
       <div class="hero-tag">Nueva colección 2026</div>
@@ -162,7 +116,6 @@
       <button class="hero-cta">Ver colección</button>
     </div>
     <div class="hero-right">
-      <!-- Ilustración SVG decorativa dibujada en código -->
       <svg width="360" height="280" viewBox="0 0 360 280" style="display:block">
         <rect width="360" height="280" fill="#D4537E"/>
         <circle cx="300" cy="40" r="65" fill="#ED93B1" opacity=".5"/>
@@ -193,9 +146,6 @@
     </div>
   </div>
 
-  <!-- =============================================
-       STRIP DE BENEFICIOS
-  ============================================= -->
   <div class="strip">
     <div class="strip-item"><div class="strip-dot"></div>Envío gratis arriba de Q 300</div>
     <div class="strip-item"><div class="strip-dot"></div>Nuevos estilos cada semana</div>
@@ -203,10 +153,6 @@
     <div class="strip-item"><div class="strip-dot"></div>Atención por WhatsApp</div>
   </div>
 
-  <!-- =============================================
-       FILTROS DE CATEGORÍA
-       Al hacer clic llama a filtrar() con la categoría
-  ============================================= -->
   <div class="filtros">
     <div class="pill active" onclick="filtrar('Todos',this)">Todos</div>
     <div class="pill" onclick="filtrar('Blusas',this)">Blusas</div>
@@ -215,22 +161,13 @@
     <div class="pill" onclick="filtrar('Accesorios',this)">Accesorios</div>
   </div>
 
-  <!-- =============================================
-       GRID DE PRODUCTOS
-       Se llena dinámicamente desde Supabase
-  ============================================= -->
   <div class="grid" id="grid">
     <div class="loader">Cargando productos...</div>
   </div>
 
-  <!-- =============================================
-       MODAL DE PEDIDO
-       Formulario que envía el pedido a Supabase
-  ============================================= -->
   <div class="modal-bg" id="modal">
     <div class="modal">
       <h2>Hacer pedido</h2>
-      <!-- modal-sub muestra cuántos productos hay en el pedido -->
       <div class="modal-sub" id="modal-sub">Completá tus datos y te contactamos</div>
       <div class="form-group">
         <label>Nombre completo</label>
@@ -254,32 +191,29 @@
       </div>
       <div class="form-group">
         <label>Producto y talla</label>
-        <!-- Se llena automáticamente al agregar productos al pedido -->
         <textarea id="f-producto" placeholder="Ej: Blusa floral talla M..."></textarea>
       </div>
       <div class="modal-btns">
-        <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+        <!-- Cancelar: devuelve el stock y limpia el pedido -->
+        <button class="btn-cancel" onclick="cancelarPedido()">Cancelar</button>
+        <!-- Enviar: confirma el pedido y guarda en Supabase -->
         <button class="btn-enviar" onclick="enviarPedido()">Enviar pedido</button>
       </div>
     </div>
   </div>
 
-  <!-- =============================================
-       LIGHTBOX
-       Muestra la foto del producto en grande
-       Se cierra al hacer clic en cualquier parte o en la X
-  ============================================= -->
+  <!-- Lightbox para ver fotos en grande -->
   <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
     <div class="lightbox-close" onclick="cerrarLightbox()">✕</div>
     <img id="lightbox-img" src="" alt="Vista ampliada del producto">
   </div>
 
-  <!-- Notificación de pedido enviado exitosamente -->
-  <div class="notif" id="notif">Pedido enviado. Te contactamos pronto.</div>
+  <!-- Notificación de éxito al enviar pedido -->
+  <div class="notif notif-ok" id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
 
-  <!-- =============================================
-       FOOTER
-  ============================================= -->
+  <!-- Notificación al cancelar pedido (devuelve stock) -->
+  <div class="notif notif-warn" id="notif-warn">Pedido cancelado. Stock devuelto.</div>
+
   <footer>
     <div>
       <div class="footer-brand">Demo Tienda Online</div>
@@ -295,32 +229,25 @@
   </footer>
   <div class="footer-bottom">© 2026 Demo Tienda Online — Todos los derechos reservados</div>
 
-  <!-- SDK de Supabase: librería para conectar con la base de datos -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
     // =============================================
-    // CONFIGURACIÓN DE SUPABASE
-    // URL y clave anónima para conectar con la BD
+    // CONFIGURACIÓN SUPABASE
     // =============================================
     const SUPABASE_URL = 'https://dlrnlktlsvwijsnwvdiy.supabase.co'
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRscm5sa3Rsc3Z3aWpzbnd2ZGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTE2OTMsImV4cCI6MjA5MTk2NzY5M30.mPCCNUgt3kJergBuv66h89PMCOIuGtVipTM5bVPQdbw'
-
-    // Crear cliente de Supabase para hacer consultas
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
     // =============================================
     // VARIABLES DE ESTADO
-    // Guardan información durante la sesión del usuario
     // =============================================
-    let todos = []              // Lista completa de productos desde Supabase
-    let categoriaActual = 'Todos'  // Categoría seleccionada en los filtros
-    let tallasSeleccionadas = {}   // Objeto: { producto_id: talla_seleccionada }
-    let pedidoActual = []          // Array de productos agregados al pedido
+    let todos = []
+    let categoriaActual = 'Todos'
+    let tallasSeleccionadas = {}
+    let pedidoActual = []  // Productos agregados al pedido actual
 
     // =============================================
-    // CONFIGURACIÓN VISUAL POR CATEGORÍA
-    // Cada categoría tiene su color de fondo e ilustración SVG
+    // CONFIG VISUAL POR CATEGORÍA
     // =============================================
     const cfg = {
       'Blusas':     { bg: '#EEEDFE', icon: dibujarBlusa },
@@ -331,10 +258,7 @@
 
     // =============================================
     // ILUSTRACIONES SVG POR CATEGORÍA
-    // Cada función retorna un SVG dibujado en código
-    // Si el producto tiene foto real, se usa la foto
     // =============================================
-
     function dibujarBlusa() {
       return `<svg width="90" height="110" viewBox="0 0 90 110">
         <ellipse cx="45" cy="22" rx="16" ry="17" fill="#FAC775"/>
@@ -386,7 +310,6 @@
 
     // =============================================
     // CARGAR PRODUCTOS DESDE SUPABASE
-    // Consulta la tabla 'productos' ordenada por fecha
     // =============================================
     async function cargarProductos() {
       const { data, error } = await db
@@ -395,51 +318,35 @@
         .order('created_at', { ascending: false })
 
       if (error) {
-        // Si hay error de conexión, mostrar mensaje en el grid
         document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'
         return
       }
 
-      // Guardar productos en variable global y renderizar
       todos = data
       renderProductos()
     }
 
     // =============================================
     // RENDERIZAR PRODUCTOS EN EL GRID
-    // Genera el HTML de cada tarjeta y lo inserta
     // =============================================
     function renderProductos() {
-      // Filtrar por categoría seleccionada
       const lista = categoriaActual === 'Todos'
         ? todos
         : todos.filter(p => p.categoria === categoriaActual)
 
-      // Si no hay productos en esa categoría
       if (!lista.length) {
         document.getElementById('grid').innerHTML = '<div class="loader">No hay productos en esta categoría.</div>'
         return
       }
 
-      // Generar HTML para cada producto
       document.getElementById('grid').innerHTML = lista.map(p => {
-        // Obtener config visual de la categoría (color + ilustración)
         const c = cfg[p.categoria] || { bg: '#EEEDFE', icon: () => '<svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="#7F77DD"/></svg>' }
-
-        // Separar tallas por coma: "XS, S, M, L" → ["XS", "S", "M", "L"]
         const tallas = p.tallas ? p.tallas.split(',').map(t => t.trim()) : []
-
         const sinStock = p.stock <= 0
 
-        // Si el producto tiene foto real → mostrar foto con lightbox al hacer clic
-        // Si no tiene foto → mostrar ilustración SVG de la categoría
+        // Si tiene foto real → mostrar con lightbox. Si no → ilustración SVG
         const imgHtml = p.imagen_url
-          ? `<img
-              src="${p.imagen_url}"
-              style="max-height:140px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in"
-              onclick="abrirLightbox('${p.imagen_url}')"
-              title="Clic para ver en grande"
-            >`
+          ? `<img src="${p.imagen_url}" style="max-height:140px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in" onclick="abrirLightbox('${p.imagen_url}')" title="Clic para ver en grande">`
           : c.icon()
 
         return `
@@ -463,54 +370,171 @@
 
     // =============================================
     // FILTRAR POR CATEGORÍA
-    // Cambia categoriaActual y re-renderiza el grid
     // =============================================
     function filtrar(cat, el) {
       categoriaActual = cat
-      // Quitar clase active de todas las pills
       document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'))
-      // Agregar clase active a la pill clickeada
       el.classList.add('active')
       renderProductos()
     }
 
     // =============================================
     // SELECCIONAR TALLA
-    // Guarda la talla elegida para ese producto
     // =============================================
     function selTalla(id, talla, el) {
-      // Guardar: { "uuid-del-producto": "M" }
       tallasSeleccionadas[id] = talla
-      // Quitar selección de otras tallas del mismo producto
       el.closest('.card-tallas').querySelectorAll('.talla').forEach(t => t.classList.remove('sel'))
-      // Marcar la talla clickeada como seleccionada
       el.classList.add('sel')
     }
 
     // =============================================
     // AGREGAR PRODUCTO AL PEDIDO
-    // Guarda el producto y abre el modal de pedido
+    // También descuenta el stock inmediatamente
+    // para que no se pueda pedir más de lo disponible
     // =============================================
-    function agregarPedido(id, nombre, precio) {
-      // Si no eligió talla, usar "Sin especificar"
+    async function agregarPedido(id, nombre, precio) {
       const talla = tallasSeleccionadas[id] || 'Sin especificar'
 
-      // Agregar al array de pedido actual
-      pedidoActual.push({ nombre, talla, precio })
+      // Buscar el producto en memoria
+      const prod = todos.find(p => p.id === id)
+      if (!prod || prod.stock <= 0) {
+        alert('Este producto está agotado.')
+        return
+      }
 
-      // Actualizar el textarea del formulario con todos los productos
+      // Descontar 1 del stock en Supabase
+      const { error } = await db
+        .from('productos')
+        .update({ stock: prod.stock - 1 })
+        .eq('id', id)
+
+      if (error) {
+        alert('Error al reservar el producto. Intentá de nuevo.')
+        return
+      }
+
+      // Actualizar stock en memoria local
+      prod.stock = prod.stock - 1
+
+      // Agregar al array del pedido actual (guardamos id para poder devolver)
+      pedidoActual.push({ id, nombre, talla, precio })
+
+      // Actualizar textarea del modal
       document.getElementById('f-producto').value = pedidoActual
         .map(i => `${i.nombre} — ${i.talla}`)
         .join('\n')
 
-      // Actualizar el subtítulo del modal
-      document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) en tu pedido`
+      // Actualizar subtítulo del modal
+      document.getElementById('modal-sub').textContent = `${pedidoActual.length} producto(s) reservado(s)`
+
+      // Refrescar el grid para mostrar el stock actualizado
+      renderProductos()
 
       abrirModal()
     }
 
     // =============================================
-    // MODAL DE PEDIDO: ABRIR / CERRAR
+    // CANCELAR PEDIDO
+    // Devuelve el stock de todos los productos del pedido
+    // =============================================
+    async function cancelarPedido() {
+      // Si hay productos en el pedido, devolver su stock
+      if (pedidoActual.length > 0) {
+        for (const item of pedidoActual) {
+          const prod = todos.find(p => p.id === item.id)
+          if (prod) {
+            // Sumar 1 de vuelta al stock en Supabase
+            await db
+              .from('productos')
+              .update({ stock: prod.stock + 1 })
+              .eq('id', item.id)
+
+            // Actualizar en memoria local
+            prod.stock = prod.stock + 1
+          }
+        }
+
+        // Mostrar notificación de cancelación con devolución
+        mostrarNotif('notif-warn')
+      }
+
+      // Limpiar pedido y cerrar modal
+      limpiarPedido()
+      cerrarModal()
+
+      // Refrescar grid con stock devuelto
+      renderProductos()
+    }
+
+    // =============================================
+    // ENVIAR PEDIDO A SUPABASE
+    // El stock ya fue descontado al agregar productos
+    // Solo queda guardar el pedido y limpiar
+    // =============================================
+    async function enviarPedido() {
+      const nombre = document.getElementById('f-nombre').value.trim()
+      const tel    = document.getElementById('f-tel').value.trim()
+      const depto  = document.getElementById('f-depto').value
+      const prod   = document.getElementById('f-producto').value.trim()
+
+      if (!nombre || !tel || !depto || !prod) {
+        alert('Por favor completá todos los campos.')
+        return
+      }
+
+      // Guardar el pedido en Supabase
+      const { error } = await db.from('pedidos').insert([{
+        cliente_nombre: nombre,
+        whatsapp: tel,
+        departamento: depto,
+        producto_nombre: prod,
+        talla: 'Ver detalle',
+        estado: 'nuevo'
+      }])
+
+      if (error) {
+        alert('Error al enviar el pedido. Intentá de nuevo.')
+        return
+      }
+
+      // Registrar movimientos de salida para cada producto
+      for (const item of pedidoActual) {
+        const prodData = todos.find(p => p.id === item.id)
+        if (prodData) {
+          await db.from('movimientos').insert([{
+            producto_id: item.id,
+            tipo: 'salida',
+            cantidad: 1,
+            motivo: `Pedido de ${nombre}`,
+            stock_anterior: prodData.stock + 1,
+            stock_nuevo: prodData.stock
+          }])
+        }
+      }
+
+      // Limpiar y cerrar
+      cerrarModal()
+      limpiarPedido()
+      mostrarNotif('notif-ok')
+
+      // Refrescar grid
+      cargarProductos()
+    }
+
+    // =============================================
+    // LIMPIAR PEDIDO
+    // Resetea el array y los campos del formulario
+    // =============================================
+    function limpiarPedido() {
+      pedidoActual = []
+      ;['f-nombre','f-tel','f-depto','f-producto'].forEach(id => {
+        document.getElementById(id).value = ''
+      })
+      document.getElementById('modal-sub').textContent = 'Completá tus datos y te contactamos'
+    }
+
+    // =============================================
+    // MODAL: ABRIR / CERRAR
     // =============================================
     function abrirModal() {
       document.getElementById('modal').classList.add('show')
@@ -521,53 +545,16 @@
     }
 
     // =============================================
-    // ENVIAR PEDIDO A SUPABASE
-    // Valida los campos y guarda en la tabla 'pedidos'
+    // NOTIFICACIONES
     // =============================================
-    async function enviarPedido() {
-      const nombre = document.getElementById('f-nombre').value.trim()
-      const tel    = document.getElementById('f-tel').value.trim()
-      const depto  = document.getElementById('f-depto').value
-      const prod   = document.getElementById('f-producto').value.trim()
-
-      // Validación: todos los campos son requeridos
-      if (!nombre || !tel || !depto || !prod) {
-        alert('Por favor completá todos los campos.')
-        return
-      }
-
-      // Insertar pedido en Supabase
-      const { error } = await db.from('pedidos').insert([{
-        cliente_nombre: nombre,
-        whatsapp: tel,
-        departamento: depto,
-        producto_nombre: prod,
-        talla: 'Ver detalle',  // El detalle ya está en producto_nombre
-        estado: 'nuevo'        // Estado inicial del pedido
-      }])
-
-      if (error) {
-        alert('Error al enviar el pedido. Intentá de nuevo.')
-        return
-      }
-
-      // Limpiar todo después de enviar
-      cerrarModal()
-      pedidoActual = []
-      ;['f-nombre','f-tel','f-depto','f-producto'].forEach(id => {
-        document.getElementById(id).value = ''
-      })
-
-      // Mostrar notificación de éxito por 4 segundos
-      const notif = document.getElementById('notif')
-      notif.classList.add('show')
-      setTimeout(() => notif.classList.remove('show'), 4000)
+    function mostrarNotif(id) {
+      const el = document.getElementById(id)
+      el.classList.add('show')
+      setTimeout(() => el.classList.remove('show'), 4000)
     }
 
     // =============================================
     // LIGHTBOX: VER IMAGEN EN GRANDE
-    // Se abre al hacer clic en una foto de producto
-    // Se cierra al hacer clic en cualquier parte o en la X
     // =============================================
     function abrirLightbox(url) {
       document.getElementById('lightbox-img').src = url
@@ -579,14 +566,13 @@
       document.getElementById('lightbox-img').src = ''
     }
 
-    // Cerrar lightbox también con la tecla Escape
+    // Cerrar lightbox con tecla Escape
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') cerrarLightbox()
     })
 
     // =============================================
-    // INICIALIZAR
-    // Carga los productos al abrir la página
+    // INICIALIZAR: cargar productos al abrir la página
     // =============================================
     cargarProductos()
   </script>
