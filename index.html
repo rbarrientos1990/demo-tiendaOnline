@@ -139,8 +139,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://dlrnlktlsvwijsnwvdiy.supabase.co'
-    const SUPABASE_KEY = 'sb_publishable_9e03CLX0VqEMO0FVDEFsZw_MOVnt0ji'
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+    const SUPABASE_KEY = 'sb_publishable_9e03CLX0VqEM00FVDEFsZw_MOVnt0ji'
+    const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
     let todosLosProductos = []
     let categoriaActual = 'Todos'
@@ -155,10 +155,11 @@
     }
 
     async function cargarProductos() {
-      const { data, error } = await supabase
+      const { data, error } = await db
         .from('productos').select('*').order('created_at', { ascending: false })
       if (error) {
-        document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos.</div>'
+        document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar productos. Verificá la conexión.</div>'
+        console.error('Error Supabase:', error)
         return
       }
       todosLosProductos = data
@@ -230,7 +231,7 @@
 
       if (!nombre || !tel || !depto || !prod) { alert('Por favor completá todos los campos.'); return }
 
-      const { error } = await supabase.from('pedidos').insert([{
+      const { error } = await db.from('pedidos').insert([{
         cliente_nombre: nombre, whatsapp: tel, departamento: depto,
         producto_nombre: prod, talla: 'Ver detalle', estado: 'nuevo'
       }])
