@@ -1,1 +1,618 @@
 <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Demo Tienda Online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
+
+    /* LOGIN */
+    .login-bg{min-height:100vh;background:#EEEDFE;display:flex;align-items:center;justify-content:center}
+    .login-card{background:#fff;border-radius:24px;padding:40px;width:100%;max-width:380px;border:2px solid #AFA9EC}
+    .login-logo{font-size:22px;font-weight:900;color:#7F77DD;text-align:center;margin-bottom:6px}
+    .login-sub{font-size:13px;color:#888;text-align:center;margin-bottom:28px;font-weight:700}
+    .login-group{margin-bottom:14px}
+    .login-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
+    .login-group input{width:100%;padding:11px 14px;border:2px solid #EEEDFE;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
+    .login-group input:focus{border-color:#7F77DD}
+    .login-btn{width:100%;padding:12px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:8px}
+    .login-btn:hover{background:#534AB7}
+    .login-error{background:#FCEBEB;border:1px solid #F09595;border-radius:10px;padding:10px 14px;font-size:13px;color:#A32D2D;font-weight:700;margin-bottom:14px;display:none}
+
+    /* LAYOUT ADMIN */
+    .admin-layout{display:none;min-height:100vh;background:#F8F7FF}
+    .topbar{background:#7F77DD;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
+    .topbar-brand{font-size:18px;font-weight:900;color:#fff}
+    .topbar-right{display:flex;gap:12px;align-items:center}
+    .topbar-user{font-size:13px;color:#EEEDFE;font-weight:700}
+    .btn-logout{background:#ffffff30;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+    .btn-logout:hover{background:#ffffff50}
+
+    .tabs{background:#fff;border-bottom:2px solid #EEEDFE;display:flex;gap:0;padding:0 24px}
+    .tab{padding:14px 20px;font-size:14px;font-weight:800;color:#888;cursor:pointer;border-bottom:3px solid transparent}
+    .tab.active{color:#7F77DD;border-bottom:3px solid #7F77DD}
+    .tab:hover:not(.active){color:#534AB7}
+
+    .content{padding:24px}
+
+    /* STATS */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .stat{background:#fff;border-radius:14px;border:2px solid #EEEDFE;padding:16px 18px}
+    .stat-label{font-size:11px;color:#888;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+    .stat-val{font-size:26px;font-weight:900}
+
+    /* SECTION */
+    .section{background:#fff;border-radius:16px;border:2px solid #EEEDFE;overflow:hidden;margin-bottom:20px}
+    .section-head{padding:14px 20px;border-bottom:2px solid #EEEDFE;display:flex;justify-content:space-between;align-items:center}
+    .section-title{font-size:15px;font-weight:900;color:#26215C}
+
+    /* BUTTONS */
+    .btn-primary{padding:9px 20px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+    .btn-primary:hover{background:#534AB7}
+    .btn-secondary{padding:9px 20px;background:#EEEDFE;color:#534AB7;border:2px solid #AFA9EC;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
+    .btn-sm{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif}
+    .btn-sm-purple{background:#EEEDFE;color:#534AB7}
+    .btn-sm-green{background:#EAF3DE;color:#3B6D11}
+    .btn-sm-red{background:#FCEBEB;color:#A32D2D}
+    .btn-sm-amber{background:#FAEEDA;color:#854F0B}
+
+    /* TABLE */
+    .tbl-wrap{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;font-size:13px}
+    th{padding:11px 16px;text-align:left;font-weight:800;font-size:11px;color:#888;border-bottom:2px solid #EEEDFE;background:#F8F7FF;text-transform:uppercase;letter-spacing:.5px}
+    td{padding:11px 16px;border-bottom:1px solid #EEEDFE;color:#26215C;vertical-align:middle}
+    tr:last-child td{border-bottom:none}
+    tr:hover td{background:#F8F7FF}
+
+    /* BADGES */
+    .badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
+    .b-nuevo{background:#E6F1FB;color:#185FA5}
+    .b-proceso{background:#FAEEDA;color:#854F0B}
+    .b-entregado{background:#EAF3DE;color:#3B6D11}
+    .b-cancelado{background:#FCEBEB;color:#A32D2D}
+    .b-stock{background:#EAF3DE;color:#3B6D11}
+    .b-low{background:#FAEEDA;color:#854F0B}
+    .b-out{background:#FCEBEB;color:#A32D2D}
+
+    /* FORM MODAL */
+    .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:200;align-items:center;justify-content:center}
+    .modal-bg.show{display:flex}
+    .modal{background:#fff;border-radius:22px;padding:28px;max-width:460px;width:92%;border:2px solid #EEEDFE;max-height:90vh;overflow-y:auto}
+    .modal h3{font-size:18px;font-weight:900;color:#3C3489;margin-bottom:18px}
+    .form-group{margin-bottom:13px}
+    .form-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:13px;font-family:'Nunito',sans-serif;outline:none}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#7F77DD}
+    .form-group textarea{height:70px;resize:none}
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .modal-btns{display:flex;gap:10px;margin-top:18px}
+    .btn-cancel-modal{flex:1;padding:10px;border:2px solid #EEEDFE;border-radius:12px;background:#fff;color:#888;cursor:pointer;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif}
+    .btn-save{flex:2;padding:10px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
+    .btn-save:hover{background:#534AB7}
+
+    /* FOTO UPLOAD */
+    .upload-area{border:2px dashed #AFA9EC;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:#F8F7FF}
+    .upload-area:hover{border-color:#7F77DD;background:#EEEDFE}
+    .upload-area p{font-size:13px;color:#888;font-weight:700;margin-top:8px}
+    .upload-preview{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
+
+    /* NOTIF */
+    .toast{position:fixed;bottom:24px;right:24px;background:#EEEDFE;border:2px solid #7F77DD;border-radius:16px;padding:14px 20px;font-size:14px;font-weight:800;color:#3C3489;z-index:300;max-width:300px;display:none}
+    .toast.show{display:block}
+    .toast.error{background:#FCEBEB;border-color:#F09595;color:#A32D2D}
+
+    .pane{display:none}
+    .pane.active{display:block}
+
+    @media(max-width:700px){
+      .stats{grid-template-columns:1fr 1fr}
+      .form-grid-2{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-bg" id="loginBg">
+  <div class="login-card">
+    <div class="login-logo">Demo Tienda Online</div>
+    <div class="login-sub">Panel de administración</div>
+    <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+    <div class="login-group">
+      <label>Usuario</label>
+      <input type="text" id="loginUser" placeholder="admin" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-group">
+      <label>Contraseña</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Ingresar</button>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT -->
+<div class="admin-layout" id="adminLayout">
+
+  <div class="topbar">
+    <div class="topbar-brand">Admin — Demo Tienda Online</div>
+    <div class="topbar-right">
+      <span class="topbar-user" id="topbarUser"></span>
+      <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="setTab('dashboard',this)">Dashboard</div>
+    <div class="tab" onclick="setTab('pedidos',this)">Pedidos</div>
+    <div class="tab" onclick="setTab('productos',this)">Productos</div>
+    <div class="tab" onclick="setTab('movimientos',this)">Movimientos</div>
+  </div>
+
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="pane active" id="pane-dashboard">
+      <div class="stats" id="statsGrid"></div>
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Pedidos recientes</div>
+          <span class="badge b-nuevo">En vivo</span>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Cliente</th><th>Producto</th><th>Depto</th><th>Estado</th><th>Fecha</th><th>Acción</th></tr></thead>
+            <tbody id="dashPedidos"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="section">
+        <div class="section-head"><div class="section-title">Productos con stock bajo o agotado</div></div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Estado</th></tr></thead>
+            <tbody id="dashStock"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PEDIDOS -->
+    <div class="pane" id="pane-pedidos">
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Todos los pedidos</div>
+          <div style="display:flex;gap:8px">
+            <select id="filtroEstado" onchange="cargarPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+              <option value="">Todos los estados</option>
+              <option>nuevo</option>
+              <option>proceso</option>
+              <option>entregado</option>
+              <option>cancelado</option>
+            </select>
+          </div>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Cliente</th><th>WhatsApp</th><th>Producto</th><th>Depto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+            <tbody id="tablaPedidos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div class="pane" id="pane-productos">
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Catálogo de productos</div>
+          <button class="btn-primary" onclick="abrirModalProducto()">+ Agregar producto</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Foto</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Tallas</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="tablaProductos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOVIMIENTOS -->
+    <div class="pane" id="pane-movimientos">
+      <div class="section">
+        <div class="section-head">
+          <div class="section-title">Entradas y salidas de inventario</div>
+          <button class="btn-primary" onclick="abrirModalMovimiento()">+ Registrar movimiento</button>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Stock anterior</th><th>Stock nuevo</th><th>Motivo</th></tr></thead>
+            <tbody id="tablaMovimientos"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL PRODUCTO -->
+<div class="modal-bg" id="modalProducto">
+  <div class="modal">
+    <h3 id="modalProductoTitle">Agregar producto</h3>
+    <input type="hidden" id="prod-id">
+    <div class="form-group">
+      <label>Nombre del producto</label>
+      <input type="text" id="prod-nombre" placeholder="Ej: Blusa floral">
+    </div>
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>Categoría</label>
+        <select id="prod-cat">
+          <option>Blusas</option>
+          <option>Pantalones</option>
+          <option>Vestidos</option>
+          <option>Accesorios</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Precio (Q)</label>
+        <input type="number" id="prod-precio" placeholder="0.00">
+      </div>
+    </div>
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>Stock inicial</label>
+        <input type="number" id="prod-stock" placeholder="0">
+      </div>
+      <div class="form-group">
+        <label>Tallas (separadas por coma)</label>
+        <input type="text" id="prod-tallas" placeholder="XS, S, M, L, XL">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Foto del producto</label>
+      <div class="upload-area" onclick="document.getElementById('prod-foto-input').click()">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="2" y="6" width="28" height="20" rx="3" stroke="#AFA9EC" stroke-width="2"/><circle cx="11" cy="13" r="3" stroke="#AFA9EC" stroke-width="2"/><path d="M2 22l7-6 5 5 4-3 7 7" stroke="#AFA9EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <p>Clic para subir foto o arrastrar aquí</p>
+        <input type="file" id="prod-foto-input" accept="image/*" style="display:none" onchange="previewFoto(this)">
+      </div>
+      <img id="prod-foto-preview" class="upload-preview" alt="preview">
+      <input type="hidden" id="prod-imagen-url">
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel-modal" onclick="cerrarModalProducto()">Cancelar</button>
+      <button class="btn-save" onclick="guardarProducto()">Guardar producto</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL MOVIMIENTO -->
+<div class="modal-bg" id="modalMovimiento">
+  <div class="modal">
+    <h3>Registrar movimiento</h3>
+    <div class="form-group">
+      <label>Producto</label>
+      <select id="mov-producto"></select>
+    </div>
+    <div class="form-grid-2">
+      <div class="form-group">
+        <label>Tipo</label>
+        <select id="mov-tipo">
+          <option value="entrada">Entrada</option>
+          <option value="salida">Salida</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Cantidad</label>
+        <input type="number" id="mov-cantidad" placeholder="0" min="1">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Motivo</label>
+      <textarea id="mov-motivo" placeholder="Ej: Reposición proveedor, Pedido #123..."></textarea>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel-modal" onclick="cerrarModalMovimiento()">Cancelar</button>
+      <button class="btn-save" onclick="guardarMovimiento()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://dlrnlktlsvwijsnwvdiy.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRscm5sa3Rsc3Z3aWpzbnd2ZGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTE2OTMsImV4cCI6MjA5MTk2NzY5M30.mPCCNUgt3kJergBuv66h89PMCOIuGtVipTM5bVPQdbw'
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+  const USERS = { 'admin': 'demo2026', 'ronald': 'tienda2026' }
+  let productosCache = []
+
+  function doLogin() {
+    const u = document.getElementById('loginUser').value.trim()
+    const p = document.getElementById('loginPass').value
+    if (USERS[u] && USERS[u] === p) {
+      document.getElementById('loginBg').style.display = 'none'
+      document.getElementById('adminLayout').style.display = 'block'
+      document.getElementById('topbarUser').textContent = u
+      cargarDashboard()
+    } else {
+      document.getElementById('loginError').style.display = 'block'
+    }
+  }
+
+  function doLogout() {
+    document.getElementById('loginBg').style.display = 'flex'
+    document.getElementById('adminLayout').style.display = 'none'
+    document.getElementById('loginUser').value = ''
+    document.getElementById('loginPass').value = ''
+    document.getElementById('loginError').style.display = 'none'
+  }
+
+  function setTab(tab, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+    el.classList.add('active')
+    document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'))
+    document.getElementById('pane-' + tab).classList.add('active')
+    if (tab === 'dashboard') cargarDashboard()
+    if (tab === 'pedidos') cargarPedidos()
+    if (tab === 'productos') cargarProductos()
+    if (tab === 'movimientos') cargarMovimientos()
+  }
+
+  function showToast(msg, error = false) {
+    const t = document.getElementById('toast')
+    t.textContent = msg
+    t.className = 'toast show' + (error ? ' error' : '')
+    setTimeout(() => t.className = 'toast', 3000)
+  }
+
+  function estadoBadge(e) {
+    const m = { nuevo: 'b-nuevo', proceso: 'b-proceso', entregado: 'b-entregado', cancelado: 'b-cancelado' }
+    return `<span class="badge ${m[e] || 'b-nuevo'}">${e}</span>`
+  }
+
+  function stockBadge(s) {
+    if (s <= 0) return '<span class="badge b-out">Agotado</span>'
+    if (s <= 5) return '<span class="badge b-low">Stock bajo</span>'
+    return '<span class="badge b-stock">En stock</span>'
+  }
+
+  function fmtFecha(f) {
+    return f ? new Date(f).toLocaleDateString('es-GT', { day:'2-digit', month:'short', year:'numeric' }) : '—'
+  }
+
+  async function cargarDashboard() {
+    const [{ data: pedidos }, { data: productos }] = await Promise.all([
+      db.from('pedidos').select('*').order('created_at', { ascending: false }),
+      db.from('productos').select('*')
+    ])
+    productosCache = productos || []
+    const total = productos?.length || 0
+    const nuevos = pedidos?.filter(p => p.estado === 'nuevo').length || 0
+    const bajo = productos?.filter(p => p.stock <= 5 && p.stock > 0).length || 0
+    const agotados = productos?.filter(p => p.stock <= 0).length || 0
+    document.getElementById('statsGrid').innerHTML = `
+      <div class="stat"><div class="stat-label">Productos</div><div class="stat-val" style="color:#7F77DD">${total}</div></div>
+      <div class="stat"><div class="stat-label">Pedidos nuevos</div><div class="stat-val" style="color:#185FA5">${nuevos}</div></div>
+      <div class="stat"><div class="stat-label">Stock bajo</div><div class="stat-val" style="color:#854F0B">${bajo}</div></div>
+      <div class="stat"><div class="stat-label">Agotados</div><div class="stat-val" style="color:#A32D2D">${agotados}</div></div>`
+    document.getElementById('dashPedidos').innerHTML = (pedidos || []).slice(0, 5).map(p => `
+      <tr>
+        <td style="font-family:monospace;font-size:11px;color:#888">${p.id.slice(0,8)}...</td>
+        <td style="font-weight:800">${p.cliente_nombre}</td>
+        <td>${p.producto_nombre}</td>
+        <td>${p.departamento}</td>
+        <td>${estadoBadge(p.estado)}</td>
+        <td>${fmtFecha(p.created_at)}</td>
+        <td><select onchange="cambiarEstadoPedido('${p.id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+          <option ${p.estado==='nuevo'?'selected':''}>nuevo</option>
+          <option ${p.estado==='proceso'?'selected':''}>proceso</option>
+          <option ${p.estado==='entregado'?'selected':''}>entregado</option>
+          <option ${p.estado==='cancelado'?'selected':''}>cancelado</option>
+        </select></td>
+      </tr>`).join('')
+    document.getElementById('dashStock').innerHTML = (productos || [])
+      .filter(p => p.stock <= 5)
+      .map(p => `<tr><td style="font-weight:800">${p.nombre}</td><td>${p.categoria}</td><td>${p.stock}</td><td>${stockBadge(p.stock)}</td></tr>`).join('')
+  }
+
+  async function cargarPedidos() {
+    const filtro = document.getElementById('filtroEstado').value
+    let q = db.from('pedidos').select('*').order('created_at', { ascending: false })
+    if (filtro) q = q.eq('estado', filtro)
+    const { data } = await q
+    document.getElementById('tablaPedidos').innerHTML = (data || []).map(p => `
+      <tr>
+        <td style="font-weight:800">${p.cliente_nombre}</td>
+        <td style="color:#7F77DD;font-weight:700">${p.whatsapp}</td>
+        <td>${p.producto_nombre}</td>
+        <td>${p.departamento}</td>
+        <td>${estadoBadge(p.estado)}</td>
+        <td>${fmtFecha(p.created_at)}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          <select onchange="cambiarEstadoPedido('${p.id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+            <option ${p.estado==='nuevo'?'selected':''}>nuevo</option>
+            <option ${p.estado==='proceso'?'selected':''}>proceso</option>
+            <option ${p.estado==='entregado'?'selected':''}>entregado</option>
+            <option ${p.estado==='cancelado'?'selected':''}>cancelado</option>
+          </select>
+          <button class="btn-sm btn-sm-red" onclick="eliminarPedido('${p.id}')">Eliminar</button>
+        </td>
+      </tr>`).join('')
+  }
+
+  async function cambiarEstadoPedido(id, estado) {
+    await db.from('pedidos').update({ estado }).eq('id', id)
+    showToast('Estado actualizado')
+  }
+
+  async function eliminarPedido(id) {
+    if (!confirm('¿Eliminar este pedido?')) return
+    await db.from('pedidos').delete().eq('id', id)
+    showToast('Pedido eliminado')
+    cargarPedidos()
+  }
+
+  async function cargarProductos() {
+    const { data } = await db.from('productos').select('*').order('created_at', { ascending: false })
+    productosCache = data || []
+    document.getElementById('tablaProductos').innerHTML = (data || []).map(p => `
+      <tr>
+        <td>${p.imagen_url ? `<img src="${p.imagen_url}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;border:2px solid #EEEDFE">` : '<div style="width:44px;height:44px;background:#EEEDFE;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px">🛍️</div>'}</td>
+        <td style="font-weight:800">${p.nombre}</td>
+        <td>${p.categoria}</td>
+        <td style="font-weight:800;color:#D4537E">Q ${parseFloat(p.precio).toFixed(2)}</td>
+        <td style="font-weight:800">${p.stock}</td>
+        <td style="font-size:12px;color:#888">${p.tallas}</td>
+        <td>${stockBadge(p.stock)}</td>
+        <td style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-sm btn-sm-purple" onclick="editarProducto('${p.id}')">Editar</button>
+          <button class="btn-sm btn-sm-amber" onclick="abrirModalMovimientoProducto('${p.id}')">Stock</button>
+          <button class="btn-sm btn-sm-red" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+        </td>
+      </tr>`).join('')
+  }
+
+  function abrirModalProducto(id) {
+    document.getElementById('modalProductoTitle').textContent = 'Agregar producto'
+    document.getElementById('prod-id').value = ''
+    document.getElementById('prod-nombre').value = ''
+    document.getElementById('prod-cat').value = 'Blusas'
+    document.getElementById('prod-precio').value = ''
+    document.getElementById('prod-stock').value = ''
+    document.getElementById('prod-tallas').value = ''
+    document.getElementById('prod-imagen-url').value = ''
+    document.getElementById('prod-foto-preview').style.display = 'none'
+    document.getElementById('modalProducto').classList.add('show')
+  }
+
+  function cerrarModalProducto() { document.getElementById('modalProducto').classList.remove('show') }
+
+  function editarProducto(id) {
+    const p = productosCache.find(x => x.id === id)
+    if (!p) return
+    document.getElementById('modalProductoTitle').textContent = 'Editar producto'
+    document.getElementById('prod-id').value = p.id
+    document.getElementById('prod-nombre').value = p.nombre
+    document.getElementById('prod-cat').value = p.categoria
+    document.getElementById('prod-precio').value = p.precio
+    document.getElementById('prod-stock').value = p.stock
+    document.getElementById('prod-tallas').value = p.tallas
+    document.getElementById('prod-imagen-url').value = p.imagen_url || ''
+    const prev = document.getElementById('prod-foto-preview')
+    if (p.imagen_url) { prev.src = p.imagen_url; prev.style.display = 'block' }
+    else { prev.style.display = 'none' }
+    document.getElementById('modalProducto').classList.add('show')
+  }
+
+  function previewFoto(input) {
+    const file = input.files[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = e => {
+      const prev = document.getElementById('prod-foto-preview')
+      prev.src = e.target.result
+      prev.style.display = 'block'
+    }
+    reader.readAsDataURL(file)
+  }
+
+  async function subirFoto(file, nombre) {
+    const ext = file.name.split('.').pop()
+    const path = `productos/${Date.now()}-${nombre.replace(/\s/g,'_')}.${ext}`
+    const { error } = await db.storage.from('fotos').upload(path, file, { upsert: true })
+    if (error) return null
+    const { data } = db.storage.from('fotos').getPublicUrl(path)
+    return data.publicUrl
+  }
+
+  async function guardarProducto() {
+    const id = document.getElementById('prod-id').value
+    const nombre = document.getElementById('prod-nombre').value.trim()
+    const categoria = document.getElementById('prod-cat').value
+    const precio = parseFloat(document.getElementById('prod-precio').value)
+    const stock = parseInt(document.getElementById('prod-stock').value)
+    const tallas = document.getElementById('prod-tallas').value.trim()
+    if (!nombre || !precio || isNaN(stock) || !tallas) { showToast('Completá todos los campos', true); return }
+    let imagen_url = document.getElementById('prod-imagen-url').value
+    const fotoInput = document.getElementById('prod-foto-input')
+    if (fotoInput.files[0]) {
+      showToast('Subiendo foto...')
+      const url = await subirFoto(fotoInput.files[0], nombre)
+      if (url) imagen_url = url
+    }
+    const payload = { nombre, categoria, precio, stock, tallas, imagen_url: imagen_url || null }
+    if (id) {
+      await db.from('productos').update(payload).eq('id', id)
+      showToast('Producto actualizado')
+    } else {
+      await db.from('productos').insert([payload])
+      showToast('Producto agregado')
+    }
+    cerrarModalProducto()
+    cargarProductos()
+  }
+
+  async function eliminarProducto(id) {
+    if (!confirm('¿Eliminar este producto?')) return
+    await db.from('productos').delete().eq('id', id)
+    showToast('Producto eliminado')
+    cargarProductos()
+  }
+
+  async function cargarMovimientos() {
+    const { data } = await db.from('movimientos').select('*, productos(nombre)').order('created_at', { ascending: false })
+    document.getElementById('tablaMovimientos').innerHTML = (data || []).map(m => `
+      <tr>
+        <td>${fmtFecha(m.created_at)}</td>
+        <td style="font-weight:800">${m.productos?.nombre || '—'}</td>
+        <td><span class="badge ${m.tipo==='entrada'?'b-stock':'b-out'}">${m.tipo}</span></td>
+        <td style="font-weight:800">${m.tipo==='entrada'?'+':'−'}${m.cantidad}</td>
+        <td>${m.stock_anterior ?? '—'}</td>
+        <td style="font-weight:800">${m.stock_nuevo ?? '—'}</td>
+        <td style="color:#888">${m.motivo || '—'}</td>
+      </tr>`).join('')
+  }
+
+  function abrirModalMovimiento() {
+    const sel = document.getElementById('mov-producto')
+    sel.innerHTML = productosCache.map(p => `<option value="${p.id}" data-stock="${p.stock}">${p.nombre} (stock: ${p.stock})</option>`).join('')
+    document.getElementById('mov-cantidad').value = ''
+    document.getElementById('mov-motivo').value = ''
+    document.getElementById('modalMovimiento').classList.add('show')
+  }
+
+  function abrirModalMovimientoProducto(id) {
+    abrirModalMovimiento()
+    document.getElementById('mov-producto').value = id
+  }
+
+  function cerrarModalMovimiento() { document.getElementById('modalMovimiento').classList.remove('show') }
+
+  async function guardarMovimiento() {
+    const prodId = document.getElementById('mov-producto').value
+    const tipo = document.getElementById('mov-tipo').value
+    const cantidad = parseInt(document.getElementById('mov-cantidad').value)
+    const motivo = document.getElementById('mov-motivo').value.trim()
+    if (!prodId || !cantidad || cantidad < 1) { showToast('Completá todos los campos', true); return }
+    const prod = productosCache.find(p => p.id === prodId)
+    if (!prod) return
+    const stockAnterior = prod.stock
+    const stockNuevo = tipo === 'entrada' ? stockAnterior + cantidad : Math.max(0, stockAnterior - cantidad)
+    await db.from('productos').update({ stock: stockNuevo }).eq('id', prodId)
+    await db.from('movimientos').insert([{ producto_id: prodId, tipo, cantidad, motivo, stock_anterior: stockAnterior, stock_nuevo: stockNuevo }])
+    showToast('Movimiento registrado')
+    cerrarModalMovimiento()
+    cargarMovimientos()
+    cargarProductos()
+  }
+
+  cargarDashboard()
+</script>
+</body>
+</html>
