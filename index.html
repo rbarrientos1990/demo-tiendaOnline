@@ -334,34 +334,193 @@
     /* ===== GRID ===== */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:14px 20px 20px;background:#F8F7FF}
 
-    /* ===== TARJETA ===== */
-    .card{background:#fff;border-radius:16px;border:2px solid #EEEDFE;overflow:hidden;transition:border-color .2s}
-    .card:hover{border-color:#AFA9EC}
-    .card-img{height:130px;display:flex;align-items:center;justify-content:center;overflow:hidden;cursor:pointer}
-    .card-img img{max-height:120px;max-width:100%;object-fit:cover;border-radius:6px;cursor:zoom-in}
-    .card-body{padding:12px}
-    .card-cat{font-size:9px;color:#7F77DD;font-weight:900;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}
-    .card-name{font-size:13px;font-weight:900;color:#26215C;margin-bottom:3px;line-height:1.2;cursor:pointer}
+    /* ===== TARJETA PREMIUM ===== */
+    .card{
+      background:#fff;
+      border-radius:22px;
+      border:1px solid #EEEDFE;
+      overflow:hidden;
+      position:relative;
+      box-shadow:0 12px 32px rgba(38,33,92,.08);
+      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      border-color:#D9D5FF;
+      box-shadow:0 20px 46px rgba(38,33,92,.14);
+    }
+    .card-media{
+      position:relative;
+      padding:10px;
+      background:linear-gradient(135deg,#F8F7FF,#FFFFFF);
+    }
+    .card-img{
+      height:168px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      cursor:pointer;
+      border-radius:18px;
+      position:relative;
+    }
+    .card-img img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      object-position:center;
+      border-radius:14px;
+      cursor:zoom-in;
+      padding:4px;
+      transition:transform .25s ease;
+    }
+    .card:hover .card-img img{transform:scale(1.035)}
+    .product-badge{
+      position:absolute;
+      top:18px;
+      left:18px;
+      z-index:3;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.45px;
+      text-transform:uppercase;
+      box-shadow:0 8px 18px rgba(0,0,0,.12);
+    }
+    .badge-new{background:#FAC775;color:#633806}
+    .badge-low{background:#FAEEDA;color:#A4550E}
+    .badge-out{background:#F1F1F4;color:#777}
+    .card-body{padding:13px 14px 15px}
+    .card-topline{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-bottom:6px;
+    }
+    .card-cat{
+      font-size:9px;
+      color:#7F77DD;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+    .card-stock{
+      font-size:9px;
+      color:#777;
+      font-weight:900;
+      background:#F8F7FF;
+      border:1px solid #EEEDFE;
+      padding:4px 7px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .card-name{
+      font-size:14px;
+      font-weight:900;
+      color:#26215C;
+      margin-bottom:6px;
+      line-height:1.22;
+      cursor:pointer;
+      min-height:34px;
+    }
     .card-name:hover{color:#7F77DD}
-    .card-price{font-size:16px;font-weight:900;color:#D4537E;margin-bottom:6px}
-    .card-stock{font-size:10px;color:#888;font-weight:700;margin-bottom:7px}
-    .card-tallas{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
-    .talla{font-size:10px;padding:3px 8px;border-radius:7px;border:2px solid #AFA9EC;color:#534AB7;background:#EEEDFE;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
-    .talla.sel{background:#7F77DD;color:#fff;border-color:#7F77DD}
-    .qty-wrap{display:flex;align-items:center;gap:6px;margin-bottom:9px}
-    .qty-label{font-size:10px;color:#534AB7;font-weight:800}
-    .qty-ctrl{display:flex;align-items:center;gap:4px;background:#EEEDFE;border-radius:8px;padding:2px 6px}
-    .qty-btn{width:22px;height:22px;border:none;background:#7F77DD;color:#fff;border-radius:6px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
-    .qty-btn:hover{background:#534AB7}
-    .qty-btn:disabled{background:#AFA9EC;cursor:not-allowed}
-    .qty-num{font-size:13px;font-weight:900;color:#26215C;min-width:16px;text-align:center}
-    .sin-stock{font-size:11px;color:#bbb;text-align:center;padding:6px 0;font-weight:700}
-    .btn-row{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-    .btn-add{padding:8px;background:#7F77DD;color:#fff;border:none;border-radius:10px;font-size:11px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
-    .btn-add:hover{background:#534AB7}
-    .btn-wa{padding:8px;background:#25D366;color:#fff;border:none;border-radius:10px;font-size:11px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;font-family:'Nunito',sans-serif;text-decoration:none}
+    .card-price{
+      font-size:19px;
+      font-weight:900;
+      color:#D4537E;
+      margin-bottom:9px;
+      letter-spacing:-.2px;
+    }
+    .card-tallas{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+    .talla{
+      font-size:10px;
+      padding:4px 9px;
+      border-radius:999px;
+      border:1px solid #D9D5FF;
+      color:#534AB7;
+      background:#F8F7FF;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      transition:all .18s ease;
+    }
+    .talla:hover{border-color:#7F77DD;background:#EEEDFE}
+    .talla.sel{background:#7F77DD;color:#fff;border-color:#7F77DD;box-shadow:0 6px 14px rgba(127,119,221,.25)}
+    .qty-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:11px;
+      background:#F8F7FF;
+      border:1px solid #EEEDFE;
+      border-radius:14px;
+      padding:7px 8px;
+    }
+    .qty-label{font-size:10px;color:#534AB7;font-weight:900}
+    .qty-ctrl{display:flex;align-items:center;gap:6px;background:transparent;border-radius:8px;padding:0}
+    .qty-btn{
+      width:24px;
+      height:24px;
+      border:none;
+      background:#fff;
+      color:#534AB7;
+      border-radius:8px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 4px 10px rgba(38,33,92,.10);
+    }
+    .qty-btn:hover{background:#7F77DD;color:#fff}
+    .qty-btn:disabled{background:#ECEAFB;color:#AFA9EC;cursor:not-allowed;box-shadow:none}
+    .qty-num{font-size:13px;font-weight:900;color:#26215C;min-width:18px;text-align:center}
+    .sin-stock{
+      font-size:12px;
+      color:#888;
+      text-align:center;
+      padding:10px;
+      font-weight:900;
+      background:#F8F7FF;
+      border-radius:14px;
+      margin-top:8px;
+    }
+    .btn-row{display:grid;grid-template-columns:1fr 44px;gap:7px}
+    .btn-add{
+      padding:10px 8px;
+      background:linear-gradient(135deg,#7F77DD,#534AB7);
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      font-size:11px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      box-shadow:0 9px 18px rgba(127,119,221,.22);
+    }
+    .btn-add:hover{background:linear-gradient(135deg,#534AB7,#3C3489)}
+    .btn-wa{
+      width:44px;
+      height:40px;
+      padding:0;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Nunito',sans-serif;
+      text-decoration:none;
+      box-shadow:0 9px 18px rgba(37,211,102,.18);
+    }
     .btn-wa:hover{background:#128C7E}
-    .wa-icon{width:13px;height:13px;flex-shrink:0}
+    .wa-icon{width:18px;height:18px;flex-shrink:0}
 
     /* ===== MODAL PEDIDO ===== */
     .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:100;align-items:flex-end;justify-content:center}
@@ -754,18 +913,26 @@
         const qty = cantidades[p.id] || 1
         const ts = tallasSeleccionadas[p.id] || ''
         const img = p.imagen_url
-          ? `<img src="${p.imagen_url}" onclick="abrirLightbox('${p.imagen_url}')" style="max-height:120px;max-width:100%;object-fit:cover;border-radius:8px;cursor:zoom-in">`
+          ? `<img src="${p.imagen_url}" onclick="abrirLightbox('${p.imagen_url}')">`
           : c.icon()
+        const badge = sinStock
+          ? '<span class="product-badge badge-out">Agotado</span>'
+          : (p.stock <= 3 ? '<span class="product-badge badge-low">Últimas unidades</span>' : '<span class="product-badge badge-new">Nuevo</span>')
         return `<div class="card">
-          <div class="card-img" style="background:${c.bg}" onclick="abrirDetalle('${p.id}')">${img}</div>
+          <div class="card-media">
+            ${badge}
+            <div class="card-img" style="background:${c.bg}" onclick="abrirDetalle('${p.id}')">${img}</div>
+          </div>
           <div class="card-body">
-            <div class="card-cat">${p.categoria}</div>
+            <div class="card-topline">
+              <div class="card-cat">${p.categoria}</div>
+              <div class="card-stock">${p.stock} disp.</div>
+            </div>
             <div class="card-name" onclick="abrirDetalle('${p.id}')">${p.nombre}</div>
             <div class="card-price">Q ${parseFloat(p.precio).toFixed(2)}</div>
-            <div class="card-stock">${p.stock} disponibles</div>
-            ${sinStock ? '<div class="sin-stock">Agotado</div>' : `
+            ${sinStock ? '<div class="sin-stock">Producto agotado</div>' : `
               <div class="card-tallas">${tallas.map(t=>`<span class="talla ${ts===t?'sel':''}" onclick="selTalla('${p.id}','${t}',this)">${t}</span>`).join('')}</div>
-              <div class="qty-wrap"><span class="qty-label">Cant:</span>
+              <div class="qty-wrap"><span class="qty-label">Cantidad</span>
                 <div class="qty-ctrl">
                   <button class="qty-btn" onclick="cambiarCantidad('${p.id}',-1,${p.stock})" ${qty<=1?'disabled':''}>−</button>
                   <span class="qty-num" id="qty-${p.id}">${qty}</span>
@@ -774,7 +941,7 @@
               </div>
               <div class="btn-row">
                 <button class="btn-add" onclick="agregarPedido('${p.id}','${p.nombre}',${p.precio},${p.stock})">Agregar</button>
-                <a class="btn-wa" href="${waLink(p.nombre,ts)}" target="_blank">${WA_SVG}WhatsApp</a>
+                <a class="btn-wa" href="${waLink(p.nombre,ts)}" target="_blank" title="Consultar por WhatsApp" aria-label="Consultar por WhatsApp">${WA_SVG}</a>
               </div>`}
           </div></div>`
       }).join('')
