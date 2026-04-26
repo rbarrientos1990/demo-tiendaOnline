@@ -588,6 +588,8 @@
     .req{color:#FF4D6D;font-weight:900}
     .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#6C63FF}
+    .form-group input.error,.form-group select.error{border-color:#FF4D6D;background:#FFF4F6}
+    .form-help{display:block;margin-top:4px;font-size:10px;color:#777;font-weight:800}
     .form-group textarea{height:90px;resize:none;font-size:12px;background:#FAFAFF;color:#4B43C4;font-weight:700}
     .modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
     .btn-cancel-modal{padding:12px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif}
@@ -1402,7 +1404,7 @@
         <div class="checkout-note">Al confirmar, se abrirá WhatsApp con el resumen completo para finalizar la compra.</div>
       </div>
       <div class="form-group"><label>Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name" required></div>
-      <div class="form-group"><label>WhatsApp / Teléfono <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel" required></div>
+      <div class="form-group"><label>WhatsApp / Teléfono <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel" required><small class="form-help">Formato permitido: 8 dígitos o +502 seguido de 8 dígitos.</small></div>
       <div class="form-group">
         <label>Departamento <span class="req">*</span></label>
         <select id="f-depto" required>
@@ -1526,6 +1528,41 @@
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
     const WA_NUMBER = '50250481469'
 
+    const CART_STORAGE_KEY = 'modaKidsCarritoV1'
+
+    function guardarCarritoLocal(){
+      try{
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(pedidoActual))
+      }catch(e){}
+    }
+
+    function cargarCarritoLocal(){
+      try{
+        const raw = localStorage.getItem(CART_STORAGE_KEY)
+        if(!raw) return
+        const data = JSON.parse(raw)
+        if(Array.isArray(data)){
+          pedidoActual = data.map(i=>({
+            id:i.id,
+            nombre:i.nombre,
+            talla:i.talla,
+            cantidad:Number(i.cantidad)||1,
+            precio:Number(i.precio)||0
+          })).filter(i=>i.id && i.nombre && i.cantidad > 0)
+          actualizarResumenModal()
+        }
+      }catch(e){}
+    }
+
+    function limpiarCarritoLocal(){
+      try{ localStorage.removeItem(CART_STORAGE_KEY) }catch(e){}
+    }
+
+    function telefonoGuatemalaValido(valor){
+      const limpio = valor.replace(/\s|-/g,'')
+      return /^(\+502)?[2-7]\d{7}$/.test(limpio)
+    }
+
     let todos = [], categoriaActual = 'Todos'
     let tallasSeleccionadas = {}, cantidades = {}, pedidoActual = []
 
@@ -1553,6 +1590,7 @@
       todos = data
       todos.forEach(p => { cantidades[p.id] = 1 })
       renderProductos()
+      cargarCarritoLocal()
     }
 
     function renderProductos() {
@@ -1763,6 +1801,7 @@
     }
 
     function actualizarResumenModal(){
+      guardarCarritoLocal()
       actualizarContadorCarrito()
       if(!pedidoActual.length){
         document.getElementById('pedido-resumen').style.display='none'
@@ -1934,6 +1973,14 @@
         return
       }
 
+      const telInput = document.getElementById('f-tel')
+      telInput.classList.remove('error')
+      if(!telefonoGuatemalaValido(tel)){
+        telInput.classList.add('error')
+        mostrarNotifCarrito('Ingresá un número válido de Guatemala. Ejemplo: +502 5048-1469 o 50481469.', 'warn')
+        return
+      }
+
       const total = calcularTotalPedido()
       const mensajeWhatsApp = construirMensajeWhatsApp(nombre,tel,depto,direccion)
       const detalleCompleto = `${prod}\n\nTotal de compra: Q ${total.toFixed(2)}\nDirección de entrega: ${direccion}`
@@ -1978,6 +2025,7 @@
       document.getElementById('pedido-resumen').style.display='none'
       document.getElementById('modal-sub').textContent='Agregá productos y completá tus datos'
       actualizarContadorCarrito()
+      limpiarCarritoLocal()
     }
 
     function abrirModal(){document.getElementById('modal').classList.add('show')}
