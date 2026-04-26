@@ -977,6 +977,51 @@
 
     .sin-resultados{text-align:center;padding:50px;color:#6C63FF;font-size:15px;font-weight:800;grid-column:1/-1}
     .sin-resultados span{display:block;font-size:40px;margin-bottom:10px}
+
+    .skeleton-card{
+      background:#fff;
+      border-radius:22px;
+      border:1px solid #EEEDFE;
+      overflow:hidden;
+      box-shadow:0 12px 32px rgba(38,33,92,.08);
+      padding:10px;
+    }
+    .skeleton-img{
+      height:168px;
+      border-radius:18px;
+      background:linear-gradient(90deg,#F0EEFF 25%,#FAFAFF 50%,#F0EEFF 75%);
+      background-size:200% 100%;
+      animation:skeletonMove 1.25s infinite linear;
+      margin-bottom:12px;
+    }
+    .skeleton-line{
+      height:12px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#F0EEFF 25%,#FAFAFF 50%,#F0EEFF 75%);
+      background-size:200% 100%;
+      animation:skeletonMove 1.25s infinite linear;
+      margin:9px 4px;
+    }
+    .skeleton-line.short{width:42%}
+    .skeleton-line.medium{width:70%}
+    .skeleton-line.price{width:48%;height:18px}
+    .skeleton-actions{
+      display:grid;
+      grid-template-columns:1fr 44px;
+      gap:7px;
+      margin-top:12px;
+    }
+    .skeleton-btn{
+      height:40px;
+      border-radius:14px;
+      background:linear-gradient(90deg,#F0EEFF 25%,#FAFAFF 50%,#F0EEFF 75%);
+      background-size:200% 100%;
+      animation:skeletonMove 1.25s infinite linear;
+    }
+    @keyframes skeletonMove{
+      from{background-position:200% 0}
+      to{background-position:-200% 0}
+    }
     .loader{text-align:center;padding:50px;color:#6C63FF;font-size:15px;font-weight:800;grid-column:1/-1}
 
     .wa-global{position:fixed;bottom:20px;right:20px;background:#25D366;border:none;border-radius:50%;width:52px;height:52px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:90;text-decoration:none}
@@ -1339,7 +1384,7 @@
   </div>
 
   <div class="resultados" id="resultados"></div>
-  <div class="grid" id="grid"><div class="loader">Cargando productos...</div></div>
+  <div class="grid" id="grid"><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div></div>
 
   <!-- MODAL PEDIDO -->
   <div class="modal-bg" id="modal">
@@ -1497,7 +1542,12 @@
       return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(`Hola, me interesa ${n}${t?' — Talla: '+t:''}. ¿Está disponible?`)}`
     }
 
+    function mostrarSkeletonProductos(){
+      document.getElementById('grid').innerHTML = `<div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div>`
+    }
+
     async function cargarProductos() {
+      mostrarSkeletonProductos()
       const { data, error } = await db.from('productos').select('*').order('created_at', { ascending: false })
       if (error) { document.getElementById('grid').innerHTML = '<div class="loader">Error al cargar.</div>'; return }
       todos = data
