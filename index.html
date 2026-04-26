@@ -3,81 +3,310 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Demo Tienda Online — Ropa Guatemala</title>
+  <title>Moda Kids — Tienda Online Guatemala</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
 
-    /* ===== NAVBAR ===== */
-    nav{background:#7F77DD;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;position:sticky;top:0;z-index:50}
-    .nav-brand{font-size:18px;font-weight:900;color:#fff;letter-spacing:1px}
-    .nav-right{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-    .nav-link{color:#EEEDFE;font-size:13px;font-weight:700;text-decoration:none}
-    .btn-pedido{background:#fff;color:#534AB7;border:none;border-radius:20px;padding:8px 18px;font-weight:900;cursor:pointer;font-size:13px;font-family:'Nunito',sans-serif;white-space:nowrap}
-    .btn-pedido:hover{background:#EEEDFE}
+    /* ===== NAVBAR PROFESIONAL ===== */
+    nav{
+      background:rgba(255,255,255,.94);
+      padding:9px 22px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      border-bottom:1px solid #EEEDFE;
+      box-shadow:0 8px 24px rgba(38,33,92,.08);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:9px;
+      color:#26215C;
+      text-decoration:none;
+    }
+    .brand-mark{
+      width:32px;
+      height:32px;
+      border-radius:12px;
+      background:linear-gradient(135deg,#7F77DD,#D4537E);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      box-shadow:0 8px 18px rgba(127,119,221,.28);
+    }
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .brand-name{
+      font-size:15px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .brand-sub{
+      font-size:9px;
+      font-weight:900;
+      color:#7F77DD;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      margin-top:2px;
+    }
+    .nav-right{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .nav-link{
+      color:#534AB7;
+      font-size:12px;
+      font-weight:900;
+      text-decoration:none;
+      padding:7px 4px;
+    }
+    .nav-link:hover{color:#D4537E}
+    .btn-pedido{
+      background:#26215C;
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:8px 16px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:12px;
+      font-family:'Nunito',sans-serif;
+      white-space:nowrap;
+      box-shadow:0 8px 18px rgba(38,33,92,.18);
+    }
+    .btn-pedido:hover{background:#7F77DD}
 
-    /* ===== HERO CARRUSEL ===== */
-    .hero{position:relative;width:100%;height:300px;overflow:hidden;background:#1a1640}
-
-    /* Pista: cada slide ocupa 50% → se ven 2 fotos a la vez */
-    .hero-track{display:flex;height:100%;transition:transform 0.8s cubic-bezier(.77,0,.18,1)}
-
-    /* Cada slide = 50% del ancho */
-    .hero-slide{min-width:50%;height:100%;position:relative;flex-shrink:0}
-
-    /* object-fit:contain = foto completa sin recorte */
-    .hero-slide img{
-      width:100%;height:100%;
+    /* ===== HERO / BANNER PRINCIPAL PREMIUM ===== */
+    .hero{
+      position:relative;
+      width:100%;
+      min-height:430px;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(250,199,117,.25), transparent 30%),
+        radial-gradient(circle at 85% 25%, rgba(212,83,126,.22), transparent 32%),
+        linear-gradient(135deg,#17123D 0%,#26215C 45%,#3C3489 100%);
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(90deg,rgba(23,18,61,.82) 0%,rgba(23,18,61,.42) 42%,rgba(23,18,61,.08) 100%);
+      z-index:3;
+      pointer-events:none;
+    }
+    .hero-track{
+      display:flex;
+      height:430px;
+      transition:transform .85s cubic-bezier(.77,0,.18,1);
+      position:relative;
+      z-index:1;
+    }
+    .hero-slide{
+      min-width:100%;
+      height:100%;
+      position:relative;
+      flex-shrink:0;
+      display:grid;
+      grid-template-columns:minmax(340px,44%) 1fr;
+      align-items:center;
+      padding:34px 70px;
+      gap:34px;
+    }
+    .hero-copy{
+      position:relative;
+      z-index:5;
+      max-width:500px;
+      color:#fff;
+      background:rgba(23,18,61,.34);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:28px;
+      padding:24px;
+      backdrop-filter:blur(4px);
+      -webkit-backdrop-filter:blur(4px);
+      box-shadow:0 20px 50px rgba(0,0,0,.18);
+    }
+    .hero-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(250,199,117,1);
+      color:#633806;
+      border-radius:999px;
+      padding:7px 15px;
+      font-size:12px;
+      font-weight:900;
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+      margin-bottom:15px;
+    }
+    .hero-title{
+      font-size:46px;
+      font-weight:900;
+      line-height:1.02;
+      letter-spacing:-1px;
+      margin-bottom:12px;
+      text-wrap:balance;
+      color:#FFFFFF;
+      text-shadow:0 3px 10px rgba(0,0,0,.75);
+    }
+    .hero-title span{color:#FAC775}
+    .hero-text{
+      font-size:15px;
+      line-height:1.55;
+      color:#FFFFFF;
+      font-weight:900;
+      margin-bottom:22px;
+      max-width:410px;
+      text-shadow:0 2px 8px rgba(0,0,0,.7);
+    }
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .hero-cta{
+      border:none;
+      background:#fff;
+      color:#534AB7;
+      padding:12px 22px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 14px 30px rgba(0,0,0,.22);
+      font-family:'Nunito',sans-serif;
+    }
+    .hero-cta:hover{background:#FAC775;color:#633806}
+    .hero-ghost{
+      color:#fff;
+      font-size:13px;
+      font-weight:900;
+      text-decoration:none;
+      border:2px solid rgba(255,255,255,.42);
+      padding:10px 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      backdrop-filter:blur(8px);
+      text-shadow:0 2px 8px rgba(0,0,0,.28);
+    }
+    .hero-ghost:hover{background:rgba(255,255,255,.12)}
+    .hero-visual{
+      position:relative;
+      z-index:4;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:18px;
+    }
+    .hero-photo{
+      width:min(34vw,330px);
+      height:345px;
       object-fit:contain;
-      display:block;
-      background:#1a1640;
+      object-position:center;
+      border-radius:32px;
+      border:6px solid rgba(255,255,255,.16);
+      box-shadow:0 24px 70px rgba(0,0,0,.36);
+      background:linear-gradient(135deg,#EEEDFE,#F8F7FF);
+      padding:8px;
     }
-
-    /* Logo central siempre visible encima del carrusel */
-    .hero-logo{
-      position:absolute;top:0;left:0;width:100%;height:100%;
-      display:flex;align-items:center;justify-content:center;
-      pointer-events:none;z-index:10;
+    .hero-photo.secondary{
+      width:min(25vw,250px);
+      height:295px;
+      object-fit:contain;
+      object-position:center;
+      opacity:.94;
+      transform:translateY(22px);
     }
-    .hero-logo-box{
-      background:rgba(63,52,137,0.85);
+    .hero-floating-card{
+      position:absolute;
+      right:28px;
+      bottom:32px;
+      z-index:6;
+      background:rgba(255,255,255,.92);
+      color:#26215C;
       border-radius:20px;
-      padding:20px 36px;
-      text-align:center;
-      box-shadow:0 8px 32px rgba(0,0,0,.45);
-      backdrop-filter:blur(6px);
-      -webkit-backdrop-filter:blur(6px);
+      padding:13px 16px;
+      box-shadow:0 16px 38px rgba(0,0,0,.25);
+      backdrop-filter:blur(10px);
+      min-width:190px;
     }
-    .hero-logo-tag{
-      display:inline-block;background:#FAC775;color:#633806;
-      border-radius:12px;padding:3px 14px;font-size:11px;font-weight:900;margin-bottom:10px
+    .hero-floating-card strong{
+      display:block;
+      font-size:14px;
+      font-weight:900;
+      color:#3C3489;
     }
-    .hero-logo-title{font-size:28px;font-weight:900;color:#fff;line-height:1.1;margin-bottom:6px}
-    .hero-logo-title span{color:#FAC775;display:block}
-    .hero-logo-sub{font-size:12px;color:#EEEDFE;font-weight:700}
-
-    /* Botones nav */
+    .hero-floating-card span{
+      display:block;
+      font-size:11px;
+      font-weight:800;
+      color:#777;
+      margin-top:2px;
+    }
     .hero-btn{
-      position:absolute;top:50%;transform:translateY(-50%);
-      background:rgba(255,255,255,.25);border:none;border-radius:50%;
-      width:38px;height:38px;font-size:20px;color:#fff;cursor:pointer;
-      z-index:11;display:flex;align-items:center;justify-content:center;
-      backdrop-filter:blur(4px);transition:background .2s;
+      position:absolute;
+      top:50%;
+      transform:translateY(-50%);
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.25);
+      border-radius:50%;
+      width:34px;
+      height:34px;
+      font-size:18px;
+      color:#fff;
+      cursor:pointer;
+      z-index:12;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(8px);
+      transition:background .2s,transform .2s;
     }
-    .hero-btn:hover{background:rgba(255,255,255,.45)}
-    .hero-btn-prev{left:12px}
-    .hero-btn-next{right:12px}
-
-    /* Puntos indicadores */
+    .hero-btn:hover{background:rgba(255,255,255,.35);transform:translateY(-50%) scale(1.06)}
+    .hero-btn-prev{left:16px}
+    .hero-btn-next{right:16px}
     .hero-dots{
-      position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-      display:flex;gap:7px;z-index:11;
+      position:absolute;
+      bottom:18px;
+      left:70px;
+      display:flex;
+      gap:8px;
+      z-index:12;
     }
     .hero-dot{
-      width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.45);
-      cursor:pointer;border:none;transition:background .3s,transform .3s;padding:0;
+      width:9px;
+      height:9px;
+      border-radius:999px;
+      background:rgba(255,255,255,.42);
+      cursor:pointer;
+      border:none;
+      transition:all .3s;
+      padding:0;
     }
-    .hero-dot.active{background:#FAC775;transform:scale(1.3)}
+    .hero-dot.active{
+      width:30px;
+      background:#FAC775;
+    }
 
     /* ===== STRIP ===== */
     .strip{background:#FAC775;padding:8px 20px;display:flex;gap:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -214,15 +443,27 @@
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:600px){
-      /* En móvil: 1 foto a la vez */
-      .hero{height:220px}
-      .hero-slide{min-width:100%}
-      .hero-logo-box{padding:14px 20px}
-      .hero-logo-title{font-size:20px}
-      .hero-btn{width:32px;height:32px;font-size:16px}
-      nav{padding:12px 16px}
+      .hero{min-height:620px}
+      .hero::before{background:linear-gradient(180deg,rgba(23,18,61,.95) 0%,rgba(23,18,61,.72) 44%,rgba(23,18,61,.25) 100%)}
+      .hero-track{height:620px}
+      .hero-slide{grid-template-columns:1fr;padding:28px 18px 56px;gap:14px;align-content:center}
+      .hero-copy{padding:18px;border-radius:22px}
+      .hero-title{font-size:34px}
+      .hero-text{font-size:14px}
+      .hero-actions{gap:8px}
+      .hero-cta,.hero-ghost{font-size:12px;padding:10px 15px}
+      .hero-visual{height:300px;gap:10px}
+      .hero-photo{width:54vw;height:260px;border-radius:24px;padding:6px}
+      .hero-photo.secondary{width:38vw;height:220px;transform:translateY(18px)}
+      .hero-floating-card{right:8px;bottom:4px;min-width:160px;padding:10px 12px}
+      .hero-btn{width:30px;height:30px;font-size:15px}
+      .hero-dots{left:50%;transform:translateX(-50%);bottom:16px}
+      nav{padding:8px 14px}
       .nav-link{display:none}
-      .nav-brand{font-size:16px}
+      .brand-mark{width:30px;height:30px;border-radius:10px}
+      .brand-name{font-size:14px}
+      .brand-sub{font-size:8px}
+      .btn-pedido{padding:7px 13px;font-size:11px}
       .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
       .filtros{padding:10px 14px;gap:6px}
       .busqueda{padding:10px 14px}
@@ -230,8 +471,12 @@
       .modal{padding:20px 16px;max-height:95vh}
     }
     @media(max-width:360px){
-      .hero{height:180px}
-      .hero-logo-title{font-size:17px}
+      .hero{min-height:560px}
+      .hero-track{height:560px}
+      .hero-copy{padding:16px}
+      .hero-title{font-size:29px}
+      .hero-photo{height:220px}
+      .hero-photo.secondary{height:190px}
       .grid{grid-template-columns:1fr}
     }
   </style>
@@ -239,33 +484,82 @@
 <body>
 
   <nav>
-    <div class="nav-brand">Demo Tienda Online</div>
+    <a class="nav-brand" href="#">
+      <div class="brand-mark">M</div>
+      <div class="brand-text">
+        <div class="brand-name">Moda Kids</div>
+        <div class="brand-sub">Tienda online</div>
+      </div>
+    </a>
     <div class="nav-right">
-      <a href="#" class="nav-link">Catálogo</a>
-      <a href="#" class="nav-link">Contacto</a>
-      <button class="btn-pedido" onclick="abrirModal()">Hacer pedido</button>
+      <a href="#grid" class="nav-link">Catálogo</a>
+      <a href="#contacto" class="nav-link">Contacto</a>
+      <button class="btn-pedido" onclick="abrirModal()">Mi pedido</button>
     </div>
   </nav>
 
-  <!-- ===== HERO CARRUSEL: 2 fotos a la vez, completas ===== -->
+  <!-- ===== HERO / BANNER PRINCIPAL PREMIUM ===== -->
   <div class="hero" id="hero">
     <div class="hero-track" id="heroTrack">
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe1.jpeg" alt="bebe1"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe2.jpeg" alt="bebe2"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe3.jpeg" alt="bebe3"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe4.jpeg" alt="bebe4"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe5.jpeg" alt="bebe5"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe6.jpeg" alt="bebe6"></div>
-      <div class="hero-slide"><img src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe7.jpeg" alt="bebe7"></div>
-    </div>
+      <section class="hero-slide">
+        <div class="hero-copy">
+          <div class="hero-badge">✨ Nueva colección 2026</div>
+          <h1 class="hero-title">Moda infantil que <span>hace brillar</span></h1>
+          <p class="hero-text">Prendas cómodas, modernas y listas para acompañar cada momento especial de tus pequeños.</p>
+          <div class="hero-actions">
+            <button class="hero-cta" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">Ver catálogo</button>
+            <a class="hero-ghost" href="https://wa.me/50250481469?text=Hola,%20me%20gustar%C3%ADa%20m%C3%A1s%20informaci%C3%B3n%20sobre%20sus%20productos" target="_blank">Consultar por WhatsApp</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-photo" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe1.jpeg" alt="Moda infantil 2026">
+          <img class="hero-photo secondary" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe2.jpeg" alt="Ropa para bebé">
+          <div class="hero-floating-card">
+            <strong>Envíos a toda Guatemala</strong>
+            <span>Pedidos rápidos por WhatsApp</span>
+          </div>
+        </div>
+      </section>
 
-    <!-- Logo central siempre visible -->
-    <div class="hero-logo">
-      <div class="hero-logo-box">
-        <div class="hero-logo-tag">Nueva colección 2026</div>
-        <div class="hero-logo-title">Moda que te<span>hace brillar</span></div>
-        <div class="hero-logo-sub">Envíos a toda Guatemala</div>
-      </div>
+      <section class="hero-slide">
+        <div class="hero-copy">
+          <div class="hero-badge">🧸 Estilos nuevos cada semana</div>
+          <h1 class="hero-title">Looks cómodos para <span>niños y bebés</span></h1>
+          <p class="hero-text">Blusas, vestidos, pantalones y accesorios con tallas disponibles y atención personalizada.</p>
+          <div class="hero-actions">
+            <button class="hero-cta" onclick="filtrar('Vestidos',document.querySelectorAll('.pill')[3])">Ver vestidos</button>
+            <a class="hero-ghost" href="#grid">Explorar productos</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-photo" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe3.jpeg" alt="Vestidos infantiles">
+          <img class="hero-photo secondary" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe4.jpeg" alt="Moda para niños">
+          <div class="hero-floating-card">
+            <strong>Compra fácil y segura</strong>
+            <span>Agrega productos y envía tu pedido</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="hero-slide">
+        <div class="hero-copy">
+          <div class="hero-badge">🎁 Promos y accesorios</div>
+          <h1 class="hero-title">Detalles bonitos para <span>cada ocasión</span></h1>
+          <p class="hero-text">Encuentra prendas y accesorios ideales para regalar o renovar el clóset de tus pequeños.</p>
+          <div class="hero-actions">
+            <button class="hero-cta" onclick="filtrar('Accesorios',document.querySelectorAll('.pill')[4])">Ver accesorios</button>
+            <a class="hero-ghost" href="#contacto">Contáctanos</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img class="hero-photo" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe5.jpeg" alt="Accesorios infantiles">
+          <img class="hero-photo secondary" src="https://dlrnlktlsvwijsnwvdiy.supabase.co/storage/v1/object/public/fotos/Portada/bebe6.jpeg" alt="Ropa moderna infantil">
+          <div class="hero-floating-card">
+            <strong>Atención personalizada</strong>
+            <span>Confirmamos disponibilidad antes del envío</span>
+          </div>
+        </div>
+      </section>
     </div>
 
     <button class="hero-btn hero-btn-prev" onclick="moverCarrusel(-1)">&#8249;</button>
@@ -350,9 +644,9 @@
   <div class="notif notif-ok"   id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
   <div class="notif notif-warn" id="notif-warn">Pedido cancelado. Stock devuelto.</div>
 
-  <footer>
+  <footer id="contacto">
     <div>
-      <div class="footer-brand">Demo Tienda Online</div>
+      <div class="footer-brand">Moda Kids</div>
       <div class="footer-info">barrientosronald1990@gmail.com &nbsp;|&nbsp; +502 5048-1469</div>
       <div class="footer-info">Guatemala City — envíos a todo el país</div>
     </div>
@@ -363,78 +657,53 @@
       <span class="footer-link">Política de envíos</span>
     </div>
   </footer>
-  <div class="footer-bottom">© 2026 Demo Tienda Online — Todos los derechos reservados</div>
+  <div class="footer-bottom">© 2026 Moda Kids — Todos los derechos reservados</div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     // ===== CARRUSEL =====
-    // En desktop: 2 fotos visibles a la vez (cada slide = 50%)
-    // En móvil: 1 foto a la vez (CSS cambia slide a 100%)
-    const TOTAL = 7
+    const TOTAL = document.querySelectorAll('.hero-slide').length
     let cur = 0
     let timer = null
-    let esMobil = window.innerWidth <= 600
 
-    // Crear puntos indicadores
     const dotsEl = document.getElementById('heroDots')
-    // En desktop avanzamos de 2 en 2 → 4 posiciones máx (0,2,4,6 pero limitamos)
-    const totalPasos = esMobil ? TOTAL : Math.ceil(TOTAL / 2)
-    for (let i = 0; i < totalPasos; i++) {
+    for (let i = 0; i < TOTAL; i++) {
       const d = document.createElement('button')
       d.className = 'hero-dot' + (i === 0 ? ' active' : '')
       d.onclick = () => irA(i)
       dotsEl.appendChild(d)
     }
 
-    function getPaso() { return esMobil ? 1 : 2 }
-    function getMaxCur() { return esMobil ? TOTAL - 1 : TOTAL - 2 }
-    function getPct() { return esMobil ? 100 : 50 }
-
     function actualizar() {
-      document.getElementById('heroTrack').style.transform = `translateX(-${cur * getPct()}%)`
-      const paso = getPaso()
-      const dotIdx = Math.floor(cur / paso)
-      document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === dotIdx))
+      document.getElementById('heroTrack').style.transform = `translateX(-${cur * 100}%)`
+      document.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === cur))
     }
 
-    function irA(dotIdx) {
-      const paso = getPaso()
-      cur = Math.min(dotIdx * paso, getMaxCur())
+    function irA(idx) {
+      cur = idx
       actualizar()
       resetTimer()
     }
 
     function moverCarrusel(dir) {
-      const paso = getPaso()
-      cur += dir * paso
-      if (cur < 0) cur = getMaxCur()
-      if (cur > getMaxCur()) cur = 0
+      cur += dir
+      if (cur < 0) cur = TOTAL - 1
+      if (cur >= TOTAL) cur = 0
       actualizar()
       resetTimer()
     }
 
     function resetTimer() {
       clearInterval(timer)
-      timer = setInterval(() => moverCarrusel(1), 4000)
+      timer = setInterval(() => moverCarrusel(1), 5000)
     }
 
-    // Swipe en móvil
     let tx = 0
     const heroEl = document.getElementById('hero')
     heroEl.addEventListener('touchstart', e => { tx = e.touches[0].clientX }, { passive: true })
     heroEl.addEventListener('touchend', e => {
       const diff = tx - e.changedTouches[0].clientX
       if (Math.abs(diff) > 50) moverCarrusel(diff > 0 ? 1 : -1)
-    })
-
-    // Actualizar en resize
-    window.addEventListener('resize', () => {
-      const nuevo = window.innerWidth <= 600
-      if (nuevo !== esMobil) {
-        esMobil = nuevo
-        cur = 0
-        actualizar()
-      }
     })
 
     resetTimer()
