@@ -91,6 +91,36 @@
       box-shadow:0 8px 18px rgba(38,33,92,.18);
     }
     .btn-pedido:hover{background:#6C63FF}
+    .cart-count{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:18px;
+      height:18px;
+      margin-left:6px;
+      padding:0 5px;
+      border-radius:999px;
+      background:#FFD166;
+      color:#633806;
+      font-size:10px;
+      font-weight:900;
+    }
+    .notif-cart{
+      display:none;
+      position:fixed;
+      top:72px;
+      right:18px;
+      z-index:250;
+      background:#1E1B4B;
+      color:#fff;
+      border-radius:16px;
+      padding:12px 16px;
+      font-size:13px;
+      font-weight:900;
+      box-shadow:0 14px 35px rgba(30,27,75,.25);
+      max-width:280px;
+    }
+    .notif-cart.show{display:block}
 
     /* ===== HERO / BANNER PRINCIPAL PREMIUM ===== */
     .hero{
@@ -538,14 +568,73 @@
     .btn-cancel-modal{flex:1;padding:12px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif}
     .btn-enviar{flex:2;padding:12px;background:#6C63FF;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
     .btn-enviar:hover{background:#4B43C4}
-    .pedido-resumen{background:#FAFAFF;border-radius:12px;padding:12px;margin-bottom:14px;border:1px solid #EEEDFE;display:none}
-    .pedido-resumen-title{font-size:11px;font-weight:800;color:#4B43C4;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-    .pedido-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #EEEDFE;font-size:12px}
+    .pedido-resumen{
+      background:#FAFAFF;
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:16px;
+      border:1px solid #EEEDFE;
+      display:none;
+      box-shadow:0 10px 24px rgba(30,27,75,.06);
+    }
+    .pedido-resumen-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-size:12px;
+      font-weight:900;
+      color:#4B43C4;
+      margin-bottom:10px;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+    .pedido-count{
+      background:#6C63FF;
+      color:#fff;
+      border-radius:999px;
+      padding:4px 9px;
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:0;
+      text-transform:none;
+    }
+    .pedido-item{
+      display:grid;
+      grid-template-columns:1fr auto auto;
+      align-items:center;
+      gap:8px;
+      padding:10px 0;
+      border-bottom:1px solid #EEEDFE;
+      font-size:12px;
+    }
     .pedido-item:last-child{border-bottom:none}
-    .pedido-item-name{color:#1E1B4B;font-weight:700}
-    .pedido-item-det{color:#888;font-size:11px}
-    .pedido-item-precio{color:#FF4D6D;font-weight:900;white-space:nowrap;margin-left:8px}
-    .pedido-total{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:2px solid #EEEDFE;font-size:14px;font-weight:900;color:#1E1B4B}
+    .pedido-item-name{color:#1E1B4B;font-weight:900}
+    .pedido-item-det{color:#777;font-size:11px;font-weight:700;margin-top:2px}
+    .pedido-item-precio{color:#FF4D6D;font-weight:900;white-space:nowrap;margin-left:4px}
+    .pedido-remove{
+      width:27px;
+      height:27px;
+      border:none;
+      border-radius:9px;
+      background:#fff;
+      color:#FF4D6D;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 5px 12px rgba(30,27,75,.08);
+    }
+    .pedido-remove:hover{background:#FFE8ED}
+    .pedido-total{
+      display:flex;
+      justify-content:space-between;
+      margin-top:10px;
+      padding-top:12px;
+      border-top:2px solid #EEEDFE;
+      font-size:16px;
+      font-weight:900;
+      color:#1E1B4B;
+    }
 
     /* ===== DETALLE PRODUCTO ===== */
     .detalle-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:150;align-items:center;justify-content:center;padding:16px}
@@ -653,7 +742,7 @@
     <div class="nav-right">
       <a href="#grid" class="nav-link">Catálogo</a>
       <a href="#contacto" class="nav-link">Contacto</a>
-      <button class="btn-pedido" onclick="abrirModal()">Mi pedido</button>
+      <button class="btn-pedido" onclick="abrirModal()">Mi pedido <span id="cart-count" class="cart-count">0</span></button>
     </div>
   </nav>
 
@@ -755,10 +844,13 @@
   <div class="modal-bg" id="modal">
     <div class="modal">
       <div class="modal-handle"></div>
-      <h2>Hacer pedido</h2>
-      <div class="modal-sub" id="modal-sub">Completá tus datos y te contactamos</div>
+      <h2>Finalizar pedido</h2>
+      <div class="modal-sub" id="modal-sub">Agregá productos y completá tus datos</div>
       <div class="pedido-resumen" id="pedido-resumen">
-        <div class="pedido-resumen-title">Tu pedido</div>
+        <div class="pedido-resumen-title">
+          <span>Tu carrito</span>
+          <span class="pedido-count" id="pedido-count">0 productos</span>
+        </div>
         <div id="pedido-items"></div>
         <div class="pedido-total"><span>Total estimado</span><span id="pedido-total-val">Q 0.00</span></div>
       </div>
@@ -775,7 +867,7 @@
       <div class="form-group"><label>Detalle del pedido</label><textarea id="f-producto" placeholder="Se llena automáticamente..." readonly></textarea></div>
       <div class="modal-btns">
         <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar</button>
-        <button class="btn-enviar" onclick="enviarPedido()">Enviar pedido</button>
+        <button class="btn-enviar" onclick="enviarPedido()">Confirmar pedido</button>
       </div>
     </div>
   </div>
@@ -802,6 +894,7 @@
 
   <div class="notif notif-ok"   id="notif-ok">Pedido enviado. Te contactamos pronto.</div>
   <div class="notif notif-warn" id="notif-warn">Pedido cancelado. Stock devuelto.</div>
+  <div class="notif-cart" id="notif-cart">Producto agregado al carrito</div>
 
   <footer id="contacto">
     <div>
@@ -965,9 +1058,9 @@
             <div class="detalle-tallas">${tallas.map(t=>`<span class="talla ${ts===t?'sel':''}" onclick="selTallaDetalle('${p.id}','${t}',this)">${t}</span>`).join('')}</div>
             <div class="detalle-qty-wrap"><span class="detalle-qty-label">Cantidad:</span>
               <div class="detalle-qty-ctrl">
-                <button class="detalle-qty-btn" onclick="cambiarCantidad('${p.id}',-1,${p.stock});document.getElementById('detalle-qty-${p.id}').textContent=cantidades['${p.id}']" ${qty<=1?'disabled':''}>−</button>
+                <button class="detalle-qty-btn" onclick="actualizarCantidadDetalle('${p.id}',-1,${p.stock})" ${qty<=1?'disabled':''}>−</button>
                 <span class="detalle-qty-num" id="detalle-qty-${p.id}">${qty}</span>
-                <button class="detalle-qty-btn" onclick="cambiarCantidad('${p.id}',1,${p.stock});document.getElementById('detalle-qty-${p.id}').textContent=cantidades['${p.id}']" ${qty>=p.stock?'disabled':''}>+</button>
+                <button class="detalle-qty-btn" onclick="actualizarCantidadDetalle('${p.id}',1,${p.stock})" ${qty>=p.stock?'disabled':''}>+</button>
               </div>
             </div>
             <div class="detalle-btns">
@@ -979,12 +1072,25 @@
     }
 
     function cerrarDetalle(){document.getElementById('detalle-modal').classList.remove('show')}
+    function actualizarCantidadDetalle(id,delta,max){
+      cantidades[id]=Math.min(Math.max(1,(cantidades[id]||1)+delta),max)
+      const el=document.getElementById(`detalle-qty-${id}`)
+      if(el) el.textContent=cantidades[id]
+      renderProductos()
+      abrirDetalle(id)
+    }
+
     function selTallaDetalle(id,talla,el){
       selTalla(id,talla,el)
       const btn=document.getElementById('detalle-wa-link'),p=todos.find(x=>x.id===id)
       if(btn&&p)btn.href=waLink(p.nombre,talla)
     }
-    function cambiarCantidad(id,delta,max){cantidades[id]=Math.min(Math.max(1,(cantidades[id]||1)+delta),max);renderProductos()}
+    function cambiarCantidad(id,delta,max){
+      cantidades[id]=Math.min(Math.max(1,(cantidades[id]||1)+delta),max)
+      const qtyEl=document.getElementById(`qty-${id}`)
+      if(qtyEl) qtyEl.textContent=cantidades[id]
+      renderProductos()
+    }
     function filtrar(cat,el){categoriaActual=cat;document.getElementById('busqueda').value='';document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));el.classList.add('active');renderProductos()}
     function selTalla(id,talla,el){
       tallasSeleccionadas[id]=talla
@@ -993,32 +1099,114 @@
     }
 
     async function agregarPedido(id,nombre,precio,stockMax){
-      const talla=tallasSeleccionadas[id]||'Sin especificar',cantidad=cantidades[id]||1
-      const prod=todos.find(p=>p.id===id)
-      if(!prod||prod.stock<=0){alert('Agotado.');return}
-      if(cantidad>prod.stock){alert(`Solo hay ${prod.stock} disponibles.`);return}
-      const{error}=await db.from('productos').update({stock:prod.stock-cantidad}).eq('id',id)
-      if(error){alert('Error. Intentá de nuevo.');return}
-      prod.stock-=cantidad;pedidoActual.push({id,nombre,talla,cantidad,precio});cantidades[id]=1
-      actualizarResumenModal();renderProductos();abrirModal()
+      const talla = tallasSeleccionadas[id] || 'Sin especificar'
+      const cantidad = Number(cantidades[id] || 1)
+      const precioNum = Number(precio)
+      const prod = todos.find(p => String(p.id) === String(id))
+
+      if(!prod || Number(prod.stock) <= 0){
+        alert('Este producto está agotado.')
+        return
+      }
+
+      const stockActual = Number(prod.stock)
+
+      if(cantidad > stockActual){
+        alert(`Solo hay ${stockActual} disponibles.`)
+        return
+      }
+
+      const nuevoStock = stockActual - cantidad
+      const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',id)
+
+      if(error){
+        alert('No se pudo agregar el producto. Intentá de nuevo.')
+        return
+      }
+
+      prod.stock = nuevoStock
+
+      const existente = pedidoActual.find(i => String(i.id) === String(id) && i.talla === talla)
+
+      if(existente){
+        existente.cantidad = Number(existente.cantidad) + cantidad
+      }else{
+        pedidoActual.push({
+          id,
+          nombre,
+          talla,
+          cantidad,
+          precio: precioNum
+        })
+      }
+
+      cantidades[id] = 1
+      actualizarResumenModal()
+      renderProductos()
+      mostrarNotifCarrito(`${cantidad} ${cantidad===1?'unidad agregada':'unidades agregadas'} al carrito`)
     }
 
     function actualizarResumenModal(){
+      actualizarContadorCarrito()
       if(!pedidoActual.length){
         document.getElementById('pedido-resumen').style.display='none'
-        document.getElementById('modal-sub').textContent='Completá tus datos y te contactamos'
-        document.getElementById('f-producto').value='';return
+        document.getElementById('modal-sub').textContent='Agregá productos y completá tus datos'
+        document.getElementById('f-producto').value=''
+        return
       }
+
+      const totalProductos = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
       document.getElementById('pedido-resumen').style.display='block'
-      document.getElementById('modal-sub').textContent=`${pedidoActual.length} producto(s) en tu pedido`
-      document.getElementById('pedido-items').innerHTML=pedidoActual.map(i=>`
+      document.getElementById('modal-sub').textContent=`Revisá tu pedido antes de enviarlo`
+      document.getElementById('pedido-count').textContent=`${totalProductos} producto${totalProductos!==1?'s':''}`
+
+      document.getElementById('pedido-items').innerHTML=pedidoActual.map((i,idx)=>`
         <div class="pedido-item">
-          <div><div class="pedido-item-name">${i.nombre}</div><div class="pedido-item-det">Talla: ${i.talla} | Cant: ${i.cantidad}</div></div>
+          <div>
+            <div class="pedido-item-name">${i.nombre}</div>
+            <div class="pedido-item-det">Talla: ${i.talla} | Cantidad: ${i.cantidad}</div>
+          </div>
           <div class="pedido-item-precio">Q ${(i.precio*i.cantidad).toFixed(2)}</div>
+          <button class="pedido-remove" onclick="quitarDelPedido(${idx})" title="Quitar producto">×</button>
         </div>`).join('')
-      const total=pedidoActual.reduce((s,i)=>s+(i.precio*i.cantidad),0)
+
+      const total=pedidoActual.reduce((s,i)=>s+(Number(i.precio)*Number(i.cantidad)),0)
       document.getElementById('pedido-total-val').textContent=`Q ${total.toFixed(2)}`
       document.getElementById('f-producto').value=pedidoActual.map(i=>`${i.nombre} — ${i.talla} — Cant: ${i.cantidad} — Q ${(i.precio*i.cantidad).toFixed(2)}`).join('\n')
+    }
+
+    async function quitarDelPedido(idx){
+      const item = pedidoActual[idx]
+      if(!item) return
+
+      const prod = todos.find(p=>p.id===item.id)
+      if(prod){
+        const nuevoStock = Number(prod.stock) + Number(item.cantidad)
+        const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',item.id)
+        if(error){
+          alert('No se pudo quitar el producto. Intentá de nuevo.')
+          return
+        }
+        prod.stock = nuevoStock
+      }
+
+      pedidoActual.splice(idx,1)
+      actualizarResumenModal()
+      renderProductos()
+    }
+
+    function actualizarContadorCarrito(){
+      const totalProductos = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
+      const count = document.getElementById('cart-count')
+      if(count) count.textContent = totalProductos
+    }
+
+    function mostrarNotifCarrito(msg){
+      const el = document.getElementById('notif-cart')
+      if(!el) return
+      el.textContent = msg
+      el.classList.add('show')
+      setTimeout(()=>el.classList.remove('show'),2600)
     }
 
     async function cancelarPedido(){
@@ -1043,7 +1231,8 @@
     function limpiarPedido(){
       pedidoActual=[];['f-nombre','f-tel','f-depto','f-producto'].forEach(id=>{document.getElementById(id).value=''})
       document.getElementById('pedido-resumen').style.display='none'
-      document.getElementById('modal-sub').textContent='Completá tus datos y te contactamos'
+      document.getElementById('modal-sub').textContent='Agregá productos y completá tus datos'
+      actualizarContadorCarrito()
     }
 
     function abrirModal(){document.getElementById('modal').classList.add('show')}
