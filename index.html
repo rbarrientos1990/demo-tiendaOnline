@@ -719,30 +719,225 @@
       color:#1E1B4B;
     }
 
-    /* ===== DETALLE PRODUCTO ===== */
-    .detalle-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:150;align-items:center;justify-content:center;padding:16px}
+    /* ===== DETALLE PRODUCTO PREMIUM CORREGIDO ===== */
+    .detalle-bg{
+      display:none;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      background:rgba(10,8,35,.68);
+      z-index:150;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+      overflow-y:auto;
+    }
     .detalle-bg.show{display:flex}
-    .detalle{background:#fff;border-radius:22px;max-width:440px;width:100%;max-height:90vh;overflow-y:auto;position:relative}
-    .detalle-img{width:100%;height:180px;object-fit:contain;border-radius:22px 22px 0 0;display:block;background:#FAFAFF;padding:10px}
-    .detalle-img-placeholder{width:100%;height:180px;display:flex;align-items:center;justify-content:center;border-radius:22px 22px 0 0;background:#FAFAFF}
-    .detalle-body{padding:20px}
-    .detalle-cat{font-size:10px;color:#6C63FF;font-weight:900;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-    .detalle-name{font-size:22px;font-weight:900;color:#1E1B4B;margin-bottom:6px}
-    .detalle-price{font-size:26px;font-weight:900;color:#FF4D6D;margin-bottom:8px}
-    .detalle-stock{font-size:12px;color:#888;font-weight:700;margin-bottom:12px}
-    .detalle-desc{font-size:13px;color:#555;font-weight:600;line-height:1.6;margin-bottom:16px;padding:12px;background:#FAFAFF;border-radius:10px}
-    .detalle-tallas-title{font-size:11px;font-weight:800;color:#4B43C4;margin-bottom:8px}
-    .detalle-tallas{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-    .detalle-qty-wrap{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-    .detalle-qty-label{font-size:13px;color:#4B43C4;font-weight:800}
-    .detalle-qty-ctrl{display:flex;align-items:center;gap:8px;background:#EEEDFE;border-radius:12px;padding:4px 10px}
-    .detalle-qty-btn{width:28px;height:28px;border:none;background:#6C63FF;color:#fff;border-radius:8px;font-size:18px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center}
-    .detalle-qty-btn:disabled{background:#AFA9EC;cursor:not-allowed}
-    .detalle-qty-num{font-size:16px;font-weight:900;color:#1E1B4B;min-width:20px;text-align:center}
-    .detalle-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-    .detalle-btn-add{padding:12px;background:#6C63FF;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif}
-    .detalle-btn-wa{padding:12px;background:#25D366;color:#fff;border:none;border-radius:14px;font-size:14px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Nunito',sans-serif;text-decoration:none}
-    .detalle-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.45);color:#fff;border:none;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:900;z-index:10}
+    .detalle{
+      background:#fff;
+      border-radius:28px;
+      width:100%;
+      max-width:760px;
+      max-height:90vh;
+      overflow-y:auto;
+      position:relative;
+      box-shadow:0 30px 90px rgba(0,0,0,.35);
+      display:grid;
+      grid-template-columns:44% 56%;
+    }
+    .detalle-media{
+      background:linear-gradient(135deg,#FAFAFF,#EEEDFE);
+      min-height:420px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      position:relative;
+    }
+    .detalle-img{
+      width:100%;
+      max-width:100%;
+      height:360px;
+      object-fit:contain;
+      border-radius:24px;
+      display:block;
+      background:#fff;
+      padding:10px;
+      cursor:zoom-in;
+      box-shadow:0 18px 42px rgba(30,27,75,.12);
+    }
+    .detalle-img-placeholder{
+      width:100%;
+      height:330px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:24px;
+      background:#fff;
+      box-shadow:0 18px 42px rgba(30,27,75,.12);
+    }
+    .detalle-body{
+      padding:28px;
+    }
+    .detalle-cat{
+      display:inline-flex;
+      align-items:center;
+      background:#FAFAFF;
+      border:1px solid #EEEDFE;
+      color:#6C63FF;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      margin-bottom:12px;
+    }
+    .detalle-name{
+      font-size:28px;
+      font-weight:900;
+      color:#1E1B4B;
+      margin-bottom:8px;
+      line-height:1.08;
+      letter-spacing:-.3px;
+    }
+    .detalle-price{
+      font-size:30px;
+      font-weight:900;
+      color:#FF4D6D;
+      margin-bottom:8px;
+    }
+    .detalle-stock{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      color:#4B43C4;
+      font-weight:900;
+      margin-bottom:14px;
+      background:#FAFAFF;
+      border:1px solid #EEEDFE;
+      border-radius:999px;
+      padding:7px 10px;
+    }
+    .detalle-desc{
+      font-size:13px;
+      color:#555;
+      font-weight:700;
+      line-height:1.6;
+      margin-bottom:18px;
+      padding:14px;
+      background:#FAFAFF;
+      border:1px solid #EEEDFE;
+      border-radius:16px;
+    }
+    .detalle-alerta{
+      display:none;
+      margin-bottom:14px;
+      padding:11px 13px;
+      border-radius:14px;
+      background:#FFF4D8;
+      border:2px solid #FFD166;
+      color:#633806;
+      font-size:12px;
+      font-weight:900;
+      line-height:1.35;
+    }
+    .detalle-alerta.show{display:block}
+    .detalle-tallas-title{
+      font-size:12px;
+      font-weight:900;
+      color:#4B43C4;
+      margin-bottom:9px;
+    }
+    .detalle-tallas{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}
+    .detalle-qty-wrap{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:18px;
+      background:#FAFAFF;
+      border:1px solid #EEEDFE;
+      border-radius:18px;
+      padding:10px 12px;
+    }
+    .detalle-qty-label{font-size:13px;color:#4B43C4;font-weight:900}
+    .detalle-qty-ctrl{display:flex;align-items:center;gap:8px;background:transparent;border-radius:12px;padding:0}
+    .detalle-qty-btn{
+      width:32px;
+      height:32px;
+      border:none;
+      background:#fff;
+      color:#4B43C4;
+      border-radius:11px;
+      font-size:18px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 6px 14px rgba(30,27,75,.10);
+    }
+    .detalle-qty-btn:hover{background:#6C63FF;color:#fff}
+    .detalle-qty-btn:disabled{background:#ECEAFB;color:#AFA9EC;cursor:not-allowed;box-shadow:none}
+    .detalle-qty-num{font-size:16px;font-weight:900;color:#1E1B4B;min-width:22px;text-align:center}
+    .detalle-btns{display:grid;grid-template-columns:1fr 54px;gap:10px;margin-bottom:12px}
+    .detalle-btn-add{
+      padding:13px;
+      background:linear-gradient(135deg,#6C63FF,#4B43C4);
+      color:#fff;
+      border:none;
+      border-radius:16px;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      box-shadow:0 12px 24px rgba(108,99,255,.22);
+    }
+    .detalle-btn-add:hover{background:linear-gradient(135deg,#4B43C4,#1E1B4B)}
+    .detalle-btn-wa{
+      width:54px;
+      padding:0;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      border-radius:16px;
+      font-size:0;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Nunito',sans-serif;
+      text-decoration:none;
+      box-shadow:0 12px 24px rgba(37,211,102,.18);
+    }
+    .detalle-btn-wa:hover{background:#128C7E}
+    .detalle-btn-wa .wa-icon{width:22px;height:22px}
+    .detalle-close{
+      position:absolute;
+      top:14px;
+      right:14px;
+      background:rgba(30,27,75,.72);
+      color:#fff;
+      border:none;
+      border-radius:50%;
+      width:36px;
+      height:36px;
+      font-size:18px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      z-index:10;
+      backdrop-filter:blur(6px);
+    }
+    .detalle-close:hover{background:#1E1B4B}
 
     /* ===== LIGHTBOX ===== */
     .lightbox{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.92);z-index:500;align-items:center;justify-content:center}
@@ -894,6 +1089,45 @@
       .strip{padding:7px 14px;gap:16px}
       .modal{padding:20px 16px;max-height:95vh}
     }
+    @media(max-width:700px){
+      .detalle-bg{
+        padding:12px;
+        align-items:center;
+      }
+      .detalle{
+        grid-template-columns:1fr;
+        width:100%;
+        max-width:100%;
+        max-height:92vh;
+        border-radius:22px;
+      }
+      .detalle-media{
+        width:100%;
+        min-height:250px;
+        padding:16px;
+      }
+      .detalle-img{
+        width:100%;
+        max-width:280px;
+        height:230px;
+        object-fit:contain;
+      }
+      .detalle-img-placeholder{
+        width:100%;
+        max-width:280px;
+        height:230px;
+      }
+      .detalle-body{
+        padding:20px;
+      }
+      .detalle-name{font-size:23px}
+      .detalle-price{font-size:26px}
+      .detalle-close{
+        top:10px;
+        right:10px;
+      }
+    }
+
     @media(max-width:360px){
       .hero{min-height:610px}
       .hero-track{height:610px;width:100vw}
@@ -1065,7 +1299,7 @@
   <div class="detalle-bg" id="detalle-modal">
     <div class="detalle">
       <button class="detalle-close" onclick="cerrarDetalle()">✕</button>
-      <div id="detalle-content"></div>
+      <div id="detalle-content" style="display:contents"></div>
     </div>
   </div>
 
@@ -1233,22 +1467,30 @@
     }
 
     function abrirDetalle(id) {
-      const p = todos.find(x=>x.id===id); if (!p) return
+      const p = todos.find(x=>String(x.id)===String(id)); if (!p) return
       const c = cfg[p.categoria]||{bg:'#EEEDFE',icon:()=>''}
-      const tallas = p.tallas?p.tallas.split(',').map(t=>t.trim()):[]
-      const sinStock = p.stock<=0, qty=cantidades[p.id]||1, ts=tallasSeleccionadas[p.id]||''
+      const tallas = p.tallas?p.tallas.split(',').map(t=>t.trim()).filter(Boolean):[]
+      const sinStock = Number(p.stock)<=0
+      const qty=cantidades[p.id]||1
+      const ts=tallasSeleccionadas[p.id]||''
       document.getElementById('detalle-content').innerHTML=`
-        ${p.imagen_url?`<img class="detalle-img" src="${p.imagen_url}" onclick="abrirLightbox('${p.imagen_url}')" style="cursor:zoom-in">`:`<div class="detalle-img-placeholder" style="background:${c.bg}">${c.icon()}</div>`}
+        <div class="detalle-media">
+          ${p.imagen_url
+            ? `<img class="detalle-img" src="${p.imagen_url}" onclick="abrirLightbox('${p.imagen_url}')" alt="${p.nombre}">`
+            : `<div class="detalle-img-placeholder" style="background:${c.bg}">${c.icon()}</div>`}
+        </div>
         <div class="detalle-body">
           <div class="detalle-cat">${p.categoria}</div>
           <div class="detalle-name">${p.nombre}</div>
-          <div class="detalle-price">Q ${parseFloat(p.precio).toFixed(2)}</div>
-          <div class="detalle-stock">${p.stock>0?`${p.stock} disponibles`:'Agotado'}</div>
-          <div class="detalle-desc">Producto de alta calidad. Consultá disponibilidad por WhatsApp.</div>
+          <div class="detalle-price">Q ${Number(p.precio).toFixed(2)}</div>
+          <div class="detalle-stock">${p.stock>0?`✓ ${p.stock} disponibles`:'Agotado'}</div>
+          <div class="detalle-desc">Producto disponible para pedido en línea. Seleccioná talla y cantidad antes de agregarlo al carrito.</div>
+          <div class="detalle-alerta" id="detalle-alerta-${p.id}">Seleccioná una talla antes de agregar este producto al carrito.</div>
           ${sinStock?'':`
-            <div class="detalle-tallas-title">Seleccioná tu talla:</div>
+            <div class="detalle-tallas-title">Talla</div>
             <div class="detalle-tallas">${tallas.map(t=>`<span class="talla ${ts===t?'sel':''}" onclick="selTallaDetalle('${p.id}','${t}',this)">${t}</span>`).join('')}</div>
-            <div class="detalle-qty-wrap"><span class="detalle-qty-label">Cantidad:</span>
+            <div class="detalle-qty-wrap">
+              <span class="detalle-qty-label">Cantidad</span>
               <div class="detalle-qty-ctrl">
                 <button class="detalle-qty-btn" onclick="actualizarCantidadDetalle('${p.id}',-1,${p.stock})" ${qty<=1?'disabled':''}>−</button>
                 <span class="detalle-qty-num" id="detalle-qty-${p.id}">${qty}</span>
@@ -1256,11 +1498,27 @@
               </div>
             </div>
             <div class="detalle-btns">
-              <button class="detalle-btn-add" onclick="agregarPedido('${p.id}','${p.nombre}',${p.precio},${p.stock});cerrarDetalle()">Agregar al pedido</button>
-              <a class="detalle-btn-wa" id="detalle-wa-link" href="${waLink(p.nombre,ts)}" target="_blank">${WA_SVG}WhatsApp</a>
+              <button class="detalle-btn-add" onclick="agregarPedidoDesdeDetalle('${p.id}','${p.nombre}',${p.precio},${p.stock})">Agregar al carrito</button>
+              <a class="detalle-btn-wa" id="detalle-wa-link" href="${waLink(p.nombre,ts)}" target="_blank" title="Consultar por WhatsApp" aria-label="Consultar por WhatsApp">${WA_SVG}</a>
             </div>`}
         </div>`
       document.getElementById('detalle-modal').classList.add('show')
+    }
+
+    async function agregarPedidoDesdeDetalle(id,nombre,precio,stockMax){
+      const prod = todos.find(p => String(p.id) === String(id))
+      const tallasDisponibles = prod && prod.tallas ? prod.tallas.split(',').map(t=>t.trim()).filter(Boolean) : []
+      const talla = tallasSeleccionadas[id] || ''
+      const alerta = document.getElementById(`detalle-alerta-${id}`)
+
+      if(tallasDisponibles.length > 0 && !talla){
+        if(alerta) alerta.classList.add('show')
+        return
+      }
+
+      if(alerta) alerta.classList.remove('show')
+      await agregarPedido(id,nombre,precio,stockMax)
+      cerrarDetalle()
     }
 
     function cerrarDetalle(){document.getElementById('detalle-modal').classList.remove('show')}
@@ -1274,7 +1532,9 @@
 
     function selTallaDetalle(id,talla,el){
       selTalla(id,talla,el)
-      const btn=document.getElementById('detalle-wa-link'),p=todos.find(x=>x.id===id)
+      const alerta=document.getElementById(`detalle-alerta-${id}`)
+      if(alerta) alerta.classList.remove('show')
+      const btn=document.getElementById('detalle-wa-link'),p=todos.find(x=>String(x.id)===String(id))
       if(btn&&p)btn.href=waLink(p.nombre,talla)
     }
     function cambiarCantidad(id,delta,max){
