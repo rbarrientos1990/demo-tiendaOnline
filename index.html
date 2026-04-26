@@ -110,6 +110,14 @@
       font-size:10px;
       font-weight:900;
     }
+    .cart-total-mini{
+      display:inline-flex;
+      align-items:center;
+      margin-left:5px;
+      font-size:10px;
+      font-weight:900;
+      color:#FFD166;
+    }
     .notif-cart{
       display:none;
       position:fixed;
@@ -722,6 +730,17 @@
       font-weight:900;
       color:#1E1B4B;
     }
+    .checkout-note{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:14px;
+      background:#EFFFF5;
+      border:1px solid #C8F5DA;
+      color:#176B39;
+      font-size:11px;
+      font-weight:900;
+      line-height:1.35;
+    }
 
     /* ===== DETALLE PRODUCTO PREMIUM CORREGIDO ===== */
     .detalle-bg{
@@ -1168,7 +1187,7 @@
     <div class="nav-right">
       <a href="#grid" class="nav-link">Catálogo</a>
       <a href="#contacto" class="nav-link">Contacto</a>
-      <button class="btn-pedido" onclick="abrirModal()">Mi pedido <span id="cart-count" class="cart-count">0</span></button>
+      <button class="btn-pedido" onclick="abrirModal()">Mi pedido <span id="cart-count" class="cart-count">0</span> <span id="cart-total-mini" class="cart-total-mini">Q 0.00</span></button>
     </div>
   </nav>
 
@@ -1279,6 +1298,7 @@
         </div>
         <div id="pedido-items"></div>
         <div class="pedido-total"><span>Total estimado</span><span id="pedido-total-val">Q 0.00</span></div>
+        <div class="checkout-note">Al confirmar, se abrirá WhatsApp con el resumen completo del pedido.</div>
       </div>
       <div class="form-group"><label>Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name" required></div>
       <div class="form-group"><label>WhatsApp / Teléfono <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel" required></div>
@@ -1295,7 +1315,7 @@
       <div class="modal-btns">
         <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar pedido</button>
         <button class="btn-seguir" onclick="seguirComprando()">Seguir comprando</button>
-        <button class="btn-enviar" onclick="enviarPedido()">Confirmar pedido</button>
+        <button class="btn-enviar" onclick="enviarPedido()">Confirmar por WhatsApp</button>
       </div>
     </div>
   </div>
@@ -1610,6 +1630,24 @@
       mostrarNotifCarrito(`${cantidad} ${cantidad===1?'unidad agregada':'unidades agregadas'} al carrito`)
     }
 
+    function calcularTotalPedido(){
+      return pedidoActual.reduce((s,i)=>{
+        return s + (Number(i.precio) * Number(i.cantidad))
+      },0)
+    }
+
+    function construirMensajeWhatsApp(nombre,tel,depto,direccion){
+      const total = calcularTotalPedido()
+      const lineas = pedidoActual.map((i,idx)=>{
+        const precioUnitario = Number(i.precio)
+        const cantidadItem = Number(i.cantidad)
+        const subtotal = precioUnitario * cantidadItem
+        return `${idx+1}. ${i.nombre}\n   Talla: ${i.talla}\n   Cantidad: ${cantidadItem}\n   Precio: Q ${precioUnitario.toFixed(2)} x ${cantidadItem} = Q ${subtotal.toFixed(2)}`
+      }).join('\n\n')
+
+      return `Hola, quiero confirmar este pedido:\n\n${lineas}\n\nTotal estimado: Q ${total.toFixed(2)}\n\nDatos del cliente:\nNombre: ${nombre}\nTeléfono: ${tel}\nDepartamento: ${depto}\nDirección: ${direccion}\n\nQuedo pendiente de confirmación de disponibilidad y envío.`
+    }
+
     function actualizarResumenModal(){
       actualizarContadorCarrito()
       if(!pedidoActual.length){
@@ -1730,8 +1768,11 @@
 
     function actualizarContadorCarrito(){
       const totalUnidades = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
+      const total = calcularTotalPedido()
       const count = document.getElementById('cart-count')
+      const totalMini = document.getElementById('cart-total-mini')
       if(count) count.textContent = totalUnidades
+      if(totalMini) totalMini.textContent = `Q ${total.toFixed(2)}`
     }
 
     function mostrarNotifCarrito(msg,tipo='ok'){
@@ -1772,7 +1813,9 @@
         return
       }
 
-      const detalleCompleto = `${prod}\n\nDirección de entrega: ${direccion}`
+      const total = calcularTotalPedido()
+      const mensajeWhatsApp = construirMensajeWhatsApp(nombre,tel,depto,direccion)
+      const detalleCompleto = `${prod}\n\nTotal estimado: Q ${total.toFixed(2)}\nDirección de entrega: ${direccion}`
 
       const{error}=await db.from('pedidos').insert([{
         cliente_nombre:nombre,
@@ -1789,16 +1832,19 @@
       }
 
       for(const item of pedidoActual){
-        const pd=todos.find(p=>p.id===item.id)
+        const pd=todos.find(p=>String(p.id)===String(item.id))
         if(pd)await db.from('movimientos').insert([{
           producto_id:item.id,
           tipo:'salida',
-          cantidad:item.cantidad,
+          cantidad:Number(item.cantidad),
           motivo:`Pedido de ${nombre}`,
           stock_anterior:Number(pd.stock)+Number(item.cantidad),
-          stock_nuevo:pd.stock
+          stock_nuevo:Number(pd.stock)
         }])
       }
+
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(mensajeWhatsApp)}`
+      window.open(url,'_blank')
 
       cerrarModal()
       limpiarPedido()
