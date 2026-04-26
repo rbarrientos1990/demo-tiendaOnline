@@ -566,6 +566,7 @@
     .modal-sub{font-size:12px;color:#888;margin-bottom:16px;font-weight:700}
     .form-group{margin-bottom:12px}
     .form-group label{font-size:11px;color:#4B43C4;font-weight:800;display:block;margin-bottom:4px}
+    .req{color:#FF4D6D;font-weight:900}
     .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#6C63FF}
     .form-group textarea{height:90px;resize:none;font-size:12px;background:#FAFAFF;color:#4B43C4;font-weight:700}
@@ -929,16 +930,17 @@
         <div id="pedido-items"></div>
         <div class="pedido-total"><span>Total estimado</span><span id="pedido-total-val">Q 0.00</span></div>
       </div>
-      <div class="form-group"><label>Nombre completo</label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name"></div>
-      <div class="form-group"><label>WhatsApp / Teléfono</label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel"></div>
+      <div class="form-group"><label>Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name" required></div>
+      <div class="form-group"><label>WhatsApp / Teléfono <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel" required></div>
       <div class="form-group">
-        <label>Departamento</label>
-        <select id="f-depto">
+        <label>Departamento <span class="req">*</span></label>
+        <select id="f-depto" required>
           <option value="">Seleccioná tu departamento</option>
           <option>Guatemala</option><option>Quetzaltenango</option><option>Escuintla</option>
           <option>Sacatepéquez</option><option>Chimaltenango</option><option>Otro</option>
         </select>
       </div>
+      <div class="form-group"><label>Dirección de entrega <span class="req">*</span></label><input type="text" id="f-direccion" placeholder="Ej. zona, colonia, calle, casa o referencia" autocomplete="street-address" required></div>
       <div class="form-group"><label>Detalle del pedido</label><textarea id="f-producto" placeholder="Se llena automáticamente..." readonly></textarea></div>
       <div class="modal-btns">
         <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar pedido</button>
@@ -1375,18 +1377,58 @@
     }
 
     async function enviarPedido(){
-      const nombre=document.getElementById('f-nombre').value.trim(),tel=document.getElementById('f-tel').value.trim()
-      const depto=document.getElementById('f-depto').value,prod=document.getElementById('f-producto').value.trim()
-      if(!nombre||!tel||!depto||!prod){alert('Completá todos los campos.');return}
-      if(!pedidoActual.length){alert('Agregá al menos un producto.');return}
-      const{error}=await db.from('pedidos').insert([{cliente_nombre:nombre,whatsapp:tel,departamento:depto,producto_nombre:prod,talla:'Ver detalle',estado:'nuevo'}])
-      if(error){alert('Error. Intentá de nuevo.');return}
-      for(const item of pedidoActual){const pd=todos.find(p=>p.id===item.id);if(pd)await db.from('movimientos').insert([{producto_id:item.id,tipo:'salida',cantidad:item.cantidad,motivo:`Pedido de ${nombre}`,stock_anterior:pd.stock+item.cantidad,stock_nuevo:pd.stock}])}
-      cerrarModal();limpiarPedido();mostrarNotif('notif-ok');cargarProductos()
+      const nombre=document.getElementById('f-nombre').value.trim()
+      const tel=document.getElementById('f-tel').value.trim()
+      const depto=document.getElementById('f-depto').value
+      const direccion=document.getElementById('f-direccion').value.trim()
+      const prod=document.getElementById('f-producto').value.trim()
+
+      if(!pedidoActual.length){
+        mostrarNotifCarrito('Agregá al menos un producto al carrito antes de confirmar.', 'warn')
+        return
+      }
+
+      if(!nombre||!tel||!depto||!direccion){
+        mostrarNotifCarrito('Completá los campos obligatorios: nombre, teléfono, departamento y dirección.', 'warn')
+        return
+      }
+
+      const detalleCompleto = `${prod}\n\nDirección de entrega: ${direccion}`
+
+      const{error}=await db.from('pedidos').insert([{
+        cliente_nombre:nombre,
+        whatsapp:tel,
+        departamento:depto,
+        producto_nombre:detalleCompleto,
+        talla:'Ver detalle',
+        estado:'nuevo'
+      }])
+
+      if(error){
+        mostrarNotifCarrito('Error al confirmar el pedido. Intentá de nuevo.', 'warn')
+        return
+      }
+
+      for(const item of pedidoActual){
+        const pd=todos.find(p=>p.id===item.id)
+        if(pd)await db.from('movimientos').insert([{
+          producto_id:item.id,
+          tipo:'salida',
+          cantidad:item.cantidad,
+          motivo:`Pedido de ${nombre}`,
+          stock_anterior:Number(pd.stock)+Number(item.cantidad),
+          stock_nuevo:pd.stock
+        }])
+      }
+
+      cerrarModal()
+      limpiarPedido()
+      mostrarNotif('notif-ok')
+      cargarProductos()
     }
 
     function limpiarPedido(){
-      pedidoActual=[];['f-nombre','f-tel','f-depto','f-producto'].forEach(id=>{document.getElementById(id).value=''})
+      pedidoActual=[];['f-nombre','f-tel','f-depto','f-direccion','f-producto'].forEach(id=>{document.getElementById(id).value=''})
       document.getElementById('pedido-resumen').style.display='none'
       document.getElementById('modal-sub').textContent='Agregá productos y completá tus datos'
       actualizarContadorCarrito()
