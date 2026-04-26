@@ -118,9 +118,14 @@
       font-size:13px;
       font-weight:900;
       box-shadow:0 14px 35px rgba(30,27,75,.25);
-      max-width:280px;
+      max-width:320px;
     }
     .notif-cart.show{display:block}
+    .notif-cart.warn{
+      background:#FFF4D8;
+      color:#633806;
+      border:2px solid #FFD166;
+    }
 
     /* ===== HERO / BANNER PRINCIPAL PREMIUM ===== */
     .hero{
@@ -564,9 +569,32 @@
     .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
     .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#6C63FF}
     .form-group textarea{height:90px;resize:none;font-size:12px;background:#FAFAFF;color:#4B43C4;font-weight:700}
-    .modal-btns{display:flex;gap:10px;margin-top:16px}
-    .btn-cancel-modal{flex:1;padding:12px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif}
-    .btn-enviar{flex:2;padding:12px;background:#6C63FF;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
+    .modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    .btn-cancel-modal{padding:12px;border:2px solid #EEEDFE;border-radius:14px;background:#fff;color:#888;cursor:pointer;font-size:14px;font-weight:800;font-family:'Nunito',sans-serif}
+    .btn-seguir{
+      padding:12px;
+      border:2px solid #D9D5FF;
+      border-radius:14px;
+      background:#FAFAFF;
+      color:#4B43C4;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:900;
+      font-family:'Nunito',sans-serif;
+    }
+    .btn-seguir:hover{background:#EEEDFE}
+    .btn-enviar{
+      grid-column:1/-1;
+      padding:13px;
+      background:#6C63FF;
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:14px;
+      font-family:'Nunito',sans-serif;
+    }
     .btn-enviar:hover{background:#4B43C4}
     .pedido-resumen{
       background:#FAFAFF;
@@ -611,7 +639,54 @@
     .pedido-item:last-child{border-bottom:none}
     .pedido-item-name{color:#1E1B4B;font-weight:900}
     .pedido-item-det{color:#777;font-size:11px;font-weight:700;margin-top:2px}
-    .pedido-item-precio{color:#FF4D6D;font-weight:900;white-space:nowrap;margin-left:4px}
+    .pedido-qty{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      margin-top:6px;
+      background:#fff;
+      border:1px solid #EEEDFE;
+      border-radius:999px;
+      padding:4px 6px;
+      box-shadow:0 4px 10px rgba(30,27,75,.05);
+    }
+    .pedido-qty-btn{
+      width:22px;
+      height:22px;
+      border:none;
+      border-radius:8px;
+      background:#FAFAFF;
+      color:#4B43C4;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .pedido-qty-btn:hover{background:#6C63FF;color:#fff}
+    .pedido-qty-num{
+      min-width:18px;
+      text-align:center;
+      font-size:12px;
+      font-weight:900;
+      color:#1E1B4B;
+    }
+    .pedido-item-precio{
+      color:#FF4D6D;
+      font-weight:900;
+      white-space:nowrap;
+      margin-left:4px;
+      text-align:right;
+      line-height:1.25;
+    }
+    .pedido-item-calculo{
+      display:block;
+      color:#777;
+      font-size:10px;
+      font-weight:800;
+      margin-bottom:2px;
+    }
     .pedido-remove{
       width:27px;
       height:27px;
@@ -866,7 +941,8 @@
       </div>
       <div class="form-group"><label>Detalle del pedido</label><textarea id="f-producto" placeholder="Se llena automáticamente..." readonly></textarea></div>
       <div class="modal-btns">
-        <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar</button>
+        <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar pedido</button>
+        <button class="btn-seguir" onclick="seguirComprando()">Seguir comprando</button>
         <button class="btn-enviar" onclick="enviarPedido()">Confirmar pedido</button>
       </div>
     </div>
@@ -1099,20 +1175,26 @@
     }
 
     async function agregarPedido(id,nombre,precio,stockMax){
-      const talla = tallasSeleccionadas[id] || 'Sin especificar'
-      const cantidad = Number(cantidades[id] || 1)
-      const precioNum = Number(precio)
       const prod = todos.find(p => String(p.id) === String(id))
-
       if(!prod || Number(prod.stock) <= 0){
-        alert('Este producto está agotado.')
+        mostrarNotifCarrito('Este producto está agotado.', 'warn')
         return
       }
 
+      const tallasDisponibles = prod.tallas ? prod.tallas.split(',').map(t=>t.trim()).filter(Boolean) : []
+      const talla = tallasSeleccionadas[id] || ''
+
+      if(tallasDisponibles.length > 0 && !talla){
+        mostrarNotifCarrito(`Seleccioná una talla para "${nombre}" antes de agregarlo al carrito.`, 'warn')
+        return
+      }
+
+      const cantidad = Number(cantidades[id] || 1)
+      const precioNum = Number(precio)
       const stockActual = Number(prod.stock)
 
       if(cantidad > stockActual){
-        alert(`Solo hay ${stockActual} disponibles.`)
+        mostrarNotifCarrito(`Solo hay ${stockActual} disponibles.`, 'warn')
         return
       }
 
@@ -1120,13 +1202,14 @@
       const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',id)
 
       if(error){
-        alert('No se pudo agregar el producto. Intentá de nuevo.')
+        mostrarNotifCarrito('No se pudo agregar el producto. Intentá de nuevo.', 'warn')
         return
       }
 
       prod.stock = nuevoStock
 
-      const existente = pedidoActual.find(i => String(i.id) === String(id) && i.talla === talla)
+      const tallaFinal = talla || 'Sin especificar'
+      const existente = pedidoActual.find(i => String(i.id) === String(id) && i.talla === tallaFinal)
 
       if(existente){
         existente.cantidad = Number(existente.cantidad) + cantidad
@@ -1134,7 +1217,7 @@
         pedidoActual.push({
           id,
           nombre,
-          talla,
+          talla: tallaFinal,
           cantidad,
           precio: precioNum
         })
@@ -1155,24 +1238,93 @@
         return
       }
 
-      const totalProductos = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
+      const totalUnidades = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
+      const totalArticulos = pedidoActual.length
       document.getElementById('pedido-resumen').style.display='block'
       document.getElementById('modal-sub').textContent=`Revisá tu pedido antes de enviarlo`
-      document.getElementById('pedido-count').textContent=`${totalProductos} producto${totalProductos!==1?'s':''}`
+      document.getElementById('pedido-count').textContent=`${totalArticulos} artículo${totalArticulos!==1?'s':''} · ${totalUnidades} unidad${totalUnidades!==1?'es':''}`
 
-      document.getElementById('pedido-items').innerHTML=pedidoActual.map((i,idx)=>`
+      document.getElementById('pedido-items').innerHTML=pedidoActual.map((i,idx)=>{
+        const precioUnitario = Number(i.precio)
+        const cantidadItem = Number(i.cantidad)
+        const subtotalItem = precioUnitario * cantidadItem
+
+        return `
         <div class="pedido-item">
           <div>
             <div class="pedido-item-name">${i.nombre}</div>
-            <div class="pedido-item-det">Talla: ${i.talla} | Cantidad: ${i.cantidad}</div>
+            <div class="pedido-item-det">Talla: ${i.talla}</div>
+            <div class="pedido-qty">
+              <button class="pedido-qty-btn" onclick="editarCantidadCarrito(${idx},-1)" title="Quitar una unidad">−</button>
+              <span class="pedido-qty-num">${cantidadItem}</span>
+              <button class="pedido-qty-btn" onclick="editarCantidadCarrito(${idx},1)" title="Agregar una unidad">+</button>
+            </div>
           </div>
-          <div class="pedido-item-precio">Q ${(i.precio*i.cantidad).toFixed(2)}</div>
+          <div class="pedido-item-precio">
+            <span class="pedido-item-calculo">Q ${precioUnitario.toFixed(2)} × ${cantidadItem}</span>
+            Q ${subtotalItem.toFixed(2)}
+          </div>
           <button class="pedido-remove" onclick="quitarDelPedido(${idx})" title="Quitar producto">×</button>
-        </div>`).join('')
+        </div>`
+      }).join('')
 
-      const total=pedidoActual.reduce((s,i)=>s+(Number(i.precio)*Number(i.cantidad)),0)
+      const total=pedidoActual.reduce((s,i)=>{
+        const precioUnitario = Number(i.precio)
+        const cantidadItem = Number(i.cantidad)
+        return s + (precioUnitario * cantidadItem)
+      },0)
       document.getElementById('pedido-total-val').textContent=`Q ${total.toFixed(2)}`
       document.getElementById('f-producto').value=pedidoActual.map(i=>`${i.nombre} — ${i.talla} — Cant: ${i.cantidad} — Q ${(i.precio*i.cantidad).toFixed(2)}`).join('\n')
+    }
+
+    async function editarCantidadCarrito(idx,delta){
+      const item = pedidoActual[idx]
+      if(!item) return
+
+      const prod = todos.find(p=>String(p.id)===String(item.id))
+      const cantidadActual = Number(item.cantidad)
+
+      if(delta > 0){
+        if(!prod || Number(prod.stock) <= 0){
+          mostrarNotifCarrito('No hay más stock disponible para este producto.', 'warn')
+          return
+        }
+
+        const nuevoStock = Number(prod.stock) - 1
+        const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',item.id)
+
+        if(error){
+          mostrarNotifCarrito('No se pudo aumentar la cantidad. Intentá de nuevo.', 'warn')
+          return
+        }
+
+        prod.stock = nuevoStock
+        item.cantidad = cantidadActual + 1
+      }else{
+        const nuevaCantidad = cantidadActual - 1
+
+        const prodActual = todos.find(p=>String(p.id)===String(item.id))
+        if(prodActual){
+          const nuevoStock = Number(prodActual.stock) + 1
+          const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',item.id)
+
+          if(error){
+            mostrarNotifCarrito('No se pudo disminuir la cantidad. Intentá de nuevo.', 'warn')
+            return
+          }
+
+          prodActual.stock = nuevoStock
+        }
+
+        if(nuevaCantidad <= 0){
+          pedidoActual.splice(idx,1)
+        }else{
+          item.cantidad = nuevaCantidad
+        }
+      }
+
+      actualizarResumenModal()
+      renderProductos()
     }
 
     async function quitarDelPedido(idx){
@@ -1196,17 +1348,22 @@
     }
 
     function actualizarContadorCarrito(){
-      const totalProductos = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
+      const totalUnidades = pedidoActual.reduce((s,i)=>s+Number(i.cantidad),0)
       const count = document.getElementById('cart-count')
-      if(count) count.textContent = totalProductos
+      if(count) count.textContent = totalUnidades
     }
 
-    function mostrarNotifCarrito(msg){
+    function mostrarNotifCarrito(msg,tipo='ok'){
       const el = document.getElementById('notif-cart')
       if(!el) return
       el.textContent = msg
+      el.classList.remove('warn')
+      if(tipo==='warn') el.classList.add('warn')
       el.classList.add('show')
-      setTimeout(()=>el.classList.remove('show'),2600)
+      setTimeout(()=>{
+        el.classList.remove('show')
+        el.classList.remove('warn')
+      },3200)
     }
 
     async function cancelarPedido(){
@@ -1237,6 +1394,11 @@
 
     function abrirModal(){document.getElementById('modal').classList.add('show')}
     function cerrarModal(){document.getElementById('modal').classList.remove('show')}
+    function seguirComprando(){
+      cerrarModal()
+      document.getElementById('grid').scrollIntoView({behavior:'smooth'})
+      mostrarNotifCarrito('Carrito guardado. Podés seguir agregando productos.')
+    }
     function mostrarNotif(id){const el=document.getElementById(id);el.classList.add('show');setTimeout(()=>el.classList.remove('show'),4000)}
     function abrirLightbox(url){document.getElementById('lightbox-img').src=url;document.getElementById('lightbox').classList.add('show')}
     function cerrarLightbox(){document.getElementById('lightbox').classList.remove('show');document.getElementById('lightbox-img').src=''}
