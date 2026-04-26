@@ -8,6 +8,7 @@
   <style>
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
     html,body{width:100%;max-width:100%;overflow-x:hidden}
+    body{padding-top:62px}
 
     /* ===== NAVBAR PROFESIONAL ===== */
     nav{
@@ -18,9 +19,12 @@
       align-items:center;
       flex-wrap:wrap;
       gap:10px;
-      position:sticky;
+      position:fixed;
       top:0;
-      z-index:50;
+      left:0;
+      right:0;
+      width:100%;
+      z-index:1000;
       border-bottom:1px solid #EEEDFE;
       box-shadow:0 8px 24px rgba(38,33,92,.08);
       backdrop-filter:blur(12px);
@@ -1077,6 +1081,7 @@
         transform:translateX(-50%);
         bottom:16px;
       }
+      body{padding-top:58px}
       nav{padding:8px 14px}
       .nav-link{display:none}
       .brand-mark{width:30px;height:30px;border-radius:10px}
