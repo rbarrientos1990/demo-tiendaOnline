@@ -1297,8 +1297,8 @@
           <span class="pedido-count" id="pedido-count">0 productos</span>
         </div>
         <div id="pedido-items"></div>
-        <div class="pedido-total"><span>Total estimado</span><span id="pedido-total-val">Q 0.00</span></div>
-        <div class="checkout-note">Al confirmar, se abrirá WhatsApp con el resumen completo del pedido.</div>
+        <div class="pedido-total"><span>Total de compra</span><span id="pedido-total-val">Q 0.00</span></div>
+        <div class="checkout-note">Al confirmar, se abrirá WhatsApp con el resumen completo para finalizar la compra.</div>
       </div>
       <div class="form-group"><label>Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name" required></div>
       <div class="form-group"><label>WhatsApp / Teléfono <span class="req">*</span></label><input type="tel" id="f-tel" placeholder="+502 0000-0000" autocomplete="tel" required></div>
@@ -1315,7 +1315,7 @@
       <div class="modal-btns">
         <button class="btn-cancel-modal" onclick="cancelarPedido()">Cancelar pedido</button>
         <button class="btn-seguir" onclick="seguirComprando()">Seguir comprando</button>
-        <button class="btn-enviar" onclick="enviarPedido()">Confirmar por WhatsApp</button>
+        <button class="btn-enviar" onclick="enviarPedido()">Confirmar compra por WhatsApp</button>
       </div>
     </div>
   </div>
@@ -1645,7 +1645,7 @@
         return `${idx+1}. ${i.nombre}\n   Talla: ${i.talla}\n   Cantidad: ${cantidadItem}\n   Precio: Q ${precioUnitario.toFixed(2)} x ${cantidadItem} = Q ${subtotal.toFixed(2)}`
       }).join('\n\n')
 
-      return `Hola, quiero confirmar este pedido:\n\n${lineas}\n\nTotal estimado: Q ${total.toFixed(2)}\n\nDatos del cliente:\nNombre: ${nombre}\nTeléfono: ${tel}\nDepartamento: ${depto}\nDirección: ${direccion}\n\nQuedo pendiente de confirmación de disponibilidad y envío.`
+      return `Hola, quiero confirmar mi compra:\n\n${lineas}\n\nTotal de compra: Q ${total.toFixed(2)}\n\nDatos de entrega:\nNombre: ${nombre}\nTeléfono: ${tel}\nDepartamento: ${depto}\nDirección: ${direccion}\n\nQuedo pendiente de las indicaciones para finalizar el pago y coordinar la entrega.`
     }
 
     function actualizarResumenModal(){
@@ -1815,7 +1815,7 @@
 
       const total = calcularTotalPedido()
       const mensajeWhatsApp = construirMensajeWhatsApp(nombre,tel,depto,direccion)
-      const detalleCompleto = `${prod}\n\nTotal estimado: Q ${total.toFixed(2)}\nDirección de entrega: ${direccion}`
+      const detalleCompleto = `${prod}\n\nTotal de compra: Q ${total.toFixed(2)}\nDirección de entrega: ${direccion}`
 
       const{error}=await db.from('pedidos').insert([{
         cliente_nombre:nombre,
