@@ -397,6 +397,11 @@
       position:relative;
       box-shadow:0 12px 32px rgba(38,33,92,.08);
       transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+      animation:cardFadeUp .32s ease both;
+    }
+    @keyframes cardFadeUp{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:translateY(0)}
     }
     .card:hover{
       transform:translateY(-4px);
@@ -732,6 +737,20 @@
       font-weight:900;
       color:#1E1B4B;
     }
+    .btn-vaciar{
+      width:100%;
+      margin-top:10px;
+      padding:10px 12px;
+      border:2px dashed #FFD1DA;
+      border-radius:14px;
+      background:#FFF4F6;
+      color:#FF4D6D;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+    }
+    .btn-vaciar:hover{background:#FFE8ED}
     .checkout-note{
       margin-top:10px;
       padding:10px 12px;
@@ -1076,12 +1095,35 @@
       opacity:.78;
     }
 
-    footer{background:#1E1B4B;padding:20px;display:flex;flex-direction:column;gap:16px}
-    .footer-brand{font-size:18px;font-weight:900;color:#fff}
-    .footer-info{font-size:11px;color:#AFA9EC;margin-top:3px;font-weight:700}
-    .footer-links{display:flex;gap:14px;flex-wrap:wrap}
-    .footer-link{font-size:11px;color:#AFA9EC;font-weight:700}
-    .footer-bottom{background:#1a1640;padding:10px 20px;text-align:center;font-size:10px;color:#4B43C4;font-weight:700}
+    footer{
+      background:linear-gradient(135deg,#1E1B4B,#2B2470);
+      padding:28px 22px;
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr;
+      gap:22px;
+      color:#fff;
+    }
+    .footer-brand{font-size:20px;font-weight:900;color:#fff;margin-bottom:6px}
+    .footer-title{font-size:12px;font-weight:900;color:#FFD166;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+    .footer-info{font-size:12px;color:#DCD9FF;margin-top:5px;font-weight:700;line-height:1.45}
+    .footer-links{display:flex;flex-direction:column;gap:7px}
+    .footer-link{font-size:12px;color:#DCD9FF;font-weight:800}
+    .footer-social{display:flex;gap:8px;margin-top:10px}
+    .footer-social a{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      background:rgba(255,255,255,.10);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-decoration:none;
+      font-size:16px;
+      font-weight:900;
+    }
+    .footer-social a:hover{background:#6C63FF}
+    .footer-bottom{background:#151238;padding:11px 20px;text-align:center;font-size:10px;color:#AFA9EC;font-weight:800}
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:600px){
@@ -1210,6 +1252,7 @@
       .cart-floating-icon{font-size:20px}
       .cart-floating-count{font-size:11px}
       .cart-floating-total{font-size:9px}
+      footer{grid-template-columns:1fr;padding:24px 18px}
       .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
       .filtros{padding:10px 14px;gap:6px}
       .busqueda{padding:10px 14px}
@@ -1401,6 +1444,7 @@
         </div>
         <div id="pedido-items"></div>
         <div class="pedido-total"><span>Total de compra</span><span id="pedido-total-val">Q 0.00</span></div>
+        <button class="btn-vaciar" onclick="vaciarCarrito()">Vaciar carrito</button>
         <div class="checkout-note">Al confirmar, se abrirá WhatsApp con el resumen completo para finalizar la compra.</div>
       </div>
       <div class="form-group"><label>Nombre completo <span class="req">*</span></label><input type="text" id="f-nombre" placeholder="Tu nombre completo" autocomplete="name" required></div>
@@ -1458,14 +1502,27 @@
   <footer id="contacto">
     <div>
       <div class="footer-brand">Moda Kids</div>
-      <div class="footer-info">barrientosronald1990@gmail.com &nbsp;|&nbsp; +502 5048-1469</div>
-      <div class="footer-info">Guatemala City — envíos a todo el país</div>
+      <div class="footer-info">Tienda online de ropa, accesorios y moda infantil en Guatemala.</div>
+      <div class="footer-social">
+        <a href="https://wa.me/50250481469" target="_blank" title="WhatsApp">☎</a>
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Instagram">◎</a>
+      </div>
     </div>
-    <div class="footer-links">
-      <span class="footer-link">Inicio</span>
-      <span class="footer-link">Catálogo</span>
-      <span class="footer-link">Contacto</span>
-      <span class="footer-link">Política de envíos</span>
+    <div>
+      <div class="footer-title">Contacto</div>
+      <div class="footer-info">barrientosronald1990@gmail.com</div>
+      <div class="footer-info">+502 5048-1469</div>
+      <div class="footer-info">Guatemala — envíos a todo el país</div>
+    </div>
+    <div>
+      <div class="footer-title">Información</div>
+      <div class="footer-links">
+        <span class="footer-link">Catálogo</span>
+        <span class="footer-link">Política de envíos</span>
+        <span class="footer-link">Cambios y devoluciones</span>
+        <span class="footer-link">Atención por WhatsApp</span>
+      </div>
     </div>
   </footer>
   <div class="footer-bottom">© 2026 Moda Kids — Todos los derechos reservados</div>
@@ -1946,6 +2003,24 @@
         el.classList.remove('show')
         el.classList.remove('warn')
       },3200)
+    }
+
+    async function vaciarCarrito(){
+      if(!pedidoActual.length) return
+
+      for(const item of pedidoActual){
+        const prod=todos.find(p=>String(p.id)===String(item.id))
+        if(prod){
+          const nuevoStock = Number(prod.stock) + Number(item.cantidad)
+          const { error } = await db.from('productos').update({stock:nuevoStock}).eq('id',item.id)
+          if(!error) prod.stock = nuevoStock
+        }
+      }
+
+      pedidoActual=[]
+      actualizarResumenModal()
+      renderProductos()
+      mostrarNotifCarrito('Carrito vaciado. El stock fue devuelto.')
     }
 
     async function cancelarPedido(){
