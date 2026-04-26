@@ -383,7 +383,59 @@
     .pill:hover{background:#EEEDFE}
     .pill.active{background:#6C63FF;color:#fff;border-color:#6C63FF}
 
-    .resultados{padding:10px 20px 0;font-size:12px;color:#888;font-weight:700;background:#FAFAFF;min-height:24px}
+    .catalog-toolbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:12px 20px 0;
+      background:#FAFAFF;
+      flex-wrap:wrap;
+    }
+    .resultados{
+      font-size:12px;
+      color:#888;
+      font-weight:800;
+      min-height:24px;
+    }
+    .catalog-controls{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .select-order{
+      border:1px solid #EEEDFE;
+      background:#fff;
+      color:#1E1B4B;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:900;
+      font-family:'Nunito',sans-serif;
+      outline:none;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(30,27,75,.06);
+    }
+    .toggle-stock{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      background:#fff;
+      border:1px solid #EEEDFE;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      color:#4B43C4;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(30,27,75,.06);
+      user-select:none;
+    }
+    .toggle-stock input{
+      accent-color:#6C63FF;
+      cursor:pointer;
+    }
 
     /* ===== GRID ===== */
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding:14px 20px 20px;background:#FAFAFF}
@@ -1253,6 +1305,9 @@
       .cart-floating-count{font-size:11px}
       .cart-floating-total{font-size:9px}
       footer{grid-template-columns:1fr;padding:24px 18px}
+      .catalog-toolbar{padding:10px 14px 0;align-items:flex-start}
+      .catalog-controls{width:100%;display:grid;grid-template-columns:1fr}
+      .select-order,.toggle-stock{width:100%;justify-content:center}
       .grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:12px 14px}
       .filtros{padding:10px 14px;gap:6px}
       .busqueda{padding:10px 14px}
@@ -1428,7 +1483,21 @@
     <div class="pill" onclick="filtrar('Accesorios',this)">Accesorios</div>
   </div>
 
-  <div class="resultados" id="resultados"></div>
+  <div class="catalog-toolbar">
+    <div class="resultados" id="resultados"></div>
+    <div class="catalog-controls">
+      <select class="select-order" id="orden-productos" onchange="renderProductos()">
+        <option value="recientes">Más recientes</option>
+        <option value="precio-asc">Precio: menor a mayor</option>
+        <option value="precio-desc">Precio: mayor a menor</option>
+        <option value="nombre-asc">Nombre A-Z</option>
+      </select>
+      <label class="toggle-stock">
+        <input type="checkbox" id="solo-stock" onchange="renderProductos()">
+        Solo disponibles
+      </label>
+    </div>
+  </div>
   <div class="grid" id="grid"><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div><div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line short"></div><div class="skeleton-line medium"></div><div class="skeleton-line price"></div><div class="skeleton-actions"><div class="skeleton-btn"></div><div class="skeleton-btn"></div></div></div></div>
 
   <!-- MODAL PEDIDO -->
@@ -1652,8 +1721,29 @@
 
     function renderProductos() {
       const busq = document.getElementById('busqueda').value.toLowerCase().trim()
-      let lista = categoriaActual === 'Todos' ? todos : todos.filter(p => p.categoria === categoriaActual)
-      if (busq) lista = lista.filter(p => p.nombre.toLowerCase().includes(busq) || p.categoria.toLowerCase().includes(busq))
+      const soloStock = document.getElementById('solo-stock')?.checked || false
+      const orden = document.getElementById('orden-productos')?.value || 'recientes'
+
+      let lista = categoriaActual === 'Todos' ? [...todos] : todos.filter(p => p.categoria === categoriaActual)
+
+      if (busq) {
+        lista = lista.filter(p =>
+          p.nombre.toLowerCase().includes(busq) ||
+          p.categoria.toLowerCase().includes(busq)
+        )
+      }
+
+      if (soloStock) {
+        lista = lista.filter(p => Number(p.stock) > 0)
+      }
+
+      lista.sort((a,b)=>{
+        if(orden === 'precio-asc') return Number(a.precio) - Number(b.precio)
+        if(orden === 'precio-desc') return Number(b.precio) - Number(a.precio)
+        if(orden === 'nombre-asc') return a.nombre.localeCompare(b.nombre)
+        return 0
+      })
+
       document.getElementById('resultados').textContent = lista.length > 0 ? `${lista.length} producto${lista.length!==1?'s':''} encontrado${lista.length!==1?'s':''}` : ''
       if (!lista.length) {
         document.getElementById('grid').innerHTML = `<div class="sin-resultados"><span>🔍</span>${busq?`No encontramos "${busq}"` :'No hay productos aquí'}</div>`
