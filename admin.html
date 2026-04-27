@@ -913,6 +913,78 @@
     .top-product-qty{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--primary-dark);white-space:nowrap}
     @media(max-width:900px){.finance-grid{grid-template-columns:1fr}}
 
+
+    /* ===== ESTADOS VISUALES EN PEDIDOS ===== */
+    .row-estado-nuevo td{
+      background:#F2F8FF !important;
+      border-bottom-color:#D8EBFF !important;
+    }
+    .row-estado-nuevo td:first-child{
+      border-left:6px solid #185FA5;
+    }
+
+    .row-estado-proceso td{
+      background:#FFF9E8 !important;
+      border-bottom-color:#FFEAB0 !important;
+    }
+    .row-estado-proceso td:first-child{
+      border-left:6px solid #FFD166;
+    }
+
+    .row-estado-entregado td{
+      background:#F0FFF5 !important;
+      border-bottom-color:#C8F5DA !important;
+    }
+    .row-estado-entregado td:first-child{
+      border-left:6px solid #25D366;
+    }
+
+    .row-estado-cancelado td{
+      background:#F4F4F7 !important;
+      border-bottom-color:#E4E4EA !important;
+      color:#8A879B !important;
+    }
+    .row-estado-cancelado td:first-child{
+      border-left:6px solid #A32D2D;
+    }
+
+    .row-estado-cancelado .pedido-preview,
+    .row-estado-cancelado td{
+      text-decoration:none;
+      opacity:.78;
+    }
+
+    .estado-legend{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      font-size:11px;
+      font-weight:900;
+      color:var(--muted);
+    }
+    .estado-dot{
+      display:inline-flex;
+      align-items:center;
+      gap:5px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:5px 9px;
+      white-space:nowrap;
+    }
+    .estado-dot::before{
+      content:"";
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      display:inline-block;
+    }
+    .estado-dot.nuevo::before{background:#185FA5}
+    .estado-dot.proceso::before{background:#FFD166}
+    .estado-dot.entregado::before{background:#25D366}
+    .estado-dot.cancelado::before{background:#A32D2D}
+
     .pane{display:none}
     .pane.active{display:block}
 
@@ -1002,7 +1074,15 @@
       </div>
       <div class="section">
         <div class="section-head">
-          <div class="section-title">Pedidos recientes</div>
+          <div>
+            <div class="section-title">Pedidos recientes</div>
+            <div class="estado-legend" style="margin-top:8px">
+              <span class="estado-dot nuevo">Nuevo</span>
+              <span class="estado-dot proceso">En proceso</span>
+              <span class="estado-dot entregado">Entregado</span>
+              <span class="estado-dot cancelado">Cancelado</span>
+            </div>
+          </div>
           <span class="badge b-nuevo">En vivo</span>
         </div>
         <div class="tbl-wrap">
@@ -1026,7 +1106,15 @@
     <div class="pane" id="pane-pedidos">
       <div class="section">
         <div class="section-head">
-          <div class="section-title">Todos los pedidos</div>
+          <div>
+            <div class="section-title">Todos los pedidos</div>
+            <div class="estado-legend" style="margin-top:8px">
+              <span class="estado-dot nuevo">Nuevo</span>
+              <span class="estado-dot proceso">En proceso</span>
+              <span class="estado-dot entregado">Entregado</span>
+              <span class="estado-dot cancelado">Cancelado</span>
+            </div>
+          </div>
           <div class="admin-toolbar">
             <input class="admin-search" id="buscarPedido" placeholder="Buscar en cualquier columna de pedidos..." oninput="renderPedidos()" style="display:none">
             <select id="filtroEstado" onchange="renderPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
@@ -1290,6 +1378,11 @@
     return `<span class="badge ${m[e]||'b-nuevo'}">${e}</span>`
   }
 
+  function rowEstadoClass(e) {
+    const estado = String(e || 'nuevo').toLowerCase()
+    return `row-estado-${estado}`
+  }
+
   function stockBadge(s) {
     if (s <= 0) return '<span class="badge b-out">Agotado</span>'
     if (s <= 5) return '<span class="badge b-low">Stock bajo</span>'
@@ -1461,7 +1554,7 @@
     const updated = document.getElementById('dashUpdated')
     if(updated) updated.textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'})
     document.getElementById('dashPedidos').innerHTML = (pedidos||[]).slice(0,5).map(p=>`
-      <tr class="${p.estado==='nuevo'?'priority-row':''}">
+      <tr class="${rowEstadoClass(p.estado)}">
         <td style="font-family:monospace;font-size:11px;color:#888">${p.id.slice(0,8)}...</td>
         <td style="font-weight:800">${p.cliente_nombre}</td>
         <td class="pedido-preview">${formatearPedidoPreview(p.producto_nombre)}</td>
@@ -1529,7 +1622,7 @@
     }
 
     document.getElementById('tablaPedidos').innerHTML = lista.map(p=>`
-      <tr>
+      <tr class="${rowEstadoClass(p.estado)}">
         <td style="font-weight:800">${p.cliente_nombre}</td>
         <td style="color:#7F77DD;font-weight:700">${p.whatsapp}</td>
         <td class="pedido-preview" title="${limpiarTextoPedido(p.producto_nombre)}">${formatearPedidoPreview(p.producto_nombre)}</td>
