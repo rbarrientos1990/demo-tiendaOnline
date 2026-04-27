@@ -3,102 +3,925 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin — Demo Tienda Online</title>
+  <title>Admin — Moda Kids</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root{
+      --primary:#6C63FF;
+      --primary-dark:#4B43C4;
+      --ink:#1E1B4B;
+      --muted:#7B7895;
+      --soft:#FAFAFF;
+      --line:#E9E7FF;
+      --card:#FFFFFF;
+      --pink:#FF4D6D;
+      --yellow:#FFD166;
+      --green:#25D366;
+      --blue:#185FA5;
+      --danger:#A32D2D;
+      --shadow:0 18px 48px rgba(30,27,75,.10);
+    }
+
     *{box-sizing:border-box;margin:0;padding:0;font-family:'Nunito',Arial,sans-serif}
+    html,body{width:100%;max-width:100%;overflow-x:hidden}
+    body{background:linear-gradient(180deg,#FFFFFF 0%,#FAFAFF 100%);color:var(--ink)}
 
-    .login-bg{min-height:100vh;background:#EEEDFE;display:flex;align-items:center;justify-content:center}
-    .login-card{background:#fff;border-radius:24px;padding:40px;width:100%;max-width:380px;border:2px solid #AFA9EC}
-    .login-logo{font-size:22px;font-weight:900;color:#7F77DD;text-align:center;margin-bottom:6px}
-    .login-sub{font-size:13px;color:#888;text-align:center;margin-bottom:28px;font-weight:700}
+    /* ===== LOGIN PREMIUM ===== */
+    .login-bg{
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255,209,102,.26), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(255,77,109,.18), transparent 30%),
+        linear-gradient(135deg,#17123D 0%,#26215C 45%,#4B43C4 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .login-bg::before{
+      content:"";
+      position:absolute;
+      width:420px;
+      height:420px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      right:-120px;
+      bottom:-150px;
+      filter:blur(2px);
+    }
+    .login-card{
+      position:relative;
+      z-index:2;
+      background:rgba(255,255,255,.94);
+      border-radius:30px;
+      padding:34px;
+      width:100%;
+      max-width:420px;
+      border:1px solid rgba(255,255,255,.45);
+      box-shadow:0 28px 80px rgba(0,0,0,.28);
+      backdrop-filter:blur(16px);
+      -webkit-backdrop-filter:blur(16px);
+    }
+    .login-logo{
+      width:64px;
+      height:64px;
+      border-radius:22px;
+      background:linear-gradient(135deg,var(--primary),var(--pink));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:900;
+      margin:0 auto 14px;
+      box-shadow:0 18px 38px rgba(108,99,255,.32);
+    }
+    .login-logo::before{content:"M"}
+    .login-sub{
+      font-size:13px;
+      color:var(--muted);
+      text-align:center;
+      margin-bottom:26px;
+      font-weight:800;
+    }
+    .login-title{
+      text-align:center;
+      color:var(--ink);
+      font-size:24px;
+      font-weight:900;
+      margin-bottom:6px;
+      letter-spacing:-.3px;
+    }
+    .login-error{
+      background:#FFF0F2;
+      border:1px solid #FFD1DA;
+      border-radius:14px;
+      padding:11px 14px;
+      font-size:13px;
+      color:var(--danger);
+      font-weight:900;
+      margin-bottom:14px;
+      display:none;
+    }
     .login-group{margin-bottom:14px}
-    .login-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
-    .login-group input{width:100%;padding:11px 14px;border:2px solid #EEEDFE;border-radius:12px;font-size:14px;font-family:'Nunito',sans-serif;outline:none}
-    .login-group input:focus{border-color:#7F77DD}
-    .login-btn{width:100%;padding:12px;background:#7F77DD;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;margin-top:8px}
-    .login-btn:hover{background:#534AB7}
-    .login-error{background:#FCEBEB;border:1px solid #F09595;border-radius:10px;padding:10px 14px;font-size:13px;color:#A32D2D;font-weight:700;margin-bottom:14px;display:none}
+    .login-group label{
+      font-size:12px;
+      color:var(--primary-dark);
+      font-weight:900;
+      display:block;
+      margin-bottom:6px;
+    }
+    .login-group input{
+      width:100%;
+      padding:13px 15px;
+      border:2px solid var(--line);
+      border-radius:16px;
+      font-size:14px;
+      font-family:'Nunito',sans-serif;
+      outline:none;
+      background:#fff;
+      color:var(--ink);
+      font-weight:800;
+    }
+    .login-group input:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(108,99,255,.10);
+    }
+    .login-btn{
+      width:100%;
+      padding:13px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      color:#fff;
+      border:none;
+      border-radius:17px;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      margin-top:8px;
+      box-shadow:0 14px 30px rgba(108,99,255,.28);
+    }
+    .login-btn:hover{background:linear-gradient(135deg,var(--primary-dark),var(--ink))}
 
-    .admin-layout{display:none;min-height:100vh;background:#F8F7FF}
-    .topbar{background:#7F77DD;padding:14px 24px;display:flex;justify-content:space-between;align-items:center}
-    .topbar-brand{font-size:18px;font-weight:900;color:#fff}
+    /* ===== ADMIN LAYOUT ===== */
+    .admin-layout{
+      display:none;
+      min-height:100vh;
+      background:
+        radial-gradient(circle at top left, rgba(108,99,255,.10), transparent 32%),
+        linear-gradient(180deg,#FFFFFF 0%,#FAFAFF 100%);
+    }
+    .topbar{
+      background:rgba(255,255,255,.92);
+      padding:12px 24px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid var(--line);
+      box-shadow:0 10px 28px rgba(30,27,75,.07);
+      position:sticky;
+      top:0;
+      z-index:80;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+    .topbar-brand{
+      display:flex;
+      align-items:center;
+      gap:11px;
+      font-size:17px;
+      font-weight:900;
+      color:var(--ink);
+    }
+    .topbar-brand::before{
+      content:"M";
+      width:36px;
+      height:36px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--primary),var(--pink));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 10px 22px rgba(108,99,255,.24);
+    }
     .topbar-right{display:flex;gap:12px;align-items:center}
-    .topbar-user{font-size:13px;color:#EEEDFE;font-weight:700}
-    .btn-logout{background:#ffffff30;color:#fff;border:none;border-radius:10px;padding:7px 16px;font-size:12px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
-    .btn-logout:hover{background:#ffffff50}
+    .topbar-user{
+      font-size:12px;
+      color:var(--primary-dark);
+      font-weight:900;
+      background:#F0EEFF;
+      border:1px solid var(--line);
+      padding:7px 11px;
+      border-radius:999px;
+    }
+    .btn-logout{
+      background:var(--ink);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:8px 16px;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      box-shadow:0 10px 20px rgba(30,27,75,.18);
+    }
+    .btn-logout:hover{background:var(--primary)}
 
-    .tabs{background:#fff;border-bottom:2px solid #EEEDFE;display:flex;gap:0;padding:0 24px}
-    .tab{padding:14px 20px;font-size:14px;font-weight:800;color:#888;cursor:pointer;border-bottom:3px solid transparent}
-    .tab.active{color:#7F77DD;border-bottom:3px solid #7F77DD}
-    .tab:hover:not(.active){color:#534AB7}
+    /* ===== TABS ===== */
+    .tabs{
+      background:rgba(255,255,255,.78);
+      border-bottom:1px solid var(--line);
+      display:flex;
+      gap:8px;
+      padding:12px 24px;
+      overflow-x:auto;
+      scrollbar-width:none;
+    }
+    .tabs::-webkit-scrollbar{display:none}
+    .tab{
+      padding:10px 18px;
+      font-size:13px;
+      font-weight:900;
+      color:var(--muted);
+      cursor:pointer;
+      border-radius:999px;
+      border:1px solid transparent;
+      white-space:nowrap;
+      transition:all .18s ease;
+    }
+    .tab.active{
+      color:#fff;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      box-shadow:0 10px 22px rgba(108,99,255,.22);
+    }
+    .tab:hover:not(.active){
+      color:var(--primary-dark);
+      background:#F0EEFF;
+      border-color:var(--line);
+    }
 
     .content{padding:24px}
 
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-    .stat{background:#fff;border-radius:14px;border:2px solid #EEEDFE;padding:16px 18px}
-    .stat-label{font-size:11px;color:#888;font-weight:800;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-    .stat-val{font-size:26px;font-weight:900}
+    /* ===== STATS ===== */
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+      margin-bottom:24px;
+    }
+    .stat{
+      background:var(--card);
+      border-radius:22px;
+      border:1px solid var(--line);
+      padding:18px 20px;
+      box-shadow:0 14px 34px rgba(30,27,75,.07);
+      position:relative;
+      overflow:hidden;
+    }
+    .stat::after{
+      content:"";
+      position:absolute;
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      background:rgba(108,99,255,.08);
+      right:-30px;
+      top:-30px;
+    }
+    .stat-label{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:900;
+      margin-bottom:8px;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+    }
+    .stat-val{font-size:30px;font-weight:900;letter-spacing:-.5px}
 
-    .section{background:#fff;border-radius:16px;border:2px solid #EEEDFE;overflow:hidden;margin-bottom:20px}
-    .section-head{padding:14px 20px;border-bottom:2px solid #EEEDFE;display:flex;justify-content:space-between;align-items:center}
-    .section-title{font-size:15px;font-weight:900;color:#26215C}
-
-    .btn-primary{padding:9px 20px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
-    .btn-primary:hover{background:#534AB7}
-    .btn-secondary{padding:9px 20px;background:#EEEDFE;color:#534AB7;border:2px solid #AFA9EC;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:'Nunito',sans-serif}
-    .btn-sm{padding:5px 12px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:none;font-family:'Nunito',sans-serif}
-    .btn-sm-purple{background:#EEEDFE;color:#534AB7}
-    .btn-sm-green{background:#EAF3DE;color:#3B6D11}
-    .btn-sm-red{background:#FCEBEB;color:#A32D2D}
-    .btn-sm-amber{background:#FAEEDA;color:#854F0B}
-
+    /* ===== SECTIONS / TABLES ===== */
+    .section{
+      background:rgba(255,255,255,.96);
+      border-radius:24px;
+      border:1px solid var(--line);
+      overflow:hidden;
+      margin-bottom:22px;
+      box-shadow:var(--shadow);
+    }
+    .section-head{
+      padding:16px 20px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+    .section-title{
+      font-size:16px;
+      font-weight:900;
+      color:var(--ink);
+    }
     .tbl-wrap{overflow-x:auto}
     table{width:100%;border-collapse:collapse;font-size:13px}
-    th{padding:11px 16px;text-align:left;font-weight:800;font-size:11px;color:#888;border-bottom:2px solid #EEEDFE;background:#F8F7FF;text-transform:uppercase;letter-spacing:.5px}
-    td{padding:11px 16px;border-bottom:1px solid #EEEDFE;color:#26215C;vertical-align:middle}
+    th{
+      padding:12px 16px;
+      text-align:left;
+      font-weight:900;
+      font-size:11px;
+      color:var(--muted);
+      border-bottom:1px solid var(--line);
+      background:#F7F6FF;
+      text-transform:uppercase;
+      letter-spacing:.55px;
+    }
+    .filter-row th{
+      background:#FFFFFF;
+      padding:8px 10px;
+      border-bottom:1px solid var(--line);
+    }
+    .col-filter{
+      width:100%;
+      min-width:110px;
+      padding:7px 9px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      font-size:11px;
+      font-family:'Nunito',sans-serif;
+      font-weight:800;
+      outline:none;
+      color:var(--ink);
+      background:#FAFAFF;
+      text-transform:none;
+      letter-spacing:0;
+    }
+    .col-filter:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(108,99,255,.10);
+      background:#fff;
+    }
+    td{
+      padding:13px 16px;
+      border-bottom:1px solid var(--line);
+      color:var(--ink);
+      vertical-align:middle;
+      font-weight:700;
+    }
     tr:last-child td{border-bottom:none}
-    tr:hover td{background:#F8F7FF}
+    tr:hover td{background:#FAFAFF}
 
-    .badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:11px;font-weight:800}
+    /* ===== BUTTONS ===== */
+    .btn-primary{
+      padding:10px 18px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+      box-shadow:0 10px 22px rgba(108,99,255,.20);
+    }
+    .btn-primary:hover{background:linear-gradient(135deg,var(--primary-dark),var(--ink))}
+    .btn-secondary{
+      padding:9px 18px;
+      background:#F0EEFF;
+      color:var(--primary-dark);
+      border:1px solid var(--line);
+      border-radius:14px;
+      font-size:13px;
+      font-weight:900;
+      cursor:pointer;
+      font-family:'Nunito',sans-serif;
+    }
+    .btn-sm{
+      padding:6px 12px;
+      border-radius:10px;
+      font-size:12px;
+      font-weight:900;
+      cursor:pointer;
+      border:none;
+      font-family:'Nunito',sans-serif;
+    }
+    .btn-sm-purple{background:#F0EEFF;color:var(--primary-dark)}
+    .btn-sm-green{background:#EAF9E6;color:#3B6D11}
+    .btn-sm-red{background:#FFF0F2;color:var(--danger)}
+    .btn-sm-amber{background:#FFF4D8;color:#854F0B}
+    .btn-sm-blue{background:#E6F1FB;color:#185FA5}
+    .btn-sm-wa{
+      background:#25D366;
+      color:#fff;
+      min-width:34px;
+      width:34px;
+      height:30px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+      border-radius:10px;
+      line-height:1;
+      vertical-align:middle;
+      box-shadow:0 6px 14px rgba(37,211,102,.18);
+    }
+    .btn-sm-wa:hover{background:#128C7E}
+    .btn-sm-wa svg{width:17px;height:17px;display:block;flex-shrink:0}
+
+    /* ===== BADGES ===== */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:5px 11px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      white-space:nowrap;
+    }
     .b-nuevo{background:#E6F1FB;color:#185FA5}
-    .b-proceso{background:#FAEEDA;color:#854F0B}
-    .b-entregado{background:#EAF3DE;color:#3B6D11}
-    .b-cancelado{background:#FCEBEB;color:#A32D2D}
-    .b-stock{background:#EAF3DE;color:#3B6D11}
-    .b-low{background:#FAEEDA;color:#854F0B}
-    .b-out{background:#FCEBEB;color:#A32D2D}
+    .b-proceso{background:#FFF4D8;color:#854F0B}
+    .b-entregado{background:#EAF9E6;color:#3B6D11}
+    .b-cancelado{background:#FFF0F2;color:var(--danger)}
+    .b-stock{background:#EAF9E6;color:#3B6D11}
+    .b-low{background:#FFF4D8;color:#854F0B}
+    .b-out{background:#FFF0F2;color:var(--danger)}
 
-    .modal-bg{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(63,52,137,.5);z-index:200;align-items:center;justify-content:center}
+    /* ===== TOOLBARS / SEARCH ===== */
+    .admin-toolbar,.producto-toolbar{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .admin-search{
+      min-width:280px;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      font-size:13px;
+      font-family:'Nunito',sans-serif;
+      font-weight:800;
+      outline:none;
+      background:#fff;
+      color:var(--ink);
+      box-shadow:0 8px 18px rgba(30,27,75,.05);
+    }
+    .admin-search:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(108,99,255,.10);
+    }
+    .pedido-preview{
+      max-width:560px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .pedido-actions{
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .pedido-actions select{height:30px}
+    .pedido-actions .btn-sm{height:30px;display:inline-flex;align-items:center;justify-content:center}
+
+    /* ===== MODALS ===== */
+    .modal-bg{
+      display:none;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      background:rgba(10,8,35,.62);
+      z-index:200;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
     .modal-bg.show{display:flex}
-    .modal{background:#fff;border-radius:22px;padding:28px;max-width:460px;width:92%;border:2px solid #EEEDFE;max-height:90vh;overflow-y:auto}
-    .modal h3{font-size:18px;font-weight:900;color:#3C3489;margin-bottom:18px}
+    .modal{
+      background:#fff;
+      border-radius:26px;
+      padding:28px;
+      max-width:480px;
+      width:94%;
+      border:1px solid var(--line);
+      max-height:90vh;
+      overflow-y:auto;
+      box-shadow:0 30px 90px rgba(0,0,0,.30);
+    }
+    .modal-wide{max-width:760px}
+    .modal h3{
+      font-size:20px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:18px;
+    }
     .form-group{margin-bottom:13px}
-    .form-group label{font-size:12px;color:#534AB7;font-weight:800;display:block;margin-bottom:5px}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 13px;border:2px solid #EEEDFE;border-radius:11px;font-size:13px;font-family:'Nunito',sans-serif;outline:none}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#7F77DD}
-    .form-group textarea{height:70px;resize:none}
+    .form-group label{
+      font-size:12px;
+      color:var(--primary-dark);
+      font-weight:900;
+      display:block;
+      margin-bottom:6px;
+    }
+    .form-group input,.form-group select,.form-group textarea{
+      width:100%;
+      padding:11px 13px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      font-size:13px;
+      font-family:'Nunito',sans-serif;
+      outline:none;
+      color:var(--ink);
+      font-weight:800;
+      background:#fff;
+    }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px rgba(108,99,255,.10);
+    }
+    .form-group textarea{height:76px;resize:none}
     .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .modal-btns{display:flex;gap:10px;margin-top:18px}
-    .btn-cancel-modal{flex:1;padding:10px;border:2px solid #EEEDFE;border-radius:12px;background:#fff;color:#888;cursor:pointer;font-size:13px;font-weight:800;font-family:'Nunito',sans-serif}
-    .btn-save{flex:2;padding:10px;background:#7F77DD;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-size:14px;font-family:'Nunito',sans-serif}
-    .btn-save:hover{background:#534AB7}
+    .btn-cancel-modal{
+      flex:1;
+      padding:11px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      color:var(--muted);
+      cursor:pointer;
+      font-size:13px;
+      font-weight:900;
+      font-family:'Nunito',sans-serif;
+    }
+    .btn-save{
+      flex:2;
+      padding:11px;
+      background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:14px;
+      font-family:'Nunito',sans-serif;
+      box-shadow:0 12px 24px rgba(108,99,255,.22);
+    }
+    .btn-save:hover{background:linear-gradient(135deg,var(--primary-dark),var(--ink))}
 
-    .upload-area{border:2px dashed #AFA9EC;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:#F8F7FF}
-    .upload-area:hover{border-color:#7F77DD;background:#EEEDFE}
-    .upload-area p{font-size:13px;color:#888;font-weight:700;margin-top:8px}
-    .upload-preview{width:100%;height:140px;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
+    .upload-area{
+      border:2px dashed #C9C5FF;
+      border-radius:16px;
+      padding:22px;
+      text-align:center;
+      cursor:pointer;
+      background:#FAFAFF;
+    }
+    .upload-area:hover{border-color:var(--primary);background:#F0EEFF}
+    .upload-area p{font-size:13px;color:var(--muted);font-weight:800;margin-top:8px}
+    .upload-preview{
+      width:100%;
+      height:150px;
+      object-fit:contain;
+      background:#FAFAFF;
+      border-radius:14px;
+      margin-top:10px;
+      display:none;
+      border:1px solid var(--line);
+    }
 
-    .toast{position:fixed;bottom:24px;right:24px;background:#EEEDFE;border:2px solid #7F77DD;border-radius:16px;padding:14px 20px;font-size:14px;font-weight:800;color:#3C3489;z-index:300;max-width:300px;display:none}
+    /* ===== DETALLE PEDIDO ===== */
+    .pedido-detalle-box{
+      background:#FAFAFF;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:15px;
+      margin-bottom:14px;
+    }
+    .pedido-detalle-title{
+      font-size:12px;
+      color:var(--primary-dark);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.6px;
+      margin-bottom:8px;
+    }
+    .pedido-detalle-line{
+      font-size:13px;
+      color:var(--ink);
+      font-weight:800;
+      line-height:1.6;
+      white-space:pre-wrap;
+    }
+    .pedido-meta-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .pedido-meta{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:11px;
+    }
+    .pedido-meta span{
+      display:block;
+      font-size:10px;
+      color:var(--muted);
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+      margin-bottom:4px;
+    }
+    .pedido-meta strong{
+      display:block;
+      font-size:13px;
+      color:var(--ink);
+      font-weight:900;
+      overflow-wrap:anywhere;
+    }
+
+    /* ===== TOAST ===== */
+    .toast{
+      position:fixed;
+      bottom:24px;
+      right:24px;
+      background:#F0EEFF;
+      border:1px solid var(--primary);
+      border-radius:18px;
+      padding:14px 20px;
+      font-size:14px;
+      font-weight:900;
+      color:var(--primary-dark);
+      z-index:300;
+      max-width:320px;
+      display:none;
+      box-shadow:var(--shadow);
+    }
     .toast.show{display:block}
-    .toast.error{background:#FCEBEB;border-color:#F09595;color:#A32D2D}
+    .toast.error{background:#FFF0F2;border-color:#FFD1DA;color:var(--danger)}
+
+
+    /* ===== AJUSTES PEDIDOS + DASHBOARD EMPRESARIAL ===== */
+    .pedido-preview{
+      max-width:440px;
+      white-space:normal !important;
+      overflow:visible !important;
+      text-overflow:unset !important;
+      line-height:1.45;
+      font-weight:800;
+    }
+
+    .pedido-actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-start;
+      flex-wrap:nowrap;
+      min-width:260px;
+      white-space:nowrap;
+    }
+
+    .pedido-actions select,
+    .pedido-actions .btn-sm,
+    .producto-actions .btn-sm{
+      min-height:32px;
+      height:32px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      white-space:nowrap;
+    }
+
+    .producto-actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      justify-content:flex-start;
+      flex-wrap:nowrap;
+      min-width:230px;
+      white-space:nowrap;
+    }
+
+    .pedido-actions select{
+      min-width:112px;
+      background:#fff;
+      border:1px solid var(--line) !important;
+      border-radius:10px !important;
+      color:var(--ink);
+      font-weight:900 !important;
+    }
+
+    .btn-sm-wa{
+      background:#25D366 !important;
+      width:34px !important;
+      min-width:34px !important;
+      height:32px !important;
+      border-radius:11px !important;
+      display:inline-flex !important;
+      align-items:center !important;
+      justify-content:center !important;
+      box-shadow:0 8px 18px rgba(37,211,102,.25) !important;
+    }
+
+    .btn-sm-wa svg{
+      width:18px !important;
+      height:18px !important;
+    }
+
+    .dashboard-hero{
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255,209,102,.24), transparent 28%),
+        radial-gradient(circle at 86% 26%, rgba(255,77,109,.18), transparent 30%),
+        linear-gradient(135deg,#1E1B4B 0%,#4B43C4 55%,#6C63FF 100%);
+      color:#fff;
+      border-radius:28px;
+      padding:26px;
+      margin-bottom:22px;
+      box-shadow:0 24px 70px rgba(30,27,75,.22);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .dashboard-hero::after{
+      content:"";
+      position:absolute;
+      right:-80px;
+      top:-80px;
+      width:240px;
+      height:240px;
+      background:rgba(255,255,255,.10);
+      border-radius:50%;
+    }
+
+    .dashboard-hero h1{
+      font-size:28px;
+      font-weight:900;
+      line-height:1.05;
+      margin-bottom:8px;
+      position:relative;
+      z-index:2;
+    }
+
+    .dashboard-hero p{
+      font-size:14px;
+      font-weight:800;
+      color:#EDEBFF;
+      position:relative;
+      z-index:2;
+    }
+
+    .dashboard-hero-pill{
+      position:relative;
+      z-index:2;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.20);
+      border-radius:999px;
+      padding:10px 15px;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+      backdrop-filter:blur(8px);
+    }
+
+    .stat{
+      border-radius:24px !important;
+      padding:20px !important;
+      position:relative;
+      overflow:hidden;
+      box-shadow:0 16px 40px rgba(30,27,75,.08) !important;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+
+    .stat:hover{
+      transform:translateY(-4px);
+      box-shadow:0 24px 56px rgba(30,27,75,.13) !important;
+    }
+
+    .stat::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:6px;
+    }
+
+    .stat.productos::before{background:#6C63FF}
+    .stat.pedidos::before{background:#185FA5}
+    .stat.stock::before{background:#FFD166}
+    .stat.agotado::before{background:#FF4D6D}
+
+    .stat-icon{
+      width:42px;
+      height:42px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      margin-bottom:12px;
+      background:#F0EEFF;
+    }
+
+    .stat.productos .stat-icon{background:#F0EEFF}
+    .stat.pedidos .stat-icon{background:#E6F1FB}
+    .stat.stock .stat-icon{background:#FFF4D8}
+    .stat.agotado .stat-icon{background:#FFF0F2}
+
+    .stat-label{
+      margin-bottom:4px !important;
+    }
+
+    .stat-help{
+      font-size:11px;
+      color:var(--muted);
+      font-weight:800;
+      margin-top:4px;
+    }
+
+    .dash-grid{
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:20px;
+      margin-bottom:20px;
+    }
+
+    .mini-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .mini-panel-title{
+      font-size:15px;
+      font-weight:900;
+      color:var(--ink);
+      margin-bottom:12px;
+    }
+
+    .status-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .status-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      background:#FAFAFF;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .status-item span:first-child{
+      color:var(--ink);
+    }
+
+    .status-item span:last-child{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 10px;
+      color:var(--primary-dark);
+    }
+
+    .priority-row td{
+      background:#FFFDF5 !important;
+    }
+
+    @media(max-width:900px){
+      .dash-grid{grid-template-columns:1fr}
+      .dashboard-hero{flex-direction:column;align-items:flex-start}
+    }
+
+    @media(max-width:700px){
+      .pedido-actions{min-width:260px}
+      .producto-actions{min-width:230px}
+      .pedido-preview{max-width:320px}
+      .dashboard-hero{padding:22px}
+      .dashboard-hero h1{font-size:24px}
+    }
 
     .pane{display:none}
     .pane.active{display:block}
 
-    @media(max-width:700px){
+    @media(max-width:900px){
       .stats{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:700px){
+      .topbar{padding:10px 14px;align-items:flex-start;gap:10px;flex-direction:column}
+      .topbar-right{width:100%;justify-content:space-between}
+      .tabs{padding:10px 14px}
+      .content{padding:16px 14px}
+      .stats{grid-template-columns:1fr 1fr;gap:10px}
+      .stat{padding:15px}
+      .stat-val{font-size:25px}
+      .section-head{align-items:flex-start;gap:10px;flex-direction:column}
+      .admin-toolbar,.producto-toolbar{width:100%}
+      .admin-search{min-width:100%;width:100%}
+      .producto-toolbar .btn-primary{width:100%}
       .form-grid-2{grid-template-columns:1fr}
+      .pedido-meta-grid{grid-template-columns:1fr}
+      .modal{padding:22px 18px;border-radius:22px}
+      th,td{padding:11px 12px}
     }
   </style>
 </head>
@@ -106,8 +929,9 @@
 
 <div class="login-bg" id="loginBg">
   <div class="login-card">
-    <div class="login-logo">Demo Tienda Online</div>
-    <div class="login-sub">Panel de administración</div>
+    <div class="login-logo"></div>
+    <div class="login-title">Panel de administración</div>
+    <div class="login-sub">Moda Kids · Gestión de pedidos, productos e inventario</div>
     <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
     <div class="login-group">
       <label>Usuario</label>
@@ -124,7 +948,7 @@
 <div class="admin-layout" id="adminLayout">
 
   <div class="topbar">
-    <div class="topbar-brand">Admin — Demo Tienda Online</div>
+    <div class="topbar-brand">Admin — Moda Kids</div>
     <div class="topbar-right">
       <span class="topbar-user" id="topbarUser"></span>
       <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
@@ -141,7 +965,26 @@
   <div class="content">
 
     <div class="pane active" id="pane-dashboard">
+      <div class="dashboard-hero">
+        <div>
+          <h1>Panel de control</h1>
+          <p>Resumen operativo de pedidos, inventario y productos críticos.</p>
+        </div>
+        <div class="dashboard-hero-pill" id="dashUpdated">Actualizado en vivo</div>
+      </div>
+
       <div class="stats" id="statsGrid"></div>
+
+      <div class="dash-grid">
+        <div class="mini-panel">
+          <div class="mini-panel-title">Resumen por estado de pedido</div>
+          <div class="status-list" id="dashEstados"></div>
+        </div>
+        <div class="mini-panel">
+          <div class="mini-panel-title">Salud del inventario</div>
+          <div class="status-list" id="dashInventario"></div>
+        </div>
+      </div>
       <div class="section">
         <div class="section-head">
           <div class="section-title">Pedidos recientes</div>
@@ -169,17 +1012,31 @@
       <div class="section">
         <div class="section-head">
           <div class="section-title">Todos los pedidos</div>
-          <select id="filtroEstado" onchange="cargarPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
-            <option value="">Todos los estados</option>
-            <option>nuevo</option>
-            <option>proceso</option>
-            <option>entregado</option>
-            <option>cancelado</option>
-          </select>
+          <div class="admin-toolbar">
+            <input class="admin-search" id="buscarPedido" placeholder="Buscar en cualquier columna de pedidos..." oninput="renderPedidos()" style="display:none">
+            <select id="filtroEstado" onchange="renderPedidos()" style="padding:7px 12px;border:2px solid #EEEDFE;border-radius:10px;font-size:13px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
+              <option value="">Todos los estados</option>
+              <option>nuevo</option>
+              <option>proceso</option>
+              <option>entregado</option>
+              <option>cancelado</option>
+            </select>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Cliente</th><th>WhatsApp</th><th>Producto</th><th>Depto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+            <thead>
+              <tr><th>Cliente</th><th>WhatsApp</th><th>Producto</th><th>Depto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr>
+              <tr class="filter-row">
+                <th><input class="col-filter pedido-filter" data-field="cliente" placeholder="Cliente" oninput="renderPedidos()"></th>
+                <th><input class="col-filter pedido-filter" data-field="whatsapp" placeholder="Teléfono" oninput="renderPedidos()"></th>
+                <th><input class="col-filter pedido-filter" data-field="producto" placeholder="Producto" oninput="renderPedidos()"></th>
+                <th><input class="col-filter pedido-filter" data-field="depto" placeholder="Depto" oninput="renderPedidos()"></th>
+                <th><input class="col-filter pedido-filter" data-field="estado" placeholder="Estado" oninput="renderPedidos()"></th>
+                <th><input class="col-filter pedido-filter" data-field="fecha" placeholder="Fecha" oninput="renderPedidos()"></th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody id="tablaPedidos"></tbody>
           </table>
         </div>
@@ -190,11 +1047,26 @@
       <div class="section">
         <div class="section-head">
           <div class="section-title">Catálogo de productos</div>
-          <button class="btn-primary" onclick="abrirModalProducto()">+ Agregar producto</button>
+          <div class="producto-toolbar">
+            <input class="admin-search" id="buscarProducto" placeholder="Buscar en cualquier columna de productos..." oninput="renderProductosAdmin()" style="display:none">
+            <button class="btn-primary" onclick="abrirModalProducto()">+ Agregar producto</button>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Foto</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Tallas</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <thead>
+            <tr><th>Foto</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Tallas</th><th>Estado</th><th>Acciones</th></tr>
+            <tr class="filter-row">
+              <th></th>
+              <th><input class="col-filter producto-filter" data-field="nombre" placeholder="Nombre" oninput="renderProductosAdmin()"></th>
+              <th><input class="col-filter producto-filter" data-field="categoria" placeholder="Categoría" oninput="renderProductosAdmin()"></th>
+              <th><input class="col-filter producto-filter" data-field="precio" placeholder="Precio" oninput="renderProductosAdmin()"></th>
+              <th><input class="col-filter producto-filter" data-field="stock" placeholder="Stock" oninput="renderProductosAdmin()"></th>
+              <th><input class="col-filter producto-filter" data-field="tallas" placeholder="Tallas" oninput="renderProductosAdmin()"></th>
+              <th><input class="col-filter producto-filter" data-field="estado" placeholder="Estado" oninput="renderProductosAdmin()"></th>
+              <th></th>
+            </tr>
+          </thead>
             <tbody id="tablaProductos"></tbody>
           </table>
         </div>
@@ -205,11 +1077,25 @@
       <div class="section">
         <div class="section-head">
           <div class="section-title">Entradas y salidas de inventario</div>
-          <button class="btn-primary" onclick="abrirModalMovimiento()">+ Registrar movimiento</button>
+          <div class="producto-toolbar">
+            <input class="admin-search" id="buscarMovimiento" placeholder="Buscar en cualquier columna de movimientos..." oninput="renderMovimientosAdmin()" style="display:none">
+            <button class="btn-primary" onclick="abrirModalMovimiento()">+ Registrar movimiento</button>
+          </div>
         </div>
         <div class="tbl-wrap">
           <table>
-            <thead><tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Stock anterior</th><th>Stock nuevo</th><th>Motivo</th></tr></thead>
+            <thead>
+            <tr><th>Fecha</th><th>Producto</th><th>Tipo</th><th>Cantidad</th><th>Stock anterior</th><th>Stock nuevo</th><th>Motivo</th></tr>
+            <tr class="filter-row">
+              <th><input class="col-filter movimiento-filter" data-field="fecha" placeholder="Fecha" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="producto" placeholder="Producto" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="tipo" placeholder="Tipo" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="cantidad" placeholder="Cantidad" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="stock_anterior" placeholder="Anterior" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="stock_nuevo" placeholder="Nuevo" oninput="renderMovimientosAdmin()"></th>
+              <th><input class="col-filter movimiento-filter" data-field="motivo" placeholder="Motivo" oninput="renderMovimientosAdmin()"></th>
+            </tr>
+          </thead>
             <tbody id="tablaMovimientos"></tbody>
           </table>
         </div>
@@ -300,6 +1186,29 @@
   </div>
 </div>
 
+
+<div class="modal-bg" id="modalPedidoDetalle">
+  <div class="modal modal-wide">
+    <h3>Detalle del pedido</h3>
+    <div class="pedido-meta-grid">
+      <div class="pedido-meta"><span>Cliente</span><strong id="det-cliente">—</strong></div>
+      <div class="pedido-meta"><span>WhatsApp</span><strong id="det-whatsapp">—</strong></div>
+      <div class="pedido-meta"><span>Departamento</span><strong id="det-depto">—</strong></div>
+      <div class="pedido-meta"><span>Estado</span><strong id="det-estado">—</strong></div>
+      <div class="pedido-meta"><span>Fecha</span><strong id="det-fecha">—</strong></div>
+      <div class="pedido-meta"><span>ID pedido</span><strong id="det-id">—</strong></div>
+    </div>
+    <div class="pedido-detalle-box">
+      <div class="pedido-detalle-title">Resumen de compra</div>
+      <div class="pedido-detalle-line" id="det-producto">—</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel-modal" onclick="cerrarDetallePedido()">Cerrar</button>
+      <button class="btn-save" onclick="abrirWhatsAppPedidoActual()">Abrir WhatsApp</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -308,8 +1217,13 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRscm5sa3Rsc3Z3aWpzbnd2ZGl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzOTE2OTMsImV4cCI6MjA5MTk2NzY5M30.mPCCNUgt3kJergBuv66h89PMCOIuGtVipTM5bVPQdbw'
   const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
+  const WA_ICON = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 21.785h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884M20.463 3.488A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`
+
   const USERS = { 'admin': 'demo2026', 'ronald': 'tienda2026' }
   let productosCache = []
+  let pedidosCache = []
+  let movimientosCache = []
+  let pedidoDetalleActual = null
 
   function doLogin() {
     const u = document.getElementById('loginUser').value.trim()
@@ -371,6 +1285,36 @@
     return f ? new Date(f).toLocaleDateString('es-GT',{day:'2-digit',month:'short',year:'numeric'}) : '—'
   }
 
+  function fmtFechaHora(f) {
+    return f ? new Date(f).toLocaleString('es-GT',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—'
+  }
+
+  function limpiarTextoPedido(txt) {
+    return (txt || '').replace(/\n/g,' ').replace(/\s+/g,' ').trim()
+  }
+
+  function formatearPedidoPreview(txt) {
+    const limpio = limpiarTextoPedido(txt)
+    if (!limpio) return '—'
+    return limpio
+      .replace(/Total de compra:/gi, '<br><strong>Total de compra:</strong>')
+      .replace(/Total estimado:/gi, '<br><strong>Total:</strong>')
+      .replace(/Dirección de entrega:/gi, '<br><strong>Dirección:</strong>')
+  }
+
+  function normalizarTel(tel) {
+    const limpio = String(tel || '').replace(/\D/g,'')
+    if (limpio.startsWith('502')) return limpio
+    if (limpio.length === 8) return '502' + limpio
+    return limpio
+  }
+
+  function waPedidoLink(p) {
+    const tel = normalizarTel(p.whatsapp)
+    const msg = `Hola ${p.cliente_nombre}, le escribimos de Moda Kids por su compra. Su pedido se encuentra en estado: ${p.estado}.`
+    return `https://wa.me/${tel}?text=${encodeURIComponent(msg)}`
+  }
+
   function estadoSelect(id, actual) {
     return `<select onchange="cambiarEstadoPedido('${id}',this.value)" style="padding:4px 8px;border:1.5px solid #EEEDFE;border-radius:8px;font-size:12px;font-family:'Nunito',sans-serif;font-weight:700;outline:none">
       <option ${actual==='nuevo'?'selected':''}>nuevo</option>
@@ -386,24 +1330,70 @@
       db.from('productos').select('*')
     ])
     productosCache = productos || []
+    pedidosCache = pedidos || []
     const total = productos?.length || 0
     const nuevos = pedidos?.filter(p => p.estado==='nuevo').length || 0
     const bajo = productos?.filter(p => p.stock<=5 && p.stock>0).length || 0
     const agotados = productos?.filter(p => p.stock<=0).length || 0
+    const proceso = pedidos?.filter(p => p.estado==='proceso').length || 0
+    const entregados = pedidos?.filter(p => p.estado==='entregado').length || 0
+    const cancelados = pedidos?.filter(p => p.estado==='cancelado').length || 0
+    const stockOk = productos?.filter(p => p.stock>5).length || 0
+
     document.getElementById('statsGrid').innerHTML = `
-      <div class="stat"><div class="stat-label">Productos</div><div class="stat-val" style="color:#7F77DD">${total}</div></div>
-      <div class="stat"><div class="stat-label">Pedidos nuevos</div><div class="stat-val" style="color:#185FA5">${nuevos}</div></div>
-      <div class="stat"><div class="stat-label">Stock bajo</div><div class="stat-val" style="color:#854F0B">${bajo}</div></div>
-      <div class="stat"><div class="stat-label">Agotados</div><div class="stat-val" style="color:#A32D2D">${agotados}</div></div>`
+      <div class="stat productos">
+        <div class="stat-icon">📦</div>
+        <div class="stat-label">Productos</div>
+        <div class="stat-val" style="color:#6C63FF">${total}</div>
+        <div class="stat-help">Productos activos en catálogo</div>
+      </div>
+      <div class="stat pedidos">
+        <div class="stat-icon">🧾</div>
+        <div class="stat-label">Pedidos nuevos</div>
+        <div class="stat-val" style="color:#185FA5">${nuevos}</div>
+        <div class="stat-help">Pendientes de atención</div>
+      </div>
+      <div class="stat stock">
+        <div class="stat-icon">⚠️</div>
+        <div class="stat-label">Stock bajo</div>
+        <div class="stat-val" style="color:#854F0B">${bajo}</div>
+        <div class="stat-help">Productos con 5 o menos</div>
+      </div>
+      <div class="stat agotado">
+        <div class="stat-icon">⛔</div>
+        <div class="stat-label">Agotados</div>
+        <div class="stat-val" style="color:#A32D2D">${agotados}</div>
+        <div class="stat-help">Requieren reposición</div>
+      </div>`
+
+    document.getElementById('dashEstados').innerHTML = `
+      <div class="status-item"><span>🟦 Nuevos</span><span>${nuevos}</span></div>
+      <div class="status-item"><span>🟨 En proceso</span><span>${proceso}</span></div>
+      <div class="status-item"><span>🟩 Entregados</span><span>${entregados}</span></div>
+      <div class="status-item"><span>🟥 Cancelados</span><span>${cancelados}</span></div>`
+
+    document.getElementById('dashInventario').innerHTML = `
+      <div class="status-item"><span>✅ Stock saludable</span><span>${stockOk}</span></div>
+      <div class="status-item"><span>⚠️ Stock bajo</span><span>${bajo}</span></div>
+      <div class="status-item"><span>⛔ Agotados</span><span>${agotados}</span></div>`
+
+    const updated = document.getElementById('dashUpdated')
+    if(updated) updated.textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'})
     document.getElementById('dashPedidos').innerHTML = (pedidos||[]).slice(0,5).map(p=>`
-      <tr>
+      <tr class="${p.estado==='nuevo'?'priority-row':''}">
         <td style="font-family:monospace;font-size:11px;color:#888">${p.id.slice(0,8)}...</td>
         <td style="font-weight:800">${p.cliente_nombre}</td>
-        <td>${p.producto_nombre}</td>
+        <td class="pedido-preview">${formatearPedidoPreview(p.producto_nombre)}</td>
         <td>${p.departamento}</td>
         <td>${estadoBadge(p.estado)}</td>
         <td>${fmtFecha(p.created_at)}</td>
-        <td>${estadoSelect(p.id,p.estado)}</td>
+        <td>
+          <div class="pedido-actions">
+            ${estadoSelect(p.id,p.estado)}
+            <button class="btn-sm btn-sm-blue" onclick="verDetallePedido('${p.id}')">Ver detalle</button>
+            <a class="btn-sm btn-sm-wa" href="${waPedidoLink(p)}" target="_blank" style="text-decoration:none" title="Abrir WhatsApp" aria-label="Abrir WhatsApp">${WA_ICON}</a>
+          </div>
+        </td>
       </tr>`).join('')
     document.getElementById('dashStock').innerHTML = (productos||[])
       .filter(p=>p.stock<=5)
@@ -411,41 +1401,148 @@
   }
 
   async function cargarPedidos() {
-    const filtro = document.getElementById('filtroEstado').value
-    let q = db.from('pedidos').select('*').order('created_at',{ascending:false})
-    if (filtro) q = q.eq('estado',filtro)
-    const { data } = await q
-    document.getElementById('tablaPedidos').innerHTML = (data||[]).map(p=>`
+    const { data } = await db.from('pedidos').select('*').order('created_at',{ascending:false})
+    pedidosCache = data || []
+    renderPedidos()
+  }
+
+  function getColumnFilters(selector){
+    const filters = {}
+    document.querySelectorAll(selector).forEach(input=>{
+      const value = input.value.toLowerCase().trim()
+      if(value) filters[input.dataset.field] = value
+    })
+    return filters
+  }
+
+  function matchColumnFilters(row, filters){
+    return Object.entries(filters).every(([field,value])=>{
+      return String(row[field] ?? '').toLowerCase().includes(value)
+    })
+  }
+
+  function renderPedidos() {
+    const filtro = document.getElementById('filtroEstado')?.value || ''
+    const busqueda = (document.getElementById('buscarPedido')?.value || '').toLowerCase().trim()
+    let lista = [...pedidosCache]
+
+    if (filtro) lista = lista.filter(p => p.estado === filtro)
+
+    if (busqueda) {
+      lista = lista.filter(p => {
+        const texto = `${p.id||''} ${p.cliente_nombre||''} ${p.whatsapp||''} ${p.producto_nombre||''} ${p.departamento||''} ${p.estado||''} ${fmtFecha(p.created_at)} ${fmtFechaHora(p.created_at)}`.toLowerCase()
+        return texto.includes(busqueda)
+      })
+    }
+
+    const filtrosColumna = getColumnFilters('.pedido-filter')
+    if(Object.keys(filtrosColumna).length){
+      lista = lista.filter(p => matchColumnFilters({
+        cliente:p.cliente_nombre,
+        whatsapp:p.whatsapp,
+        producto:limpiarTextoPedido(p.producto_nombre),
+        depto:p.departamento,
+        estado:p.estado,
+        fecha:`${fmtFecha(p.created_at)} ${fmtFechaHora(p.created_at)}`
+      }, filtrosColumna))
+    }
+
+    document.getElementById('tablaPedidos').innerHTML = lista.map(p=>`
       <tr>
         <td style="font-weight:800">${p.cliente_nombre}</td>
         <td style="color:#7F77DD;font-weight:700">${p.whatsapp}</td>
-        <td>${p.producto_nombre}</td>
+        <td class="pedido-preview" title="${limpiarTextoPedido(p.producto_nombre)}">${formatearPedidoPreview(p.producto_nombre)}</td>
         <td>${p.departamento}</td>
         <td>${estadoBadge(p.estado)}</td>
         <td>${fmtFecha(p.created_at)}</td>
-        <td style="display:flex;gap:6px;flex-wrap:wrap">
-          ${estadoSelect(p.id,p.estado)}
-          <button class="btn-sm btn-sm-red" onclick="eliminarPedido('${p.id}')">Eliminar</button>
+        <td>
+          <div class="pedido-actions">
+            ${estadoSelect(p.id,p.estado)}
+            <button class="btn-sm btn-sm-blue" onclick="verDetallePedido('${p.id}')">Ver detalle</button>
+            <a class="btn-sm btn-sm-wa" href="${waPedidoLink(p)}" target="_blank" style="text-decoration:none" title="Abrir WhatsApp" aria-label="Abrir WhatsApp">${WA_ICON}</a>
+            <button class="btn-sm btn-sm-red" onclick="eliminarPedido('${p.id}')">Eliminar</button>
+          </div>
         </td>
-      </tr>`).join('')
+      </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;color:#888;font-weight:800;padding:30px">No hay pedidos con estos filtros.</td></tr>`
+  }
+
+  function verDetallePedido(id) {
+    const p = pedidosCache.find(x => x.id === id)
+    if (!p) return
+    pedidoDetalleActual = p
+    document.getElementById('det-cliente').textContent = p.cliente_nombre || '—'
+    document.getElementById('det-whatsapp').textContent = p.whatsapp || '—'
+    document.getElementById('det-depto').textContent = p.departamento || '—'
+    document.getElementById('det-estado').innerHTML = estadoBadge(p.estado || 'nuevo')
+    document.getElementById('det-fecha').textContent = fmtFechaHora(p.created_at)
+    document.getElementById('det-id').textContent = p.id
+    document.getElementById('det-producto').textContent = p.producto_nombre || '—'
+    document.getElementById('modalPedidoDetalle').classList.add('show')
+  }
+
+  function cerrarDetallePedido() {
+    document.getElementById('modalPedidoDetalle').classList.remove('show')
+    pedidoDetalleActual = null
+  }
+
+  function abrirWhatsAppPedidoActual() {
+    if (!pedidoDetalleActual) return
+    window.open(waPedidoLink(pedidoDetalleActual), '_blank')
   }
 
   async function cambiarEstadoPedido(id, estado) {
-    await db.from('pedidos').update({estado}).eq('id',id)
+    const { error } = await db.from('pedidos').update({estado}).eq('id',id)
+    if (error) { showToast('Error al actualizar estado', true); return }
+    const p = pedidosCache.find(x => x.id === id)
+    if (p) p.estado = estado
     showToast('Estado actualizado')
+    renderPedidos()
+    cargarDashboard()
   }
 
   async function eliminarPedido(id) {
     if (!confirm('¿Eliminar este pedido?')) return
     await db.from('pedidos').delete().eq('id',id)
+    pedidosCache = pedidosCache.filter(p => p.id !== id)
     showToast('Pedido eliminado')
-    cargarPedidos()
+    renderPedidos()
+    cargarDashboard()
   }
 
   async function cargarProductos() {
     const { data } = await db.from('productos').select('*').order('created_at',{ascending:false})
     productosCache = data || []
-    document.getElementById('tablaProductos').innerHTML = (data||[]).map(p=>`
+    renderProductosAdmin()
+  }
+
+  function renderProductosAdmin() {
+    const busqueda = (document.getElementById('buscarProducto')?.value || '').toLowerCase().trim()
+    let lista = [...productosCache]
+
+    if (busqueda) {
+      lista = lista.filter(p => {
+        const estadoStock = Number(p.stock) <= 0 ? 'agotado' : (Number(p.stock) <= 5 ? 'stock bajo' : 'en stock')
+        const texto = `${p.id || ''} ${p.nombre || ''} ${p.categoria || ''} ${p.tallas || ''} ${p.precio || ''} ${p.stock || ''} ${estadoStock}`.toLowerCase()
+        return texto.includes(busqueda)
+      })
+    }
+
+    const filtrosColumna = getColumnFilters('.producto-filter')
+    if(Object.keys(filtrosColumna).length){
+      lista = lista.filter(p => {
+        const estadoStock = Number(p.stock) <= 0 ? 'agotado' : (Number(p.stock) <= 5 ? 'stock bajo' : 'en stock')
+        return matchColumnFilters({
+          nombre:p.nombre,
+          categoria:p.categoria,
+          precio:`Q ${parseFloat(p.precio).toFixed(2)} ${p.precio}`,
+          stock:p.stock,
+          tallas:p.tallas,
+          estado:estadoStock
+        }, filtrosColumna)
+      })
+    }
+
+    document.getElementById('tablaProductos').innerHTML = lista.map(p=>`
       <tr>
         <td>${p.imagen_url
           ? `<img src="${p.imagen_url}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;border:2px solid #EEEDFE">`
@@ -456,12 +1553,14 @@
         <td style="font-weight:800">${p.stock}</td>
         <td style="font-size:12px;color:#888">${p.tallas}</td>
         <td>${stockBadge(p.stock)}</td>
-        <td style="display:flex;gap:6px;flex-wrap:wrap">
-          <button class="btn-sm btn-sm-purple" onclick="editarProducto('${p.id}')">Editar</button>
-          <button class="btn-sm btn-sm-amber" onclick="abrirModalMovimientoProducto('${p.id}')">Stock</button>
-          <button class="btn-sm btn-sm-red" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+        <td>
+          <div class="producto-actions">
+            <button class="btn-sm btn-sm-purple" onclick="editarProducto('${p.id}')">Editar</button>
+            <button class="btn-sm btn-sm-amber" onclick="abrirModalMovimientoProducto('${p.id}')">Stock</button>
+            <button class="btn-sm btn-sm-red" onclick="eliminarProducto('${p.id}')">Eliminar</button>
+          </div>
         </td>
-      </tr>`).join('')
+      </tr>`).join('') || `<tr><td colspan="8" style="text-align:center;color:#888;font-weight:800;padding:30px">No se encontraron productos.</td></tr>`
   }
 
   function abrirModalProducto() {
@@ -558,7 +1657,37 @@
 
   async function cargarMovimientos() {
     const { data } = await db.from('movimientos').select('*, productos(nombre)').order('created_at',{ascending:false})
-    document.getElementById('tablaMovimientos').innerHTML = (data||[]).map(m=>`
+    movimientosCache = data || []
+    renderMovimientosAdmin()
+  }
+
+  function renderMovimientosAdmin() {
+    const busqueda = (document.getElementById('buscarMovimiento')?.value || '').toLowerCase().trim()
+    let lista = [...movimientosCache]
+
+    if (busqueda) {
+      lista = lista.filter(m => {
+        const producto = m.productos?.nombre || ''
+        const fecha = fmtFecha(m.created_at)
+        const texto = `${m.id || ''} ${fecha} ${producto} ${m.tipo || ''} ${m.cantidad || ''} ${m.stock_anterior ?? ''} ${m.stock_nuevo ?? ''} ${m.motivo || ''}`.toLowerCase()
+        return texto.includes(busqueda)
+      })
+    }
+
+    const filtrosColumna = getColumnFilters('.movimiento-filter')
+    if(Object.keys(filtrosColumna).length){
+      lista = lista.filter(m => matchColumnFilters({
+        fecha:`${fmtFecha(m.created_at)} ${fmtFechaHora(m.created_at)}`,
+        producto:m.productos?.nombre || '',
+        tipo:m.tipo,
+        cantidad:m.cantidad,
+        stock_anterior:m.stock_anterior,
+        stock_nuevo:m.stock_nuevo,
+        motivo:m.motivo
+      }, filtrosColumna))
+    }
+
+    document.getElementById('tablaMovimientos').innerHTML = lista.map(m=>`
       <tr>
         <td>${fmtFecha(m.created_at)}</td>
         <td style="font-weight:800">${m.productos?.nombre||'—'}</td>
@@ -567,7 +1696,7 @@
         <td>${m.stock_anterior??'—'}</td>
         <td style="font-weight:800">${m.stock_nuevo??'—'}</td>
         <td style="color:#888">${m.motivo||'—'}</td>
-      </tr>`).join('')
+      </tr>`).join('') || `<tr><td colspan="7" style="text-align:center;color:#888;font-weight:800;padding:30px">No se encontraron movimientos.</td></tr>`
   }
 
   function abrirModalMovimiento() {
