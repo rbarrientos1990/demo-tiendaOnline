@@ -900,6 +900,19 @@
       .dashboard-hero h1{font-size:24px}
     }
 
+
+    .finance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+    .finance-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 16px 40px rgba(30,27,75,.08);position:relative;overflow:hidden}
+    .finance-card::after{content:"";position:absolute;right:-36px;top:-36px;width:120px;height:120px;border-radius:50%;background:rgba(108,99,255,.08)}
+    .finance-label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+    .finance-value{font-size:28px;font-weight:900;color:var(--ink);letter-spacing:-.5px}
+    .finance-help{font-size:11px;color:var(--muted);font-weight:800;margin-top:5px}
+    .top-products-list{display:flex;flex-direction:column;gap:10px}
+    .top-product-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#FAFAFF;border:1px solid var(--line);border-radius:16px;padding:11px 12px;font-size:13px;font-weight:900}
+    .top-product-item small{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-top:2px}
+    .top-product-qty{background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 10px;color:var(--primary-dark);white-space:nowrap}
+    @media(max-width:900px){.finance-grid{grid-template-columns:1fr}}
+
     .pane{display:none}
     .pane.active{display:block}
 
@@ -974,6 +987,8 @@
       </div>
 
       <div class="stats" id="statsGrid"></div>
+
+      <div class="finance-grid" id="financeGrid"></div>
 
       <div class="dash-grid">
         <div class="mini-panel">
@@ -1324,10 +1339,35 @@
     </select>`
   }
 
+
+  function extraerTotalPedido(texto){
+    const raw = String(texto || '')
+    const patterns = [
+      /Total de compra:\s*Q?\s*([0-9]+(?:\.[0-9]{1,2})?)/i,
+      /Total estimado:\s*Q?\s*([0-9]+(?:\.[0-9]{1,2})?)/i,
+      /Total:\s*Q?\s*([0-9]+(?:\.[0-9]{1,2})?)/i
+    ]
+    for(const p of patterns){
+      const m = raw.match(p)
+      if(m) return Number(m[1]) || 0
+    }
+    return 0
+  }
+  function esMismaFecha(fecha, ref = new Date()){
+    const f = new Date(fecha)
+    return f.getFullYear()===ref.getFullYear() && f.getMonth()===ref.getMonth() && f.getDate()===ref.getDate()
+  }
+  function esMismoMes(fecha, ref = new Date()){
+    const f = new Date(fecha)
+    return f.getFullYear()===ref.getFullYear() && f.getMonth()===ref.getMonth()
+  }
+  function formatoQ(valor){ return `Q ${Number(valor || 0).toFixed(2)}` }
+
   async function cargarDashboard() {
-    const [{ data: pedidos },{ data: productos }] = await Promise.all([
+    const [{ data: pedidos },{ data: productos },{ data: movimientos }] = await Promise.all([
       db.from('pedidos').select('*').order('created_at',{ascending:false}),
-      db.from('productos').select('*')
+      db.from('productos').select('*'),
+      db.from('movimientos').select('*, productos(nombre)').order('created_at',{ascending:false})
     ])
     productosCache = productos || []
     pedidosCache = pedidos || []
@@ -1339,6 +1379,22 @@
     const entregados = pedidos?.filter(p => p.estado==='entregado').length || 0
     const cancelados = pedidos?.filter(p => p.estado==='cancelado').length || 0
     const stockOk = productos?.filter(p => p.stock>5).length || 0
+
+    const pedidosVendidos = (pedidos || []).filter(p => ['proceso','entregado'].includes(p.estado))
+    const ventasHoy = pedidosVendidos.filter(p => esMismaFecha(p.created_at)).reduce((s,p) => s + extraerTotalPedido(p.producto_nombre), 0)
+    const ventasMes = pedidosVendidos.filter(p => esMismoMes(p.created_at)).reduce((s,p) => s + extraerTotalPedido(p.producto_nombre), 0)
+    const ventasTotal = pedidosVendidos.reduce((s,p) => s + extraerTotalPedido(p.producto_nombre), 0)
+
+    const salidas = (movimientos || []).filter(m => m.tipo === 'salida')
+    const unidadesVendidasMes = salidas.filter(m => esMismoMes(m.created_at)).reduce((s,m) => s + Number(m.cantidad || 0), 0)
+
+    const topMap = {}
+    salidas.forEach(m => {
+      const nombre = m.productos?.nombre || 'Producto sin nombre'
+      if(!topMap[nombre]) topMap[nombre] = { nombre, cantidad:0 }
+      topMap[nombre].cantidad += Number(m.cantidad || 0)
+    })
+    const topProductos = Object.values(topMap).sort((a,b)=>b.cantidad-a.cantidad).slice(0,5)
 
     document.getElementById('statsGrid').innerHTML = `
       <div class="stat productos">
@@ -1366,6 +1422,23 @@
         <div class="stat-help">Requieren reposición</div>
       </div>`
 
+    document.getElementById('financeGrid').innerHTML = `
+      <div class="finance-card">
+        <div class="finance-label">Ventas de hoy</div>
+        <div class="finance-value" style="color:#185FA5">${formatoQ(ventasHoy)}</div>
+        <div class="finance-help">Pedidos en proceso o entregados</div>
+      </div>
+      <div class="finance-card">
+        <div class="finance-label">Ventas del mes</div>
+        <div class="finance-value" style="color:#3B6D11">${formatoQ(ventasMes)}</div>
+        <div class="finance-help">${unidadesVendidasMes} unidades vendidas este mes</div>
+      </div>
+      <div class="finance-card">
+        <div class="finance-label">Ventas acumuladas</div>
+        <div class="finance-value" style="color:#6C63FF">${formatoQ(ventasTotal)}</div>
+        <div class="finance-help">Total histórico registrado</div>
+      </div>`
+
     document.getElementById('dashEstados').innerHTML = `
       <div class="status-item"><span>🟦 Nuevos</span><span>${nuevos}</span></div>
       <div class="status-item"><span>🟨 En proceso</span><span>${proceso}</span></div>
@@ -1376,6 +1449,14 @@
       <div class="status-item"><span>✅ Stock saludable</span><span>${stockOk}</span></div>
       <div class="status-item"><span>⚠️ Stock bajo</span><span>${bajo}</span></div>
       <div class="status-item"><span>⛔ Agotados</span><span>${agotados}</span></div>`
+
+    document.getElementById('dashTopProductos').innerHTML = topProductos.length
+      ? topProductos.map((p,idx)=>`
+        <div class="top-product-item">
+          <div>${idx+1}. ${p.nombre}<small>Unidades registradas como salida</small></div>
+          <div class="top-product-qty">${p.cantidad} uds.</div>
+        </div>`).join('')
+      : `<div class="top-product-item"><div>No hay ventas registradas todavía.</div><div class="top-product-qty">0 uds.</div></div>`
 
     const updated = document.getElementById('dashUpdated')
     if(updated) updated.textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-GT',{hour:'2-digit',minute:'2-digit'})
@@ -1495,7 +1576,7 @@
     if (error) { showToast('Error al actualizar estado', true); return }
     const p = pedidosCache.find(x => x.id === id)
     if (p) p.estado = estado
-    showToast('Estado actualizado')
+    showToast(estado === 'cancelado' ? 'Pedido cancelado. Verificá si corresponde devolver stock manualmente.' : 'Estado actualizado')
     renderPedidos()
     cargarDashboard()
   }
